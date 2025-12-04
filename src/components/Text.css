@@ -1,0 +1,10 @@
+.text-default {
+    font-family: 'Inter', serif !important;
+    font-weight: 400 !important;
+}
+
+.title-default {
+    font-family: 'Crimson Text', serif !important;
+    letter-spacing: 0.2px;
+    font-weight: 600 !important;
+}

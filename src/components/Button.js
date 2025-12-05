@@ -15,9 +15,14 @@ export default function Button({
     position,
     classnames,
     gapIcon,
+    animatedicon,
     ...props
 }) {
     const componentClass = useClassNames(setExtraClass('button-default', [classnames]));
+
+    if (animatedicon && icon) {
+        icon = <span className="iconAnimation">{icon}</span>;
+    }
 
     return (
         <ButtonRadix

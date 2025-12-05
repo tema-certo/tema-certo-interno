@@ -1,0 +1,34 @@
+.textDefault {
+    font-family: 'Inter', serif !important;
+    font-weight: 400 !important;
+}
+
+.titleDefault {
+    font-family: 'Crimson Text', serif !important;
+    letter-spacing: 0.275px;
+    font-weight: 600 !important;
+}
+
+
+.middleSeparator {
+    display: flex;
+    align-items: center;
+    width: 105%;
+    column-gap: 12px;
+
+    & > * {
+        flex: 1 1 auto;
+    }
+
+    & > span {
+        white-space: nowrap;
+    }
+}
+
+.middleSeparator::before,
+.middleSeparator::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #ddd; /* ou var(--gray-6) do Radix */
+}

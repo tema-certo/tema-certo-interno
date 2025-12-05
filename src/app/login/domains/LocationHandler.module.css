@@ -1,0 +1,49 @@
+.rootTabs {
+    background: var(--color-gray-100);
+    border-radius: 16px;
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 0;
+
+    margin-bottom: 20px;
+
+    & > button {
+        padding: 20px;
+        max-width: 196px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    & > button::before {
+        content: none;
+    }
+
+    & > button[data-state="active"] {
+        border: none;
+        border-radius: 8px;
+        font-weight: 400;
+        box-shadow: var(--general-shadow);
+    }
+
+    & > button:hover {
+        background: none !important;
+    }
+
+    & > button:hover,
+    & > button:hover * {
+        background: none !important;
+    }
+}
+
+.description {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.tabs {
+    margin-bottom: 40px;
+}
+

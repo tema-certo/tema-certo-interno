@@ -1,0 +1,19 @@
+.loginInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.forgotPassword {
+    text-align: right;
+    margin-top: 12px;
+}
+
+.buttonContainer {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btnLogin {
+    width: 100%;
+}

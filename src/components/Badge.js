@@ -13,6 +13,8 @@ export default function Badge({
     variant,
     size,
     gapicon,
+    ishtml,
+    children,
     ...props
 }) {
     const componentClass = useClassNames(setExtraClass('badge-default', [classnames]));
@@ -25,13 +27,14 @@ export default function Badge({
             size={size}
             {...props}
         >
-            {setIconLocation(position, icon, text, gapicon)}
+            {!ishtml && setIconLocation(position, icon, text, gapicon)}
+            {ishtml && children}
         </RadixBadge>
     );
 }
 
 Badge.propTypes = {
-    text: PropTypes.string,
+    text: PropTypes.string || PropTypes.node,
     type: PropTypes.string,
     classnames: PropTypes.string,
     color: PropTypes.string,

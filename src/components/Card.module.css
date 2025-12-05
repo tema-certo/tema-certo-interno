@@ -1,0 +1,44 @@
+.cardContainer {
+    box-shadow: var(--card-common-shadow);
+    height: auto;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    border-radius: 0.5rem;
+
+    border: 1px solid var(--color-gray-100);
+}
+
+.card {
+    padding: 24px;
+
+    --card-border-width: 0;
+
+}
+
+.titleContainer {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+
+    & [align="left"] {
+        justify-content: flex-start;
+    }
+
+    & [align="center"] {
+        justify-content: center;
+    }
+
+    & [align="right"] {
+        justify-content: flex-end;
+    }
+
+    & > * {
+        flex: 1;
+    }
+}
+
+.title {
+    font-family: 'Crimson Text', serif !important;
+    font-weight: 600 !important;
+}

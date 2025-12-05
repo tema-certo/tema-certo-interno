@@ -1,8 +1,10 @@
 import { setExtraClass, setIconLocation } from '@/helpers';
 import useClassNames from '@/hooks/useClassnames';
 import { Text as RadixText } from '@radix-ui/themes';
+import { Separator } from '@radix-ui/themes/dist/esm';
 import PropTypes from 'prop-types';
-import './Text.css';
+
+import styles from './Text.module.css';
 
 export default function Text({
     text,
@@ -13,10 +15,14 @@ export default function Text({
     icon,
     iconLocation,
     gapSize,
+    middleSeparator,
     ...props
 }) {
     const titleMode = isTitle ? 'title-default' : '';
-    const componentClass = useClassNames([setExtraClass('text-default', [classNames]), titleMode]);
+
+    const componentClass = useClassNames([setExtraClass(styles.textDefault, [
+        classNames,
+    ]), titleMode]);
 
     return (
         <RadixText
@@ -30,6 +36,19 @@ export default function Text({
     );
 }
 
+Text.Separator = function TextSeparator({ ...props }) {
+    return (
+        <div className={styles.middleSeparator}>
+            <Separator my="3" size="4" />
+            <Text
+                {...props}
+                as="span"
+            />
+            <Separator my="3" size="4" />
+        </div>
+    );
+};
+
 Text.propTypes = {
     text: PropTypes.string,
     type: PropTypes.oneOf(['1', '2', '3', '4', '5', '6', '7', '8']),
@@ -37,4 +56,5 @@ Text.propTypes = {
     isTitle: PropTypes.bool,
     icon: PropTypes.string,
     iconLocation: PropTypes.oneOf(['left', 'right']),
+    gapSize: PropTypes.oneOf(['1', '1.5', '2', '2.5', '4', '8', '16']),
 };

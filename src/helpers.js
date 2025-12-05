@@ -1,3 +1,65 @@
+import { useCallback, useState } from 'react';
+
+import Input from '@/components/Input';
+import { EyeClosedIcon, EyeOpenIcon, LockClosedIcon } from '@radix-ui/react-icons';
+
+const badgeDifficultyColorDefiner = [
+    {
+        identifier: 'easy',
+        textConversion: 'Fácil',
+        color: 'green',
+    },
+    {
+        identifier: 'medium',
+        textConversion: 'Médio',
+        color: 'yellow',
+    },
+    {
+        identifier: 'hard',
+        textConversion: 'Difícil',
+        color: 'red',
+    },
+];
+
+const badgeCategoryColorDefiner = [
+    {
+        identifier: 'education',
+        textConversion: 'Educação',
+        color: 'green',
+    },
+    {
+        identifier: 'politics',
+        textConversion: 'Política',
+        color: 'yellow',
+    },
+    {
+        identifier: 'economy',
+        textConversion: 'Economia',
+        color: 'blue',
+    },
+    {
+        identifier: 'social',
+        textConversion: 'Problemas sociais',
+        color: 'gold',
+    },
+    {
+        identifier: 'technology',
+        textConversion: 'Tecnologia',
+        color: 'purple',
+    },
+    {
+        identifier: 'health',
+        textConversion: 'Saúde',
+        color: 'red',
+    },
+    {
+        identifier: 'environment',
+        textConversion: 'Meio ambiente',
+        color: 'grass',
+    },
+];
+
+
 export function setIconLocation(position, icon, text, gap) {
     if (!icon) return text;
 
@@ -23,4 +85,67 @@ export function setIconLocation(position, icon, text, gap) {
 
 export function setExtraClass(defaultClass, extraClass) {
     return extraClass && extraClass.length ? [defaultClass, ...extraClass] : defaultClass;
+}
+
+export function getEssayProps(category, difficulty, definedTime) {
+    const difficultyData = badgeDifficultyColorDefiner.find(item => {
+        return item.identifier === difficulty;
+    });
+
+    const categoryData = badgeCategoryColorDefiner.find(item => {
+        return item.identifier === category;
+    });
+
+    return {
+        difficultyData,
+        categoryData,
+        definedTime,
+    };
+}
+
+export function InputPassword({
+    control,
+    size,
+    radius,
+    placeholder,
+    color,
+    label,
+    name,
+    id,
+    ...props
+}) {
+    const [pwdIco, setPwdIco] = useState(true);
+
+    const handleExtraIconClick = useCallback(() => {
+        setPwdIco(!pwdIco);
+    }, [pwdIco]);
+
+    const validateTypeIco = useCallback(() => {
+        return pwdIco ? 'password' : 'text';
+    }, [pwdIco]);
+
+    const extraIcon = useCallback(() => {
+        return pwdIco ? <EyeClosedIcon/> : <EyeOpenIcon/>;
+    }, [pwdIco]);
+
+    return (
+        <Input.Field
+            control={control}
+            placeholder={placeholder}
+            size={size}
+            radius={radius}
+            required
+            color={color}
+            label={label}
+            name={name}
+            id={id}
+            icon={<LockClosedIcon/>}
+            type={validateTypeIco()}
+            onClickExtra={handleExtraIconClick}
+            extraIcon={extraIcon()}
+            {...props}
+        />
+    );
+
+
 }

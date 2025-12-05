@@ -2,7 +2,7 @@
 @import "@radix-ui/themes/styles.css";
 
 :root {
-  --background: #F9FAFB;
+  --background: 210 20% 98%;
   --foreground: #171717;
   --blue-1: #f0f9ff;
   --blue-2: #e0f2fe;
@@ -26,7 +26,7 @@
   --accent-a8: var(--blue-a8);
   --accent-a9: var(--blue-a9);
   --accent-a10: var(--blue-a10);
-  --accent-a11: var(--blue-a11);
+  --accent-a11: #0b64f4;
   --accent-a12: var(--blue-a12);
 
   --black-1: #171717;
@@ -41,6 +41,9 @@
   --black-10: #8d8d8d;
   --black-11: #999999;
   --black-12: #a6a6a6;
+
+  --general-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
+  --card-common-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 @theme inline {
@@ -61,7 +64,7 @@
     --blue-6: #0ea5e9;
     --blue-7: #0284c7;
     --blue-8: #0369a1;
-    --blue-9: #0b64f4e6;  /* Cor principal */
+    --blue-9: #0b64f4;  /* Cor principal */
     --blue-10: #0060d6; /* Hover */
     --blue-11: #0050b8;
     --blue-12: #00408f;

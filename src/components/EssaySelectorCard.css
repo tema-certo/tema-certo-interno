@@ -58,3 +58,8 @@
     height: 140px;
     background-color: var(--gray-5) ;
 }
+
+.title {
+    color: var(--color-gray-800);
+    font-family: 'Crimson Text', serif !important;
+}

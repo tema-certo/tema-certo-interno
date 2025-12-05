@@ -1,7 +1,7 @@
+import { ClientProviders } from '@/providers';
 import { Theme } from '@radix-ui/themes';
 import { Crimson_Text, Inter } from 'next/font/google';
 import './globals.css';
-import { ClientProviders } from '@/providers';
 
 const crimsonText = Crimson_Text({
     weight: '400',
@@ -22,15 +22,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-                <body
-                    className={`${crimsonText.variable} ${inter.variable} antialiased`}
-                >
-                <ClientProviders>
-                    <Theme>
+            <body
+                className={`${crimsonText.variable} ${inter.variable} antialiased`}
+            >
+                <Theme>
+                    <ClientProviders>
                         {children}
-                    </Theme>
-                </ClientProviders>
-                </body>
+                    </ClientProviders>
+                </Theme>
+            </body>
         </html>
     );
 }

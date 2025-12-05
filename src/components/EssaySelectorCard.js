@@ -2,68 +2,13 @@ import './EssaySelectorCard.css';
 import Badge from '@/components/Badge';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
+import { getEssayProps } from '@/helpers';
 import { ChevronRightIcon, ClockIcon, FileTextIcon } from '@radix-ui/react-icons';
 import { Box, Card, Inset, Separator, Flex } from '@radix-ui/themes';
 import PropTypes from 'prop-types';
 
-const badgeDifficultyColorDefiner = [
-    {
-        identifier: 'easy',
-        textConversion: 'Fácil',
-        color: 'green',
-    },
-    {
-        identifier: 'medium',
-        textConversion: 'Médio',
-        color: 'yellow',
-    },
-    {
-        identifier: 'hard',
-        textConversion: 'Difícil',
-        color: 'red',
-    },
-];
-
-const badgeCategoryColorDefiner = [
-    {
-        identifier: 'education',
-        textConversion: 'Educação',
-        color: 'green',
-    },
-    {
-        identifier: 'politics',
-        textConversion: 'Política',
-        color: 'yellow',
-    },
-    {
-        identifier: 'economy',
-        textConversion: 'Economia',
-        color: 'blue',
-    },
-    {
-        identifier: 'social',
-        textConversion: 'Problemas sociais',
-        color: 'gold',
-    },
-    {
-        identifier: 'technology',
-        textConversion: 'Tecnologia',
-        color: 'purple',
-    },
-    {
-        identifier: 'health',
-        textConversion: 'Saúde',
-        color: 'red',
-    },
-    {
-        identifier: 'environment',
-        textConversion: 'Meio ambiente',
-        color: 'grass',
-    },
-];
-
 export default function EssaySelectorCard({
-    essayTitle,
+    title,
     description,
     definedTime,
     essayFinishedCounter,
@@ -72,24 +17,19 @@ export default function EssaySelectorCard({
     imgSrc,
     onSelect,
 }) {
-    const difficultyData = badgeDifficultyColorDefiner.find(item => {
-        return item.identifier === difficulty;
-    });
-
-    const categoryData = badgeCategoryColorDefiner.find(item => {
-        return item.identifier === category;
-    });
-
     const parsedEssayData = {
         id: 234,
-        essayTitle,
+        title,
         description,
         category,
         difficulty,
+        definedTime,
     };
 
+    const { difficultyData, categoryData } = getEssayProps(category, difficulty, definedTime);
+
     return (
-        <Box minWidth="320px" maxWidth="365px" className="defaultContainer">
+        <Box minWidth="20   0px" maxWidth="365px" className="defaultContainer">
             {/* eslint-disable-next-line react/jsx-no-bind */}
             <Card className="card" variant={'ghost'} onClick={() => onSelect(parsedEssayData)}>
                 { imgSrc && (
@@ -110,7 +50,7 @@ export default function EssaySelectorCard({
                             color={categoryData?.color || 'gray'}
                         />
                         <Badge
-                            text={difficultyData?.textConversion || 'Dificuldade indefinida'}
+                            text={getEssayProps(category, difficulty).difficultyData?.textConversion || 'Dificuldade indefinida'}
                             radius={'full'}
                             variant={'surface'}
                             color={difficultyData?.color || 'gray'}
@@ -118,11 +58,11 @@ export default function EssaySelectorCard({
                     </div>
                     <div className="container">
                         <Text
-                            text={essayTitle}
+                            text={title}
                             as="h1"
                             size="4"
                             weight="bold"
-                            classnames={'title'}
+                            className={'title'}
                             isTitle
                         />
                         <Text

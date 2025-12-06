@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import FormLogin from '@/app/login/domains/FormLogin';
+import FormRegister from '@/app/login/domains/FormRegister';
 import Text from '@/components/Text';
 import { Box, Tabs } from '@radix-ui/themes';
 
@@ -52,7 +53,7 @@ export default function LocationHandler({ setTitle }) {
                 </Tabs.Content>
 
                 <Tabs.Content value="register">
-                    bbbb
+                    <FormRegister/>
                 </Tabs.Content>
             </Box>
         </Tabs.Root>

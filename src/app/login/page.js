@@ -47,8 +47,8 @@ export default function Page() {
                 <img
                     src="/tema-certo-black.svg"
                     alt="Logo do Tema Certo"
-                    width={135}
-                    height={135}
+                    width={120}
+                    height={120}
 		            />
                 <Text text={'Sua plataforma de redações.'} size={'2'} color={'gray'} />
                 <Card

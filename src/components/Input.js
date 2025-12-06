@@ -9,6 +9,8 @@ import { Controller } from 'react-hook-form';
 
 import styles from './Input.module.css';
 
+const EmailValidator = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
 export default function Input({
     icon,
     size,
@@ -72,9 +74,16 @@ Input.Field = function Field({
     ...props
 }) {
     const FieldRender = useCallback(({ field, fieldState }) => {
-        return <Input {...props} {...field} error={fieldState?.error} />;
-    }, [props]);
 
+        return <div>
+            <Input
+                {...props}
+                {...field}
+                error={fieldState.error}
+            />
+            { fieldState.error && <span className={styles.errorMessageInput}>{fieldState?.error?.message}</span> }
+        </div>;
+    }, [props]);
 
     return (
         <Controller
@@ -83,6 +92,15 @@ Input.Field = function Field({
             /* eslint-disable-next-line react-perf/jsx-no-new-object-as-prop */
             rules={{
                 ...(required ? { required: 'Este campo é obrigatório.' } : {}),
+                ...(name === 'email'
+                    ? {
+                        pattern: {
+                            value: EmailValidator,
+                            message: 'Insira um e-mail válido.',
+                        },
+                    }
+                    : {}
+                ),
             }}
 
             /* eslint-disable-next-line react/jsx-no-bind */

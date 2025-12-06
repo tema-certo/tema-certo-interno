@@ -1,0 +1,16 @@
+import { Toast as ToastPrimitive } from 'radix-ui';
+
+export const Toast = ({ title, content, children, ...props }) => {
+    return (
+        <ToastPrimitive.Root {...props}>
+            {title && <ToastPrimitive.Title>{title}</ToastPrimitive.Title>}
+            <ToastPrimitive.Description>{content}</ToastPrimitive.Description>
+            {children && (
+                <ToastPrimitive.Action asChild altText={'Ok'}>{children}</ToastPrimitive.Action>
+            )}
+            <ToastPrimitive.Close aria-label="Close">
+                <span aria-hidden>×</span>
+            </ToastPrimitive.Close>
+        </ToastPrimitive.Root>
+    );
+};

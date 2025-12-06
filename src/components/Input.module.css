@@ -44,3 +44,10 @@
     border: 1px solid var(--red-9) !important;
     box-shadow: 0 0 0 2px rgba(255, 0, 0, .2);
 }
+
+.errorMessageInput {
+    color: var(--red-9);
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 4px;
+}

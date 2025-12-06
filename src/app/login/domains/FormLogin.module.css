@@ -17,3 +17,18 @@
 .btnLogin {
     width: 100%;
 }
+
+.recoverPasswordMessage {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.buttonRecoverPasswordContainer {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btnRecoverPassword {
+}

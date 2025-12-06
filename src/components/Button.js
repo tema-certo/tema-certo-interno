@@ -2,6 +2,7 @@ import './Button.css';
 import { setExtraClass, setIconLocation } from '@/helpers';
 import useClassNames from '@/hooks/useClassnames';
 import { Button as ButtonRadix } from '@radix-ui/themes';
+import { Loader2Icon } from 'lucide-react';
 import PropTypes from 'prop-types';
 
 export default function Button({
@@ -34,7 +35,8 @@ export default function Button({
             className={componentClass}
             {...props}
         >
-            {setIconLocation(position, icon, text, gapIcon)}
+            {loading && <Loader2Icon className="size-4 animate-spin" />}
+            {!loading && setIconLocation(position, icon, text, gapIcon)}
         </ButtonRadix>
     );
 }

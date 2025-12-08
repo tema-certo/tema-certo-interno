@@ -8,7 +8,7 @@ import { envs } from '@/envs';
 import { dismissLoadingToast, InputPassword } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
-import useStore from '@/hooks/useStore';
+import useStore, { setUserLoginData } from '@/hooks/useStore';
 import {
     ArrowRightIcon, CheckIcon,
     EnvelopeClosedIcon,
@@ -18,6 +18,7 @@ import {
     LockClosedIcon,
 } from '@radix-ui/react-icons';
 import { CheckCircleIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -122,7 +123,7 @@ export default function FormLogin() {
     });
 
     const api = useApi({ url: envs.API_URL });
-    const { setUserToken } = useStore();
+    const router = useRouter();
 
     const changeSetupRecoverPasswordModal = useCallback(() => {
         setSendedEmail(false);
@@ -150,12 +151,15 @@ export default function FormLogin() {
                 password: formData?.password,
             });
 
-            setUserToken(data);
+            document.cookie = `token=${data.token}; path=/; max-age=3600;`;
+
             dismissLoadingToast({
                 toastId,
                 type: 'success',
                 message: 'Sucesso! Vamos te redirecionar para seu acesso.',
             });
+
+            await router.replace('/interno/inicio');
         } catch (e) {
             dismissLoadingToast({
                 toastId,

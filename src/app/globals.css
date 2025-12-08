@@ -189,6 +189,17 @@ body {
   background-color: var(--background-gray-default);
 }
 
+/* setup de avatar padronizado */
+.rt-AvatarRoot.rt-r-size-3 {
+  .rt-AvatarFallback {
+    font-size: 14px;
+  }
+}
+
+.rt-BaseButton:where(.rt-variant-outline) {
+  box-shadow: none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

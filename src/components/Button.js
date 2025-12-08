@@ -1,9 +1,10 @@
-import './Button.css';
 import { setExtraClass, setIconLocation } from '@/helpers';
 import useClassNames from '@/hooks/useClassnames';
 import { Button as ButtonRadix } from '@radix-ui/themes';
 import { Loader2Icon } from 'lucide-react';
 import PropTypes from 'prop-types';
+
+import styles from './Button.module.css';
 
 export default function Button({
     text,
@@ -17,12 +18,13 @@ export default function Button({
     classnames,
     gapIcon,
     animatedicon,
+    children,
     ...props
 }) {
-    const componentClass = useClassNames(setExtraClass('button-default', [classnames]));
+    const componentClass = useClassNames(setExtraClass(styles.buttonDefault, [classnames]));
 
     if (animatedicon && icon) {
-        icon = <span className="iconAnimation">{icon}</span>;
+        icon = <span className={styles.iconAnimation}>{icon}</span>;
     }
 
     return (
@@ -37,6 +39,7 @@ export default function Button({
         >
             {loading && <Loader2Icon className="size-4 animate-spin" />}
             {!loading && setIconLocation(position, icon, text, gapIcon)}
+            {children && children}
         </ButtonRadix>
     );
 }
@@ -49,6 +52,40 @@ Button.Html = function ButtonHtml({
         <Button className="htmlButton" {...props}>
             {children}
         </Button>
+    );
+};
+
+Button.Card = function GlobalizedIcon({
+    children,
+    icon,
+    iconClassName,
+    ...props
+}) {
+    const backgroundCardIcon = useClassNames(setExtraClass(styles.iconCard, [
+        iconClassName === 'green' && styles.green,
+        iconClassName === 'yellow' && styles.yellow,
+        iconClassName === 'blue' && styles.blue,
+        iconClassName === 'gold' && styles.gold,
+        iconClassName === 'purple' && styles.purple,
+        iconClassName === 'red' && styles.red,
+    ]));
+
+    return (
+        <ButtonRadix
+            variant={'outline'}
+            color={'gray'}
+            className={styles.cardButton}
+            {...props}
+        >
+            <div className={styles.cardContainer}>
+                <div className={backgroundCardIcon}>
+                    {icon}
+                </div>
+                <div className={styles.cardContent}>
+                    {children}
+                </div>
+            </div>
+        </ButtonRadix>
     );
 };
 

@@ -11,9 +11,10 @@ import { envs } from '@/envs';
 import { dismissLoadingToast } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
-import useStore from '@/hooks/useStore';
+import useStore, { setUserLoginData } from '@/hooks/useStore';
 import Icons from '@/icons/icons';
 import { Separator } from '@radix-ui/themes';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import styles from './login.module.css';
@@ -22,7 +23,8 @@ export default function Page() {
     const [title, setTitleValue] = useState('');
     const api = useApi({ url: envs.API_URL });
     const googleButtonRef = useRef(null);
-    const { setUserToken } = useStore();
+
+    const router = useRouter();
 
     const setTitle = useCallback((v) => {
         return setTitleValue(v);
@@ -38,13 +40,15 @@ export default function Page() {
                 id_token: credential,
             });
 
-            setUserToken(data);
+            document.cookie = `token=${data.token}; path=/; max-age=3600;`;
 
             dismissLoadingToast({
                 toastId: googleLoder,
                 type: 'success',
                 message: 'Sucesso! Vamos te redirecionar para seu acesso.',
             });
+
+            await router.replace('/interno/inicio');
         } catch (e) {
             dismissLoadingToast({
                 toastId: googleLoder,

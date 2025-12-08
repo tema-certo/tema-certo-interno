@@ -1,0 +1,102 @@
+.buttonDefault {
+    cursor: pointer;
+    font-family: "Inter", "sans-serif" !important;
+    font-size: 14px;
+
+    &:hover {
+        .iconAnimation {
+            transition: all 0.2s linear;
+            transform: translateX(4px);
+        }
+    }
+}
+
+.buttonDefault.rt-variant-ghost {
+    color : var(--blue-9);
+}
+
+.buttonDefault.rt-variant-surface {
+    color : var(--black-3);
+}
+
+/* Card button */
+
+.cardButton {
+    cursor: pointer !important;
+
+    width: 100%;
+    min-height: 120px !important;
+    height: auto !important;
+    border-radius: 1rem !important;
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300) !important;
+
+    font-size: 16px;
+    padding: 16px 16px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    transition: all 0.2s ease;
+
+    &:hover {
+        box-shadow: var(--card-common-shadow);
+        border: 1px solid var(--color-gray-800);
+        background: var(--color-gray-100);
+
+        & .iconCard {
+            transform: scale(1.05);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .cardButton {
+        min-height: 120px !important;
+        padding: 12px 10px !important;
+    }
+}
+
+.iconCard {
+    display: flex;
+    justify-content: center;
+    background: var(--color-gray-300);
+    border-radius: .5rem;
+    padding: 8px;
+
+    width: auto;
+    align-self: flex-start;
+
+    transition: all 0.3s ease;
+}
+
+
+/* -- COLORS BACK GROUND BUTTONS ...  ///// --- */
+.iconCard.green {
+    background: var(--color-green-100);
+}
+
+.iconCard.blue {
+    background: var(--color-blue-100);
+}
+
+.iconCard.gold {
+    background: var(--color-yellow-100);
+}
+
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    align-items: center;
+}
+
+.cardContent {
+    & > * {
+        font-weight: 500;
+        color: var(--color-gray-800);
+        margin-top: 16px;
+    }
+}

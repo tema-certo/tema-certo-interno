@@ -1,3 +1,4 @@
+import { removeAuthData } from '@/hooks/useStore';
 import axios from 'axios';
 
 function createApi(url) {
@@ -10,6 +11,32 @@ export default function useApi({
     url,
 }) {
     const api = createApi(url);
+
+    api.interceptors.response.use(async (response) => {
+        return response;
+    }, async function (error) {
+        if (error?.status === 401) {
+            await removeAuthData();
+
+            window.location.href = '/login';
+        }
+
+        return Promise.reject(error);
+    });
+
+    api.interceptors.request.use(async (config) => {
+        const tokenCookie = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('token='));
+
+        const token = tokenCookie?.split('=')[1];
+
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        return config;
+    });
 
     return api;
 }

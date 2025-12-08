@@ -163,3 +163,37 @@ export function dismissLoadingToast({
     }
 
 }
+
+export const AvgRanking = [
+    {
+        value: 0,
+        label: 'Bronze',
+        color: 'bronze',
+    },
+    {
+        value: 250,
+        label: 'Prata',
+        color: 'gray',
+    },
+    {
+        value: 400,
+        label: 'Ouro',
+        color: 'gold',
+    },
+    {
+        value: 650,
+        label: 'Platina',
+        color: 'blue',
+    },
+    {
+        value: 800,
+        label: 'Diamante',
+        color: 'purple',
+    },
+    {
+        betterThan: true,
+        value: 920,
+        label: 'Mestre',
+        color: 'red',
+    },
+];

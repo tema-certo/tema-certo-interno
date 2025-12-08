@@ -18,9 +18,9 @@ export default function Text({
     middleSeparator,
     ...props
 }) {
-    const titleMode = isTitle ? 'title-default' : '';
+    const titleMode = isTitle ? styles.titleDefault : '';
 
-    const componentClass = useClassNames([setExtraClass(styles.textDefault, [
+    const componentClass = useClassNames([setExtraClass(!isTitle ? styles.textDefault : '', [
         classNames,
     ]), titleMode]);
 

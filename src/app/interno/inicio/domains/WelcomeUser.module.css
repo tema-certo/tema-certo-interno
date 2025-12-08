@@ -1,0 +1,62 @@
+@import "../../../medias.css";
+
+.containerWelcomeUser {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.containerWelcomeMessage {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (--isMobile) {
+    .containerWelcomeUser {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .containerWelcomeMessage {
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    .containerCardChanger {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        align-content: center;
+    }
+
+}
+
+.containerCard {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-content: center;
+    align-items: center;
+}
+
+.card {
+    background: linear-gradient(180deg, #0066FF 20%, #2D8CFF 90%);
+    padding: 20px 28px;
+    opacity: 1;
+    color: white;
+}
+
+.secondaryText {
+    color: var(--color-gray-300);
+}
+
+.containerBadge {
+    display: flex;
+    margin-top: 8px;
+    gap: 20px;
+}

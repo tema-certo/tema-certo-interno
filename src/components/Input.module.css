@@ -5,11 +5,7 @@
 
     width: auto;
     height: auto;
-
     padding: 8px 0;
-
-    --text-field-border-width: 0;
-
     border: 1px solid var(--color-gray-200);
 }
 
@@ -20,7 +16,6 @@
 
     width: auto;
     height: auto;
-
     padding: 4px 0;
 }
 

@@ -1,7 +1,8 @@
 import Badge from '@/components/Badge';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
-import { getEssayProps } from '@/helpers';
+import { getEssayProps, setExtraClass } from '@/helpers';
+import useClassNames from '@/hooks/useClassnames';
 import { ChevronRightIcon, ClockIcon, FileTextIcon } from '@radix-ui/react-icons';
 import { Box, Flex, Inset, Separator, Card as RadixCard } from '@radix-ui/themes';
 import PropTypes from 'prop-types';
@@ -15,19 +16,27 @@ export default function Card({
     maxW,
     aligntitle,
     basecontent,
+    variant,
+    className,
+    ...props
 }) {
+    const variantFilter = variant || 'surface';
+    const classNameSetter = useClassNames(setExtraClass(styles.card, [className]));
+
     return (
         <Box minWidth={minW} maxWidth={maxW} className={styles.cardContainer}>
-            <RadixCard className={styles.card} variant={'surface'}>
-                <div className={styles.titleContainer} align={aligntitle}>
-                    <Text
-                        text={title}
-                        isTitle
-                        as={'h1'}
-                        size={'6'}
-                        className={styles.title}
-                    />
-                </div>
+            <RadixCard className={classNameSetter} variant={variantFilter} {...props}>
+                {title && (
+                    <div className={styles.titleContainer} align={aligntitle}>
+                        <Text
+                            text={title}
+                            isTitle
+                            as={'h1'}
+                            size={'6'}
+                            className={styles.title}
+                        />
+                    </div>
+                )}
                 <div className="content">
                     {html}
                 </div>

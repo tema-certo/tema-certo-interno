@@ -6,7 +6,7 @@ import { envs } from '@/envs';
 import { dismissLoadingToast, InputPassword } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
-import useStore from '@/hooks/useStore';
+import useStore, { setUserLoginData } from '@/hooks/useStore';
 import {
     ArrowRightIcon,
     EnvelopeClosedIcon,
@@ -15,6 +15,7 @@ import {
     LetterSpacingIcon,
     LockClosedIcon, PersonIcon,
 } from '@radix-ui/react-icons';
+import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -43,7 +44,7 @@ export default function FormRegister() {
     });
 
     const api = useApi({ url: envs.API_URL });
-    const { setUserToken } = useStore();
+    const router = useRouter();
 
     const { loading, call: loginUser } = useAsync(async (formData) => {
         const toastId = toast.loading(toastLayoutMessages.createAccountLoading);
@@ -57,12 +58,15 @@ export default function FormRegister() {
                 },
             });
 
-            setUserToken(data);
+            document.cookie = `token=${data.token}; path=/; max-age=3600;`;
+
             dismissLoadingToast({
                 toastId,
                 type: 'success',
                 message: toastLayoutMessages.createAccountSuccess,
             });
+
+            await router.replace('/interno/inicio');
         } catch (e) {
             toast.dismiss(toastId);
             toast.error(toastLayoutMessages.createAccountError.title, {

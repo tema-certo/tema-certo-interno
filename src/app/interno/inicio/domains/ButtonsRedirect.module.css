@@ -1,0 +1,19 @@
+@import "../../../medias.css";
+
+.cardButtonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 100%;
+
+    & > * {
+        flex: 1 1 0;
+    }
+}
+
+@media (--isMobile) {
+    .cardButtonContainer {
+        flex-direction: column;
+    }
+}
+

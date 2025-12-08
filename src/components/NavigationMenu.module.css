@@ -1,0 +1,84 @@
+.navigationContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 20px 0 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menuList {
+    display: flex;
+    gap: 48px;
+
+    & > * {
+        color: var(--black-3);
+        list-style: none;
+    }
+
+    & > li > button {
+        cursor: pointer;
+        transition: all 0.3s ease-out;
+        font-size: 14px;
+        font-weight: 500;
+
+        &:hover {
+            background: none;
+            color: var(--color-black);
+        }
+
+    }
+
+    & > li {
+        list-style: none;
+    }
+
+    :global(button.active) {
+        background-color: var(--accent-3) !important;
+        color: var(--color-blue-600) !important;
+        transition: all 0.3s ease-out;
+        position: relative;
+    }
+
+    :global(button.active)::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 1px;
+        width: 50%;
+        margin-left: 25%;
+        height: 2px;
+        border-radius: 8px;
+        background-color: var(--color-blue-600);
+
+        transform: scaleX(0);
+        transform-origin: center;
+        animation: underline-grow 0.35s ease-out forwards;
+    }
+}
+
+@keyframes underline-grow {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+.containerPageComponent {
+    border-bottom: 1px solid var(--accent-a3);
+    padding-bottom: 12px;
+}
+
+.logoContainer {
+    cursor: pointer;
+}
+
+.userContainer {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    gap: 16px;
+}

@@ -1,3 +1,4 @@
+import NavigationMenu from '@/components/NavigationMenu';
 import { ClientProviders } from '@/providers';
 import { Theme } from '@radix-ui/themes';
 import { Crimson_Text, Inter } from 'next/font/google';

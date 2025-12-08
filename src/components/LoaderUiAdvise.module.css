@@ -1,0 +1,30 @@
+@import "../../src/app/medias.css";
+
+.loaderUiContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    height: 90vh;
+}
+
+.loaderUiContent {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+@media (--isMobile) {
+    .logo {
+        width: 220px !important;
+    }
+
+    .textMessage {
+        font-size: 20px;
+    }
+}

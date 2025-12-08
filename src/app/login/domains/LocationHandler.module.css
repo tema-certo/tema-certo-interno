@@ -17,6 +17,12 @@
         font-weight: 400;
     }
 
+    @media (max-width: 640px) {
+        & > button {
+            max-width: 100%;
+        }
+    }
+
     & > button::before {
         content: none;
     }

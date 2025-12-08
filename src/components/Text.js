@@ -54,7 +54,7 @@ Text.propTypes = {
     type: PropTypes.oneOf(['1', '2', '3', '4', '5', '6', '7', '8']),
     color: PropTypes.oneOf['blue'],
     isTitle: PropTypes.bool,
-    icon: PropTypes.string,
+    icon: PropTypes.node,
     iconLocation: PropTypes.oneOf(['left', 'right']),
     gapSize: PropTypes.oneOf(['1', '1.5', '2', '2.5', '4', '8', '16']),
 };

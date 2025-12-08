@@ -41,6 +41,17 @@ export default function Button({
     );
 }
 
+Button.Html = function ButtonHtml({
+    children,
+    props,
+}) {
+    return (
+        <Button className="htmlButton" {...props}>
+            {children}
+        </Button>
+    );
+};
+
 Button.propTypes = {
     text: PropTypes.string.isRequired,
     variant: PropTypes.oneOf['classic', 'solid', 'soft', 'surface', 'outline', 'ghost'],

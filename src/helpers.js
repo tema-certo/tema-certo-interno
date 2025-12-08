@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 
 import Input from '@/components/Input';
 import { EyeClosedIcon, EyeOpenIcon, LockClosedIcon } from '@radix-ui/react-icons';
+import { toast } from 'sonner';
 
 const badgeDifficultyColorDefiner = [
     {
@@ -146,6 +147,19 @@ export function InputPassword({
             {...props}
         />
     );
+}
 
+export function dismissLoadingToast({
+    toastId,
+    type,
+    message,
+}) {
+    toast.dismiss(toastId);
+
+    if (type === 'success') {
+        toast.success(message);
+    } else {
+        toast.error(message);
+    }
 
 }

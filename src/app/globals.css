@@ -42,6 +42,8 @@
   --black-11: #999999;
   --black-12: #a6a6a6;
 
+  --background-gray-default: #f8fbff;
+
   --general-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
   --card-common-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --radius: 0.625rem;
@@ -174,6 +176,17 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* setup de background radix theme */
+.radix-themes:where([data-is-root-theme="true"]) {
+  background-image:
+  linear-gradient(to right, rgba(229,231,235,0.8) 1px, transparent 1px),
+  linear-gradient(to bottom, rgba(229,231,235,0.8) 1px, transparent 1px),
+  radial-gradient(circle 500px at 20% 100%, var(--blue-a4), transparent),
+  radial-gradient(circle 500px at 100% 80%, var(--blue-a4), transparent);
+  background-size: "48px 48px, 48px 48px, 100% 100%, 100% 100%";
+  background-color: var(--background-gray-default);
 }
 
 @layer base {

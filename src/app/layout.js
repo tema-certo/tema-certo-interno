@@ -4,7 +4,7 @@ import { Crimson_Text, Inter } from 'next/font/google';
 import './globals.css';
 
 const crimsonText = Crimson_Text({
-    weight: '400',
+    weight: '600',
     variable: '--font-crimson-text',
     subsets: ['latin'],
 });
@@ -21,7 +21,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en">
+        <html lang="pt-br">
+            <head>
+                <link rel="icon" href="/tema-certo-black.svg" />
+                <script src="https://accounts.google.com/gsi/client" async defer></script>
+            </head>
             <body
                 className={`${crimsonText.variable} ${inter.variable} antialiased`}
             >

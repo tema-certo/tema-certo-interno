@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { envs } from '@/envs';
-import { InputPassword } from '@/helpers';
+import { dismissLoadingToast, InputPassword } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
 import useStore from '@/hooks/useStore';
@@ -43,7 +43,7 @@ export default function FormRegister() {
     });
 
     const api = useApi({ url: envs.API_URL });
-    const { setUser } = useStore();
+    const { setUserToken } = useStore();
 
     const { loading, call: loginUser } = useAsync(async (formData) => {
         const toastId = toast.loading(toastLayoutMessages.createAccountLoading);
@@ -57,9 +57,12 @@ export default function FormRegister() {
                 },
             });
 
-            setUser(data);
-            toast.dismiss(toastId);
-            toast.success(toastLayoutMessages.createAccountSuccess);
+            setUserToken(data);
+            dismissLoadingToast({
+                toastId,
+                type: 'success',
+                message: toastLayoutMessages.createAccountSuccess,
+            });
         } catch (e) {
             toast.dismiss(toastId);
             toast.error(toastLayoutMessages.createAccountError.title, {

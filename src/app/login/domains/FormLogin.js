@@ -5,24 +5,29 @@ import Input from '@/components/Input';
 import { WrapModal } from '@/components/Modal';
 import Text from '@/components/Text';
 import { envs } from '@/envs';
-import { InputPassword } from '@/helpers';
+import { dismissLoadingToast, InputPassword } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
 import useStore from '@/hooks/useStore';
 import {
-    ArrowRightIcon,
+    ArrowRightIcon, CheckIcon,
     EnvelopeClosedIcon,
     EyeClosedIcon,
     EyeOpenIcon,
     LetterSpacingIcon,
     LockClosedIcon,
 } from '@radix-ui/react-icons';
+import { CheckCircleIcon } from 'lucide-react';
 import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import styles from './FormLogin.module.css';
 
-function FormRecoverPwd() {
+function FormRecoverPwd({
+    setSended,
+}) {
+    const [alwaysSendedEmail, setAlwaysSendedEmail] = useState(false);
+
     const {
         control,
         handleSubmit,
@@ -32,52 +37,78 @@ function FormRecoverPwd() {
             email: '',
         },
     });
+    const api = useApi({ url: envs.API_URL });
 
-    // TODO: Fazer backend de recuperação de senha
+    const { loading, call: recoveryPassword } = useAsync(async (formData) => {
+        try {
+            await api.post('/create-recovery-try', {
+                email: formData?.email,
+            });
+            setAlwaysSendedEmail(true);
+            setSended(true);
+        } catch (e) {
+            toast.error('Erro ao recuperar senha.', {
+                description: 'Tente novamente mais tarde.',
+            },
+            );
+        }
+    });
 
     return (
         <div>
-            <div className={styles.recoverPasswordMessage}>
-                <Text
-                    as={'p'}
-                    text={'Insira seu e-mail para que possarmos enviar um link de recuperação de senha.'}
-                    color={'gray'}
-                />
-            </div>
-            <form onSubmit={handleSubmit(() => {})}>
-                <Input.Field
-                    control={control}
-                    placeholder={'seu@email.com'}
-                    size={'3'}
-                    radius={'large'}
-                    required
-                    color={'blue'}
-                    label={'Email'}
-                    name={'email'}
-                    id={'email'}
-                    icon={<EnvelopeClosedIcon/>}
-                />
-                <div className={styles.buttonRecoverPasswordContainer}>
-                    <Button
-                        text={'Enviar'}
-                        color={'blue'}
-                        variant={'solid'}
-                        size={'3'}
-                        radius={'medium'}
-                        icon={<ArrowRightIcon/>}
-                        position={'right'}
-                        type={'submit'}
-                        animatedicon
-                        loading={isSubmitting}
+            {!alwaysSendedEmail && <div>
+                <div className={ styles.recoverPasswordMessage }>
+                    <Text
+                        as={ 'p' }
+                        text={ 'Insira seu e-mail para que possarmos enviar um link de recuperação de senha.' }
+                        color={ 'gray' }
                     />
                 </div>
-            </form>
+                <form onSubmit={ handleSubmit(recoveryPassword) }>
+                    <Input.Field
+                        control={ control }
+                        placeholder={ 'seu@email.com' }
+                        size={ '3' }
+                        radius={ 'large' }
+                        required
+                        color={ 'blue' }
+                        label={ 'Email' }
+                        name={ 'email' }
+                        id={ 'email' }
+                        icon={ <EnvelopeClosedIcon/> }
+                    />
+                    <div className={ styles.buttonRecoverPasswordContainer }>
+                        <Button
+                            text={ 'Enviar' }
+                            color={ 'blue' }
+                            variant={ 'solid' }
+                            size={ '3' }
+                            radius={ 'medium' }
+                            icon={ <ArrowRightIcon/> }
+                            position={ 'right' }
+                            type={ 'submit' }
+                            animatedicon
+                            loading={ loading || isSubmitting }
+                        />
+                    </div>
+                </form>
+            </div> }
+            { alwaysSendedEmail && <div>
+                <div className={ styles.recoverPasswordMessage }>
+                    <Text
+                        as={ 'p' }
+                        text={ 'Caso a conta esteja registrada, você receberá um e-mail com um link de recuperação.' }
+                        color={ 'gray' }
+                    />
+                </div>
+            </div> }
         </div>
     );
 }
 
 export default function FormLogin() {
     const [recoveringPwd, setRecoveringPwd] = useState(false);
+    const [sended, setSendedEmail] = useState(false);
 
     const {
         control,
@@ -91,22 +122,24 @@ export default function FormLogin() {
     });
 
     const api = useApi({ url: envs.API_URL });
-    const { setUser } = useStore();
+    const { setUserToken } = useStore();
 
     const changeSetupRecoverPasswordModal = useCallback(() => {
+        setSendedEmail(false);
         return setRecoveringPwd(!recoveringPwd);
     }, [recoveringPwd]);
 
     const setupRecoverPasswordModal = useCallback(() => {
         return (
             <WrapModal
-                title={'Recuperar senha'}
+                title={sended ? 'E-mail enviado!' : 'Recuperar senha'}
                 open={recoveringPwd}
                 onClose={changeSetupRecoverPasswordModal}
-                children={<FormRecoverPwd />}
+                children={<FormRecoverPwd setSended={setSendedEmail}/>}
+                icon={sended && <CheckCircleIcon color={'green'}/>}
             />
         );
-    }, [changeSetupRecoverPasswordModal, recoveringPwd]);
+    }, [changeSetupRecoverPasswordModal, recoveringPwd, sended]);
 
     const { loading, call: loginUser } = useAsync(async (formData) => {
         const toastId = toast.loading('Acessando sua conta...');
@@ -117,15 +150,18 @@ export default function FormLogin() {
                 password: formData?.password,
             });
 
-            setUser(data);
-            toast.dismiss(toastId);
-            toast.success('Sucesso! Vamos te redirecionar para seu acesso.');
+            setUserToken(data);
+            dismissLoadingToast({
+                toastId,
+                type: 'success',
+                message: 'Sucesso! Vamos te redirecionar para seu acesso.',
+            });
         } catch (e) {
-            toast.dismiss(toastId);
-            toast.error('Acesso inválido.', {
-                description: 'Tente inserir um novo e-mail ou senha para acessar.',
-            },
-            );
+            dismissLoadingToast({
+                toastId,
+                type: 'error',
+                message: 'Acesso inválido.',
+            });
         }
     });
 

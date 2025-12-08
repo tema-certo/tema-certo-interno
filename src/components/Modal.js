@@ -6,10 +6,17 @@ import Button from '@/components/Button';
 import './Modal.css';
 import Text from '@/components/Text';
 import { Flex, TextField, Theme } from '@radix-ui/themes';
+import { CheckCircleIcon } from 'lucide-react';
 import { Dialog } from 'radix-ui';
 import { useForm } from 'react-hook-form';
 
-export function     WrapModal({ children, title, open, onClose }) {
+export function WrapModal({
+    children,
+    title,
+    open,
+    onClose,
+    icon,
+}) {
 
     const validateOpenChange = useCallback((isOpen) => {
         if (!isOpen) onClose?.();
@@ -24,8 +31,7 @@ export function     WrapModal({ children, title, open, onClose }) {
                 <Theme>
                     <Dialog.Overlay className="DialogOverlay" />
                     <Dialog.Content className="DialogContent">
-                        {title && <Dialog.Title className="DialogTitle">{title}</Dialog.Title>}
-
+                        {title && <Dialog.Title className="DialogTitle">{icon}{title}</Dialog.Title>}
                         {typeof children === 'function'
                             ? children({ closeModal: onClose })
                             : children

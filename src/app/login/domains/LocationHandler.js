@@ -10,7 +10,7 @@ import styles from './LocationHandler.module.css';
 const tabs = [
     {
         value: 'login',
-        label: 'Login',
+        label: 'Entrar',
         description: 'Acesse sua conta para continuar',
     },
     {

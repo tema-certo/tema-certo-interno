@@ -197,3 +197,7 @@ export const AvgRanking = [
         color: 'red',
     },
 ];
+
+export async function setTokenCookieSec(token) {
+    document.cookie = `token=${token}; path=/; max-age=21600; secure; SameSite=Strict;`;
+}

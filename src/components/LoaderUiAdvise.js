@@ -1,6 +1,6 @@
 import Container from '@/components/Container';
 import Text from '@/components/Text';
-import { Spinner } from '@radix-ui/themes';
+import { Progress, Spinner } from '@radix-ui/themes';
 import { Loader2Icon } from 'lucide-react';
 import Loadable from 'next/dist/shared/lib/lazy-dynamic/loadable';
 

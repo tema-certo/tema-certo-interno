@@ -42,7 +42,7 @@
   --black-11: #999999;
   --black-12: #a6a6a6;
 
-  --background-gray-default: #f8fbff;
+  --background-gray-default: #f6f7f8;
 
   --general-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
   --card-common-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -198,6 +198,21 @@ body {
 
 .rt-BaseButton:where(.rt-variant-outline) {
   box-shadow: none;
+}
+
+/* Change avatar */
+
+.rt-AvatarFallback {
+  ::before {
+    content: '';
+    width: 8px;
+    height: 2px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    color: #222;
+    background-color: var(--success-text);
+  }
 }
 
 @layer base {

@@ -1,4 +1,5 @@
 import { envs } from '@/envs';
+import { setTokenCookieSec } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import userResources from '@/store/user';
 import { create } from 'zustand';
@@ -17,7 +18,7 @@ export async function removeAuthData() {
 }
 
 export async function setUserLoginData(token) {
-    document.cookie = `token=${token}; path=/; max-age=3600;`;
+    await setTokenCookieSec(data?.token);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const api = useApi({ url: envs.API_URL });

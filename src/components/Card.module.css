@@ -1,5 +1,5 @@
 .cardContainer {
-    box-shadow: var(--card-common-shadow);
+    box-shadow: var(--shadow-2);
     height: auto;
     width: 100%;
     backdrop-filter: blur(10px);
@@ -12,12 +12,10 @@
     padding: 24px;
 
     --card-border-width: 0;
-
 }
 
 .titleContainer {
     width: 100%;
-    display: flex;
     gap: 8px;
     margin-bottom: 12px;
 
@@ -33,12 +31,75 @@
         justify-content: flex-end;
     }
 
-    & > * {
-        flex: 1;
-    }
 }
 
 .title {
     font-family: 'Crimson Text', serif !important;
     font-weight: 600 !important;
+}
+
+.iconContainer {
+    padding: 8px;
+    width: fit-content;
+    border-radius: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 50px;
+    gap: 8px;
+}
+
+.iconCard {
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.iconCard.green {
+    background: var(--color-green-100);
+}
+
+.iconCard.blue {
+    background: var(--color-blue-100);
+}
+
+.iconCard.gold {
+    background: var(--color-yellow-100);
+}
+
+.iconCard.red {
+    background: var(--color-red-100);
+}
+
+.iconCard.pink {
+    background: var(--color-pink-100);
+}
+
+.containerInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.valueStyle {
+    font-weight: 600;
+    color: var(--color-neutral-900);
+}
+
+.titleContainer > .iconCard {
+    flex: 0 0 auto;   /* impede o ícone de crescer */
+}
+
+.titleContainer > .containerInfo {
+    flex: 1;          /* só o texto ocupa o espaço restante */
+}
+
+.cardTip {
+    background: var(--blue-a2);
+    border: 1px solid var(--blue-a5);
+
+    --card-border-width: 0 !important;
+    box-shadow: 0 0 0 0 transparent !important;
+}
+
+.cardTipBox {
+    box-shadow: none !important;
 }

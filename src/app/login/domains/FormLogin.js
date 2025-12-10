@@ -5,7 +5,7 @@ import Input from '@/components/Input';
 import { WrapModal } from '@/components/Modal';
 import Text from '@/components/Text';
 import { envs } from '@/envs';
-import { dismissLoadingToast, InputPassword } from '@/helpers';
+import { dismissLoadingToast, InputPassword, setTokenCookieSec } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
 import useStore, { setUserLoginData } from '@/hooks/useStore';
@@ -151,7 +151,7 @@ export default function FormLogin() {
                 password: formData?.password,
             });
 
-            document.cookie = `token=${data.token}; path=/; max-age=3600;`;
+            await setTokenCookieSec(data?.token);
 
             dismissLoadingToast({
                 toastId,
@@ -207,6 +207,7 @@ export default function FormLogin() {
                         variant={'ghost'}
                         disabled={isSubmitting}
                         onClick={!isSubmitting ? changeSetupRecoverPasswordModal : null}
+                        classnames={styles.btnRecoverPassword}
                         type={'button'}
                     />
                 </div>

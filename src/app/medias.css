@@ -1,2 +1,4 @@
 /* BREAK POINTS */
-@custom-media --isMobile (max-width: 626px);
+@custom-media --isMobile (max-width: 526px);
+
+@custom-media --isTablet (max-width: 768px);

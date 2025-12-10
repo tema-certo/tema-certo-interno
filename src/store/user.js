@@ -4,5 +4,7 @@ export default function userResources(set) {
     return {
         user: null,
         setUser: (user) => set({ user }),
+        metrics: null,
+        setMetrics: (metrics) => set({ metrics }),
     };
 }

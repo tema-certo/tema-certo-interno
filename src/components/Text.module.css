@@ -12,7 +12,7 @@
 .middleSeparator {
     display: flex;
     align-items: center;
-    width: 105%;
+    width: 100%;
     column-gap: 12px;
 
     & > * {
@@ -30,4 +30,12 @@
     flex: 1;
     height: 1px;
     background-color: #ddd; /* ou var(--gray-6) do Radix */
+}
+
+.black {
+    color: var(--color-gray-800);
+}
+
+.bolder {
+    font-weight: 500 !important;
 }

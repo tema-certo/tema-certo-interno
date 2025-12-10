@@ -1,0 +1,19 @@
+@import '../../../medias.css';
+
+.cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 16px;
+}
+
+@media (--isTablet) {
+    .cardsContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (--isMobile) {
+    .cardsContainer {
+        grid-template-columns: 1fr;
+    }
+}

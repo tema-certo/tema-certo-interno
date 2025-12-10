@@ -16,22 +16,7 @@ import styles from './WelcomeUser.module.css';
 
 
 export default function WelcomeUser(callback, deps) {
-    const [avgScore, setAvgScore] = useState(0);
     const user = useStore((state) => state.user);
-    const api = useApi({ url: envs.API_URL });
-
-    const { loading, call: getAvgScore } = useAsync(async () => {
-        try {
-            const { data } = await api.get('/get-user-average-score');
-            setAvgScore(data?.averageScore);
-        } catch (e) {
-            toast.error('Erro ao carregar nota média.');
-        }
-    });
-
-    useEffect(() => {
-        getAvgScore();
-    }, [getAvgScore]);
 
     const CardStructureHtml = useCallback(() => {
         return (
@@ -41,7 +26,7 @@ export default function WelcomeUser(callback, deps) {
                     size={'3'}
                 />
                 <Text
-                    text={avgScore || 0}
+                    text={user?.averageScore || 0}
                     size={'9'}
                     isTitle
                 />
@@ -52,7 +37,7 @@ export default function WelcomeUser(callback, deps) {
                 />
             </div>
         );
-    }, [avgScore]);
+    }, [user?.averageScore]);
 
     const UserMemberSince = useCallback(() => {
         if (!user?.created_at) return '';
@@ -66,11 +51,11 @@ export default function WelcomeUser(callback, deps) {
     const FindUserRanking = useCallback(() => {
         return AvgRanking.find(item => {
             if (item.betterThan) {
-                return avgScore > item.value;
+                return user?.averageScore >= item.value;
             }
-            return avgScore <= item.value;
+            return user?.averageScore <= item.value;
         });
-    }, [avgScore]);
+    }, [user?.averageScore]);
 
     return (
         <div className={styles.containerWelcomeUser}>

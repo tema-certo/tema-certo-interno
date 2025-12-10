@@ -16,13 +16,18 @@ export default function Text({
     iconLocation,
     gapSize,
     middleSeparator,
+    bold,
     ...props
 }) {
     const titleMode = isTitle ? styles.titleDefault : '';
 
     const componentClass = useClassNames([setExtraClass(!isTitle ? styles.textDefault : '', [
         classNames,
+        color === 'black' && styles.black,
+        bold && styles.bolder,
     ]), titleMode]);
+
+
 
     return (
         <RadixText

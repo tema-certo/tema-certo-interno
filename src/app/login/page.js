@@ -8,7 +8,7 @@ import Card from '@/components/Card';
 import Container from '@/components/Container';
 import Text from '@/components/Text';
 import { envs } from '@/envs';
-import { dismissLoadingToast } from '@/helpers';
+import { dismissLoadingToast, setTokenCookieSec } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
 import useStore, { setUserLoginData } from '@/hooks/useStore';
@@ -40,7 +40,7 @@ export default function Page() {
                 id_token: credential,
             });
 
-            document.cookie = `token=${data.token}; path=/; max-age=3600;`;
+            await setTokenCookieSec(data?.token);
 
             dismissLoadingToast({
                 toastId: googleLoder,

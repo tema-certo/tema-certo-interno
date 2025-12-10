@@ -59,4 +59,5 @@
     display: flex;
     margin-top: 8px;
     gap: 20px;
+    color: var(--color-red-600);
 }

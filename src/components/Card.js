@@ -1,7 +1,9 @@
+import { useCallback } from 'react';
+
 import Badge from '@/components/Badge';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
-import { getEssayProps, setExtraClass } from '@/helpers';
+import { getEssayProps, setExtraClass, setIconLocation } from '@/helpers';
 import useClassNames from '@/hooks/useClassnames';
 import { ChevronRightIcon, ClockIcon, FileTextIcon } from '@radix-ui/react-icons';
 import { Box, Flex, Inset, Separator, Card as RadixCard } from '@radix-ui/themes';
@@ -18,23 +20,41 @@ export default function Card({
     basecontent,
     variant,
     className,
+    iconClassName,
+    cardBoxClassName,
+    titleSize,
+    ownVariant,
+    icon,
+    iconLocation,
     ...props
 }) {
     const variantFilter = variant || 'surface';
-    const classNameSetter = useClassNames(setExtraClass(styles.card, [className]));
+
+    const classNameSetter = useClassNames(setExtraClass(styles.card, [
+        className,
+        ownVariant === 'tip' && styles.cardTip,
+    ]));
+    const ownVariance = useClassNames(setExtraClass(styles.cardContainer, [
+        ownVariant === 'tip' && styles.cardTipBox,
+    ]));
 
     return (
-        <Box minWidth={minW} maxWidth={maxW} className={styles.cardContainer}>
+        <Box minWidth={minW} maxWidth={maxW} className={ownVariance}>
             <RadixCard className={classNameSetter} variant={variantFilter} {...props}>
                 {title && (
                     <div className={styles.titleContainer} align={aligntitle}>
-                        <Text
-                            text={title}
-                            isTitle
-                            as={'h1'}
-                            size={'6'}
-                            className={styles.title}
-                        />
+                        {setIconLocation(
+                            iconLocation,
+                            icon,
+                            <Text
+                                text={title}
+                                isTitle
+                                as={'h1'}
+                                size={titleSize || '6'}
+                                className={styles.title}
+                            />,
+                            '2',
+                        )}
                     </div>
                 )}
                 <div className="content">
@@ -45,6 +65,77 @@ export default function Card({
         </Box>
     );
 }
+
+Card.WithIcon = function CardWithIcon({
+    title,
+    minW,
+    maxW,
+    html,
+    aligntitle,
+    basecontent,
+    variant,
+    className,
+    iconClassName,
+    subText,
+    value,
+    icon,
+    ...props
+}) {
+
+    const backgroundCardIcon = useClassNames(setExtraClass(styles.iconCard, [
+        iconClassName === 'green' && styles.green,
+        iconClassName === 'yellow' && styles.yellow,
+        iconClassName === 'blue' && styles.blue,
+        iconClassName === 'gold' && styles.gold,
+        iconClassName === 'purple' && styles.purple,
+        iconClassName === 'red' && styles.red,
+        iconClassName === 'pink' && styles.pink,
+    ]));
+
+    const iconHtmls = useCallback(({
+        icon,
+    }) => {
+        return (
+            <div className={styles.iconContainer}>
+                <div>
+                    <div className={backgroundCardIcon}>
+                        {icon}
+                    </div>
+                </div>
+                <div className={styles.containerInfo}>
+                    { subText && (
+                        <Text
+                            text={subText}
+                            size={'1'}
+                            color={'gray'}
+                        />
+                    )}
+                    { value && (
+                        <Text
+                            text={value.toString()}
+                            size={'6'}
+                            color={'gray'}
+                            className={styles.valueStyle}
+                        />
+                    )}
+                </div>
+            </div>
+        );
+    }, [backgroundCardIcon, subText, value]);
+
+    return (
+        <Card
+            title={title}
+            html={iconHtmls({ icon })}
+            minW={minW}
+            maxW={maxW}
+            aligntitle={aligntitle}
+            basecontent={basecontent}
+            variant={variant}
+            {...props}
+        />
+    );
+};
 
 Card.propTypes = {
     title: PropTypes.string,

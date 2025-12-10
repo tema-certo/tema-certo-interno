@@ -1,0 +1,75 @@
+@import "../../medias.css";
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+
+.topActions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.bottomSection {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    gap: 24px;
+}
+
+@media (max-width: 840px) {
+    .bottomSection {
+        grid-template-columns: 1fr;
+    }
+}
+@media (--isTablet) {
+    .statsRow {
+        display: grid;
+        grid-template-columns: repeat(1fr, 1fr); /* DUAS colunas */
+        gap: 20px;
+        width: 100%;
+    }
+}
+
+.statsFlex {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.statsAndTipGrid {
+    display: grid;
+    grid-template-columns: minmax(200px,2fr) minmax(100px, 1fr);
+    gap: 12px;
+}
+
+
+.tips {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+@media (--isTablet) {
+    .statsAndTipGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .tips {
+        flex-direction: row;
+    }
+}
+
+@media (--isMobile) {
+    .tips {
+        flex-direction: column;
+    }
+}

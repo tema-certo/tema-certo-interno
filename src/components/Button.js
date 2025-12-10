@@ -66,8 +66,7 @@ Button.Card = function GlobalizedIcon({
         iconClassName === 'yellow' && styles.yellow,
         iconClassName === 'blue' && styles.blue,
         iconClassName === 'gold' && styles.gold,
-        iconClassName === 'purple' && styles.purple,
-        iconClassName === 'red' && styles.red,
+        iconClassName === 'cyan' && styles.cyan,
     ]));
 
     return (

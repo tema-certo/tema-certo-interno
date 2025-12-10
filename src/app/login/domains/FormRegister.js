@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { envs } from '@/envs';
-import { dismissLoadingToast, InputPassword } from '@/helpers';
+import { dismissLoadingToast, InputPassword, setTokenCookieSec } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
 import useStore, { setUserLoginData } from '@/hooks/useStore';
@@ -58,7 +58,7 @@ export default function FormRegister() {
                 },
             });
 
-            document.cookie = `token=${data.token}; path=/; max-age=3600;`;
+            await setTokenCookieSec(data?.token);
 
             dismissLoadingToast({
                 toastId,

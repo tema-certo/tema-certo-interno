@@ -33,7 +33,9 @@ export default function ButtonsRedirect() {
         <div className={styles.cardButtonContainer}>
             <Button.Card
                 icon={<PencilIcon
-                    width={24} height={24} color={iconColors.pencil.color}
+                    width={24}
+                    height={24}
+                    color={iconColors.pencil.color}
                 />}
                 iconClassName={'blue'}
                 onClick={handleClick('/interno/temas')}
@@ -41,14 +43,22 @@ export default function ButtonsRedirect() {
                 <div>Nova redação</div>
             </Button.Card>
             <Button.Card
-                icon={<BookOpenIcon width={24} height={24} color={iconColors.book.color}/>}
+                icon={<BookOpenIcon
+                    width={24}
+                    height={24}
+                    color={iconColors.book.color}
+                />}
                 iconClassName={'green'}
                 onClick={handleClick('/interno/temas')}
 	        >
                 <div>Ver temas</div>
             </Button.Card>
             <Button.Card
-                icon={<ChartBarIncreasing width={24} height={24} color={iconColors.pencil.color}/>}
+                icon={<ChartBarIncreasing
+                    width={24}
+                    height={24}
+                    color={iconColors.pencil.color}
+                />}
                 iconClassName={'cyan'}
                 onClick={handleClick('/interno/estatisticas')}
 	        >

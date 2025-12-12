@@ -17,6 +17,7 @@ export default function Text({
     gapSize,
     middleSeparator,
     bold,
+    children,
     ...props
 }) {
     const titleMode = isTitle ? styles.titleDefault : '';
@@ -27,8 +28,6 @@ export default function Text({
         bold && styles.bolder,
     ]), titleMode]);
 
-
-
     return (
         <RadixText
             size={type}
@@ -36,7 +35,8 @@ export default function Text({
             color={color}
             {...props}
         >
-            {setIconLocation(iconLocation, icon, text, gapSize)}
+            {text && setIconLocation(iconLocation, icon, text, gapSize)}
+            {children && setIconLocation(iconLocation, icon, children, gapSize)}
         </RadixText>
     );
 }

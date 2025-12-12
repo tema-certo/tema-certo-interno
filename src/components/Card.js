@@ -113,7 +113,7 @@ Card.WithIcon = function CardWithIcon({
                     { value && (
                         <Text
                             text={value.toString()}
-                            size={'6'}
+                            size={'7'}
                             color={'gray'}
                             className={styles.valueStyle}
                         />

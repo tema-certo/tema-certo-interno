@@ -27,12 +27,14 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
+    text-align: left;
 }
 
 .containerEssayBadge {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 24px;
     width: 100%;
 }
 

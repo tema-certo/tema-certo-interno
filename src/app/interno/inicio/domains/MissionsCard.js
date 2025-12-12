@@ -14,7 +14,6 @@ import styles from './MissionsCard.module.css';
 
 export function MissionsCard() {
     const api = useApi({ url: envs.API_URL });
-    const user = useStore((state) => state.user);
     const noMissions = useRef(false);
 
     const { data: missions } = useQuery({
@@ -33,9 +32,7 @@ export function MissionsCard() {
         }
 
 	    const sorted = haveMissions.sort((a, b) => {
-		    const ca = a?.target?.count ?? Infinity;
-		    const cb = b?.target?.count ?? Infinity;
-		    return ca - cb;
+            return Number(a?.index) - Number(b?.index);
 	    });
 
         return sorted;
@@ -50,7 +47,7 @@ export function MissionsCard() {
     return (
         <div>
             <Card
-                title={'Missões'}
+                title={`Missões nível ${missions?.data?.level}`}
                 icon={<TrendingUpIcon width={24} height={24} color={ colors['color-light-blue'] }/>}
                 html={
                     <div className={styles.missionsContainer}>
@@ -73,6 +70,9 @@ export function MissionsCard() {
                                     countTarget={item?.target?.count}
                                     target={item?.target?.identifier}
                                     countCurrent={item?.progress}
+                                    times={item?.target?.times}
+                                    strategy={item?.strategy}
+                                    objective={item?.objective}
                                 />
                             </div>
                         ))}

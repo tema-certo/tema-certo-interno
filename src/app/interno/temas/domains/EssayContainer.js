@@ -16,6 +16,7 @@ import styles from './EssayContainer.module.css';
 
 export default function EssayContainer({
     essays,
+    mockedImg,
 }) {
     const { onSelect, clearSelect, value: selectedEssay  } = useSelector();
 
@@ -100,6 +101,7 @@ export default function EssayContainer({
                     description={item?.theme?.theme_description}
                     definedTime={item?.theme?.defined_time}
                     essayFinishedCounter={item?.theme?.essay_finished_counter}
+                    imgSrc={mockedImg}
                     onSelect={onSelect}
                 />
             ))}

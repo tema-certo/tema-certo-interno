@@ -1,0 +1,10 @@
+.titleColorChange {
+    color: var(--color-blue-600);
+}
+
+.containerHeader {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}

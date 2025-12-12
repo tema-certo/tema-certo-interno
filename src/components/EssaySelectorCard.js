@@ -29,7 +29,7 @@ export default function EssaySelectorCard({
     const { difficultyData, categoryData } = getEssayProps(category, difficulty, definedTime);
 
     return (
-        <Box minWidth="20   0px" maxWidth="365px" className="defaultContainer">
+        <Box minWidth="290px" maxWidth="290px" className="defaultContainer">
             {/* eslint-disable-next-line react/jsx-no-bind */}
             <Card className="card" variant={'ghost'} onClick={() => onSelect(parsedEssayData)}>
                 { imgSrc && (
@@ -44,13 +44,14 @@ export default function EssaySelectorCard({
                 <div className="content">
                     <div className="badge-container">
                         <Badge
-                            text={categoryData?.textConversion || 'Categoria indefinida'}
+                            text={categoryData?.textConversion || 'Dif. Indefinida'}
                             radius={'full'}
                             variant={'surface'}
                             color={categoryData?.color || 'gray'}
                         />
                         <Badge
-                            text={getEssayProps(category, difficulty).difficultyData?.textConversion || 'Dificuldade indefinida'}
+                            text={getEssayProps(category, difficulty).difficultyData?.textConversion || 'Cat.' +
+                                ' Indefinida'}
                             radius={'full'}
                             variant={'surface'}
                             color={difficultyData?.color || 'gray'}
@@ -81,7 +82,7 @@ export default function EssaySelectorCard({
                                 color={'gray'}
                                 type="1"
                                 gapSize={1}
-                                text={`${definedTime} min.`|| 'Tempo indefinido'}
+                                text={`${definedTime || 0} min.`|| 'Tempo indefinido'}
                             />
                             <Text
                                 as="div"

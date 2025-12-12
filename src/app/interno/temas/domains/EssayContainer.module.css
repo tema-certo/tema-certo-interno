@@ -1,0 +1,48 @@
+.badgeContainerModal {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.badgeInternal {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    height: auto;
+    min-width: 0;
+}
+
+.badgeExtraContainerModal {
+    display: flex;
+    margin-top: 16px;
+    gap: 16px;
+}
+
+.badgeExtraContainerModal > * {
+    border-radius: 9999px !important;
+    font-size: 12px;
+}
+
+.listContainer {
+    margin-top: 20px;
+    margin-bottom: 20px
+}
+
+.listContainerDiv {
+    background: var(--color-gray-50);
+    padding: 0 24px;
+    border-radius: 16px;
+}
+
+.containerEssays {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}

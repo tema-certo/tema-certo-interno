@@ -1,0 +1,15 @@
+.tooltipChildren {
+    & > * {
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    margin-bottom: 8px;
+
+    background: var(--color-gray-900);
+
+    & > span {
+        display: none;
+    }
+
+}

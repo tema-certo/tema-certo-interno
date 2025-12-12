@@ -53,7 +53,7 @@ export function CardDataList() {
                 icon: <Icons.FireIcon width={24} height={24} color={iconColors.lightning.color}/>,
                 iconClassName: 'gold',
                 subText: <div>Sequência</div>,
-                value: metrics?.sequence || '0',
+                value: `${metrics?.sequence} dias`|| '0',
             },
         ];
     }, [metrics]);

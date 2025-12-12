@@ -75,7 +75,7 @@ export default function WelcomeUser(callback, deps) {
                         text={FindUserRanking()?.label}
                         icon={<StarIcon/>}
                         radius={'full'}
-                        color={FindUserRanking().color}
+                        color={FindUserRanking()?.color}
                         variant={'surface'}
                     />
                     <Text

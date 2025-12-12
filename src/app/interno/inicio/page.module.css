@@ -47,8 +47,8 @@
 
 .statsAndTipGrid {
     display: grid;
-    grid-template-columns: minmax(200px,2fr) minmax(100px, 1fr);
-    gap: 12px;
+    grid-template-columns: minmax(833px, 1fr) minmax(150px, 1fr);
+    gap: 16px;
 }
 
 

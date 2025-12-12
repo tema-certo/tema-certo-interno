@@ -4,3 +4,9 @@
     gap: 8px;
     margin-bottom: 12px;
 }
+
+.missionTitle {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}

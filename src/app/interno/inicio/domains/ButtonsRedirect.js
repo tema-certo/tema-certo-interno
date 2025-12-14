@@ -5,7 +5,7 @@ import Card from '@/components/Card';
 import Text from '@/components/Text';
 import Icons from '@/icons/icons';
 import PencilIcon from '@/icons/pencil/pencil';
-import { BookOpenIcon, ChartBarIncreasing } from 'lucide-react';
+import { BookOpenIcon, ChartBarIncreasing, PenToolIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import styles from './ButtonsRedirect.module.css';
@@ -32,7 +32,7 @@ export default function ButtonsRedirect() {
     return (
         <div className={styles.cardButtonContainer}>
             <Button.Card
-                icon={<PencilIcon
+                icon={<PenToolIcon
                     width={24}
                     height={24}
                     color={iconColors.pencil.color}

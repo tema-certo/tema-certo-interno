@@ -7,3 +7,17 @@
     gap: 32px;
     flex-wrap: wrap;
 }
+
+.containerSkeleton {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+    align-items:center;
+}
+
+.skeleton {
+    border-radius: 16px;
+}
+

@@ -1,24 +1,36 @@
-import './EssaySelectorCard.css';
+
+import { useCallback } from 'react';
+
 import Badge from '@/components/Badge';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
+import { envs } from '@/envs';
 import { getEssayProps } from '@/helpers';
+import useApi from '@/hooks/useApi';
+import useSize from '@/hooks/useSize';
 import { ChevronRightIcon, ClockIcon, FileTextIcon } from '@radix-ui/react-icons';
 import { Box, Card, Inset, Separator, Flex } from '@radix-ui/themes';
 import PropTypes from 'prop-types';
+import { useQuery } from 'react-query';
+
+import styles from './EssaySelectorCard.module.css';
 
 export default function EssaySelectorCard({
+    idEssay,
     title,
     description,
     definedTime,
     essayFinishedCounter,
     category,
     difficulty,
-    imgSrc,
+    imageEndpoint,
     onSelect,
 }) {
+    const api = useApi({ url: envs.APP_CDN, denyToken: true });
+    const { isMobile, isTablet, isLowerMobile } = useSize();
+
     const parsedEssayData = {
-        id: 234,
+        id: idEssay,
         title,
         description,
         category,
@@ -26,23 +38,67 @@ export default function EssaySelectorCard({
         definedTime,
     };
 
+    const { data: img } = useQuery({
+        queryKey: ['img', imageEndpoint],
+        queryFn: async () => {
+            if (imageEndpoint) {
+                const imageFound = await api.get(imageEndpoint, { responseType: 'blob' });
+
+                if (imageFound?.data) {
+                    return URL.createObjectURL(imageFound.data);
+                }
+
+                return null;
+            }
+
+            return null;
+        },
+        enabled: !!imageEndpoint,
+        retry: false,
+    });
+
     const { difficultyData, categoryData } = getEssayProps(category, difficulty, definedTime);
 
+    const selectEssay = useCallback((data) => {
+        return () => onSelect(data);
+    }, [onSelect]);
+
+    const minW =
+        isLowerMobile ? '320px' :
+            isMobile ? '280px' :
+                isTablet ? '310px' :
+                    '280px';
+
+    const renderImage = useCallback(() => {
+        if (!img && imageEndpoint) {
+            return (
+                <Inset clip="padding-box" side="top" pb="current">
+                    <div className={styles.image} />
+                </Inset>
+            );
+        }
+
+        if (img) {
+            return (
+                <Inset clip="padding-box" side="top" pb="current">
+                    <img
+                        src={img}
+                        alt="Imagem correspondente à redação."
+                        className={styles.image}
+                    />
+                </Inset>
+            );
+        }
+
+        return null;
+    }, [imageEndpoint, img]);
+
     return (
-        <Box minWidth="290px" maxWidth="290px" className="defaultContainer">
-            {/* eslint-disable-next-line react/jsx-no-bind */}
-            <Card className="card" variant={'ghost'} onClick={() => onSelect(parsedEssayData)}>
-                { imgSrc && (
-                    <Inset clip="padding-box" side="top" pb="current">
-                        <img
-                            src={imgSrc}
-                            alt="Imagem correspondente à redação."
-                            className="image"
-                        />
-                    </Inset>
-                )}
-                <div className="content">
-                    <div className="badge-container">
+        <Box minWidth={minW} maxWidth="310px">
+            <Card className={styles.card} variant={'ghost'} onClick={selectEssay(parsedEssayData)}>
+                {renderImage()}
+                <div className={styles.content}>
+                    <div className={styles.badgeContainer}>
                         <Badge
                             text={categoryData?.textConversion || 'Dif. Indefinida'}
                             radius={'full'}
@@ -50,20 +106,22 @@ export default function EssaySelectorCard({
                             color={categoryData?.color || 'gray'}
                         />
                         <Badge
-                            text={getEssayProps(category, difficulty).difficultyData?.textConversion || 'Cat.' +
-                                ' Indefinida'}
+                            text={getEssayProps(category, difficulty).difficultyData?.textConversion ||
+                                parsedEssayData?.difficulty ||
+                                'Cat.' + ' Indefinida'
+                            }
                             radius={'full'}
                             variant={'surface'}
                             color={difficultyData?.color || 'gray'}
                         />
                     </div>
-                    <div className="container">
+                    <div className={styles.container}>
                         <Text
                             text={title}
                             as="h1"
                             size="4"
                             weight="bold"
-                            className={'title'}
+                            className={styles.title}
                             isTitle
                         />
                         <Text
@@ -73,7 +131,7 @@ export default function EssaySelectorCard({
                             size="2"
                         />
                     </div>
-                    <div className="separator">
+                    <div className={styles.separator}>
                         <Separator my="3" size="4" />
                         <Flex gap="2">
                             <Text
@@ -94,7 +152,7 @@ export default function EssaySelectorCard({
                             />
                         </Flex>
                     </div>
-                    <div className="button-container">
+                    <div className={styles.buttonContainer}>
                         <Button
                             text={'Realizar redação'}
                             icon={<ChevronRightIcon className="iconArrow" />}
@@ -102,7 +160,7 @@ export default function EssaySelectorCard({
                             variant={'ghost'}
                             radius={'full'}
                             color={'blue'}
-                            classnames={'btn-change'}
+                            classnames={styles.btnChange}
                         />
                     </div>
                 </div>

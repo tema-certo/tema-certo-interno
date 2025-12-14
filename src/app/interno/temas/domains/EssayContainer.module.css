@@ -1,3 +1,5 @@
+@import '../../../medias.css';
+
 .badgeContainerModal {
     border-radius: 8px;
     width: 100%;
@@ -27,22 +29,33 @@
 }
 
 .listContainer {
-    margin-top: 20px;
-    margin-bottom: 20px
 }
 
 .listContainerDiv {
-    background: var(--color-gray-50);
-    padding: 0 24px;
+    background: var(--color-gray-100);
+    padding: 024px;
     border-radius: 16px;
 }
 
 .containerEssays {
+    width: 100%;
     display: flex;
+    justify-content: center;
+}
+
+.containerEssaysCards {
+    display: flex;
+    flex: 1 auto;
+    gap: 40px;
     flex-wrap: wrap;
-    gap: 32px;
+
+
     width: 100%;
     justify-content: flex-start;
-    align-items: flex-start;
-    align-content: flex-start;
+}
+
+@media (--isLowDesktop) {
+    .containerEssaysCards {
+        justify-content: center;
+    }
 }

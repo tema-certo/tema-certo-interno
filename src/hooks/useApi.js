@@ -9,6 +9,7 @@ function createApi(url) {
 
 export default function useApi({
     url,
+    denyToken = false,
 }) {
     const api = createApi(url);
 
@@ -31,7 +32,7 @@ export default function useApi({
 
         const token = tokenCookie?.split('=')[1];
 
-        if (token) {
+        if (token && !denyToken) {
             config.headers.Authorization = `Bearer ${token}`;
         }
 

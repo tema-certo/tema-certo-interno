@@ -16,14 +16,13 @@ import styles from './EssayContainer.module.css';
 
 export default function EssayContainer({
     essays,
-    mockedImg,
 }) {
     const { onSelect, clearSelect, value: selectedEssay  } = useSelector();
 
     const { difficultyData, definedTime } = getEssayProps(
         selectedEssay?.category,
-	    selectedEssay?.difficulty,
-	    selectedEssay?.definedTime,
+        selectedEssay?.difficulty,
+        selectedEssay?.definedTime,
     );
 
     const ListItems = useMemo(() => {
@@ -59,7 +58,7 @@ export default function EssayContainer({
                             variant={'surface'}
                             color={'gray'}
                             ishtml
-		                >
+                        >
                             <Text
                                 as="div"
                                 icon={<ClockIcon width={13} height={13} />}
@@ -67,14 +66,14 @@ export default function EssayContainer({
                                 type="1"
                                 gapSize={1}
                                 text={`${definedTime} min.`|| 'Indefinido'}
-	                        />
+                            />
                         </Badge>
                         <Badge
                             text={difficultyData?.textConversion || 'Indefinida'}
                             radius={'full'}
                             variant={'surface'}
                             color={'gray'}
-		                />
+                        />
                     </div>
                 </div>
                 <div className={styles.listContainerDiv}>
@@ -94,17 +93,21 @@ export default function EssayContainer({
 
     return (
         <div className={styles.containerEssays}>
-            {essays.map((item) => (
-                <EssaySelectorCard
-                    key={item?.theme?.id}
-                    title={item?.theme?.theme_title}
-                    description={item?.theme?.theme_description}
-                    definedTime={item?.theme?.defined_time}
-                    essayFinishedCounter={item?.theme?.essay_finished_counter}
-                    imgSrc={mockedImg}
-                    onSelect={onSelect}
-                />
-            ))}
+            <div className={styles.containerEssaysCards}>
+                {essays.map((item) => (
+                    <EssaySelectorCard
+                        idEssay={item?.theme?.id}
+                        title={item?.theme?.theme_title}
+                        description={item?.theme?.theme_description}
+                        definedTime={item?.theme?.defined_time}
+                        essayFinishedCounter={item?.theme?.essay_finished_counter}
+                        difficulty={item?.classification?.difficulty_level?.level}
+                        category={item?.classification?.category?.name}
+                        imageEndpoint={item?.theme?.image_endpoint}
+                        onSelect={onSelect}
+                    />
+                ))}
+            </div>
 
             <WrapModal
                 open={!!selectedEssay}

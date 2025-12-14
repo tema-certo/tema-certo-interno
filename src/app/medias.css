@@ -2,3 +2,7 @@
 @custom-media --isMobile (max-width: 526px);
 
 @custom-media --isTablet (max-width: 768px);
+
+@custom-media --isNotebook (max-width: 1024px);
+
+@custom-media --isLowDesktop (max-width: 1280px);

@@ -6,6 +6,8 @@ import Container from '@/components/Container';
 import NavigationMenu from '@/components/NavigationMenu';
 import { Separator } from '@radix-ui/themes/dist/esm';
 
+import styles from './page.module.css';
+
 export default function Page() {
     return (
         <main>
@@ -14,7 +16,9 @@ export default function Page() {
             </Container>
             <Separator my="4" size="4" />
             <Container>
-                <ListThemes/>
+                <div className={styles.containerEssaysCards}>
+                    <ListThemes/>
+                </div>
             </Container>
         </main>
     );

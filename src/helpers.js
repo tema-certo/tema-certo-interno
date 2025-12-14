@@ -6,17 +6,17 @@ import { toast } from 'sonner';
 
 const badgeDifficultyColorDefiner = [
     {
-        identifier: 'easy',
+        identifier: 'Easy',
         textConversion: 'Fácil',
         color: 'green',
     },
     {
-        identifier: 'medium',
+        identifier: 'Medium',
         textConversion: 'Médio',
         color: 'yellow',
     },
     {
-        identifier: 'hard',
+        identifier: 'Hard',
         textConversion: 'Difícil',
         color: 'red',
     },
@@ -201,3 +201,11 @@ export const AvgRanking = [
 export async function setTokenCookieSec(token) {
     document.cookie = `token=${token}; path=/; max-age=21600; secure; SameSite=Strict;`;
 }
+
+export const formatThemeTitle = (themeTitle) => {
+    return themeTitle
+        .trim()
+        .split(' ')
+        .join('-')
+        .toLowerCase();
+};

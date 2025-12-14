@@ -38,15 +38,15 @@
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
-    transition: all 0.2s ease;
+    transition: all 0.1s ease-in-out;
 
     &:hover {
-        box-shadow: var(--shadow-xl);
-        border: 1px solid var(--color-gray-800);
+        transition: all 0.1s ease-in-out;
+        border: 1px solid var(--color-blue-200) !important;
         background: var(--color-gray-100);
 
         & .iconCard {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
     }
 }

@@ -25,7 +25,7 @@ export default function NavigationMenu() {
     const router = useRouter();
     const user = useStore((state) => state.user);
     const metrics = useStore((state) => state.metrics);
-    const { isTablet, isMobile } = useSize();
+    const { isTablet, isMobile, isLowerMobile } = useSize();
     const { scrolled } = useScroll();
 
     const definedClasses = useClassnames(setExtraClass(styles.containerPageComponent, [scrolled && styles.moved]));
@@ -86,7 +86,7 @@ export default function NavigationMenu() {
         });
     }, [user]);
 
-    if (isTablet || isMobile) {
+    if (isTablet || isMobile || isLowerMobile) {
         return (
             <div className={definedClasses}>
                 <div className={styles.navigationContainer}>
@@ -123,13 +123,15 @@ export default function NavigationMenu() {
                             size={'1'}
                         />
                     </div>
-                    <Badge
-                        text={FindUserRanking()?.label}
-                        icon={<StarIcon/>}
-                        radius={'full'}
-                        color={FindUserRanking().color}
-                        variant={'surface'}
-                    />
+                    <div className={styles.rankingBadge}>
+                        <Badge
+                            text={FindUserRanking()?.label}
+                            icon={<StarIcon/>}
+                            radius={'full'}
+                            color={FindUserRanking()?.color}
+                            variant={'surface'}
+                        />
+                    </div>
                     <Avatar
                         radius={'full'}
                         variant={'solid'}

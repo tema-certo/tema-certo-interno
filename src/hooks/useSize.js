@@ -17,7 +17,8 @@ export default function useSize() {
     }, []);
 
     return {
-        isMobile: windowDimension < 768,
+        isLowerMobile: windowDimension <= 440,
+        isMobile: windowDimension < 768 && windowDimension > 440,
         isTablet: windowDimension >= 768 && windowDimension <= 886,
         isDesktop: windowDimension >= 1024,
     };

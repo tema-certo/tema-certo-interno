@@ -1,6 +1,5 @@
 @import '../app/medias.css';
 
-
 .navigationContainer {
     max-width: 1300px;
     margin: 0 auto;
@@ -99,6 +98,7 @@
     align-content: center;
     align-items: center;
     gap: 16px;
+    position: relative;
 }
 
 .userScore {
@@ -112,6 +112,9 @@
     & > * {
         font-size: 8px;
     }
+
+    position: absolute;
+    right: 340%;
 }
 
 .avatar {
@@ -130,4 +133,9 @@
         border-radius: 100%;
         background-color: var(--color-green-600);
     }
+}
+
+.rankingBadge {
+    position: absolute;
+    right: 140%;
 }

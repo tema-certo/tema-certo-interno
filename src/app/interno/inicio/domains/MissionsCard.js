@@ -78,7 +78,6 @@ export function MissionsCard() {
                         ))}
                     </div>
                 }
-                maxW={'460px'}
                 aligntitle={'left'}
                 ownVariant={'tip'}
                 titleSize={'5'}

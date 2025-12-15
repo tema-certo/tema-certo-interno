@@ -30,6 +30,8 @@ export function CardDataList() {
     const { metrics } = useStore((state) => state);
 
     const MetricsGroup = useMemo(() => {
+        const textDays = metrics?.sequence > 1 ? 'dias' : 'dia';
+
         return [
             {
                 icon: <FileTextIcon width={24} height={24} color={iconColors.paper.color}/>,
@@ -53,7 +55,7 @@ export function CardDataList() {
                 icon: <Icons.FireIcon width={24} height={24} color={iconColors.lightning.color}/>,
                 iconClassName: 'gold',
                 subText: <div>Sequência</div>,
-                value: `${metrics?.sequence} dias`|| '0',
+                value: `${metrics?.sequence || 0} ${textDays}`,
             },
         ];
     }, [metrics]);

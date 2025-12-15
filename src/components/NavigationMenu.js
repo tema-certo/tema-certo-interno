@@ -14,13 +14,15 @@ import useStore from '@/hooks/useStore';
 import Icons from '@/icons/icons';
 import { BookmarkIcon, BarChartIcon, StarIcon, HamburgerMenuIcon, LightningBoltIcon } from '@radix-ui/react-icons';
 import { Avatar } from '@radix-ui/themes';
-import { BarChartHorizontalIcon, BookOpenIcon, Home, LucideChartNoAxesColumnIncreasing } from 'lucide-react';
+import { BarChartHorizontalIcon, BookOpenIcon, Home, LucideChartNoAxesColumnIncreasing, XIcon } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import styles from './NavigationMenu.module.css';
 
 
 export default function NavigationMenu() {
+    const [menuMobile, setMenuMobile] = useState(false);
+
     const pathName = usePathname();
     const router = useRouter();
     const user = useStore((state) => state.user);
@@ -53,6 +55,15 @@ export default function NavigationMenu() {
         ];
     }, [router]);
 
+    const handleChangePage = useCallback((fn) => {
+        return () => {
+            if (isTablet || isMobile || isLowerMobile) {
+                setMenuMobile(false);
+            }
+            fn();
+        };
+    }, [isLowerMobile, isMobile, isTablet]);
+
     const mapMenuOptions = useCallback(() => {
         return (
             menuOptions.map(item => {
@@ -65,7 +76,7 @@ export default function NavigationMenu() {
                             variant={'ghost'}
                             radius={'large'}
                             color={'gray'}
-                            onClick={item.handler}
+                            onClick={handleChangePage(item.handler)}
                             size={'3'}
                             className={pathName === item.path && 'active'}
                         />
@@ -73,7 +84,7 @@ export default function NavigationMenu() {
                 );
             })
         );
-    }, [menuOptions, pathName]);
+    }, [handleChangePage, menuOptions, pathName]);
 
     const FindUserRanking = useCallback(() => {
         const score = user?.averageScore || 0;
@@ -86,12 +97,77 @@ export default function NavigationMenu() {
         });
     }, [user]);
 
+    const handleMobileModal = useCallback(value => {
+        return () => setMenuMobile(!value);
+    }, []);
+
     if (isTablet || isMobile || isLowerMobile) {
         return (
             <div className={definedClasses}>
-                <div className={styles.navigationContainer}>
-                    <HamburgerMenuIcon width={24} height={24}/>
-                </div>
+                {!menuMobile && (
+                    <div className={styles.navigationContainer}>
+                        <Button
+                            variant={'ghost'}
+                            radius={'large'}
+                            color={'gray'}
+                            size={'2'}
+                            onClick={handleMobileModal(menuMobile)}
+                        >
+                            <HamburgerMenuIcon
+                                width={24}
+                                height={24}
+                            />
+                        </Button>
+                    </div>
+                )}
+                {menuMobile && (
+                    <>
+                        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+                        <div className={styles.overlay} onClick={handleMobileModal(menuMobile)} />
+
+                        <div className={styles.menuMobile}>
+                            <div className={styles.logoContainerMobile}>
+                                <Button
+                                    variant={'ghost'}
+                                    radius={'large'}
+                                    color={'gray'}
+                                    size={'2'}
+                                    onClick={handleMobileModal(menuMobile)}
+                                >
+                                    <XIcon />
+                                </Button>
+                            </div>
+
+                            <div className={styles.userContainer}>
+                                <Avatar
+                                    radius={'full'}
+                                    variant={'solid'}
+                                    fallback={user?.name?.charAt(0)}
+                                    color={'blue'}
+                                    size={'3'}
+                                    className={styles.avatar}
+                                />
+                                <div className={styles.userScore}>
+                                    <Icons.FireIcon width={12} height={12} color={'#894b00'} />
+                                    <Text text={metrics?.sequence || 0} size={'1'} />
+                                </div>
+                                <div className={styles.rankingBadge}>
+                                    <Badge
+                                        text={FindUserRanking()?.label}
+                                        icon={<StarIcon />}
+                                        radius={'full'}
+                                        color={FindUserRanking()?.color}
+                                        variant={'surface'}
+                                    />
+                                </div>
+                            </div>
+
+                            <ul className={styles.menuList}>
+                                {mapMenuOptions()}
+                            </ul>
+                        </div>
+                    </>
+                )}
             </div>
         );
     }

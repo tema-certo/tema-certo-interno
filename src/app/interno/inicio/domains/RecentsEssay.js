@@ -7,7 +7,7 @@ import Text from '@/components/Text';
 import { envs } from '@/envs';
 import { AvgRanking } from '@/helpers';
 import useApi from '@/hooks/useApi';
-import { Pencil, PencilLineIcon } from 'lucide-react';
+import { LucideLoader, Pencil, PencilLineIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from 'react-query';
 
@@ -17,12 +17,13 @@ export default function RecentsEssay() {
     const api = useApi({ url: envs.API_URL });
     const router = useRouter();
 
-    const { data: listEssays } = useQuery({
+    const { data: listEssays, isLoading } = useQuery({
         queryKey: 'listEssays',
         queryFn: async () => {
             return await api.get('/last-essays-completed');
         },
         refetchOnMount: true,
+        suspense: true,
     });
 
     const handleClick = useCallback(() => {
@@ -31,6 +32,10 @@ export default function RecentsEssay() {
 
     const elements = useMemo(() => {
         const slices = listEssays?.data?.slice(0, 3) ?? [];
+
+        if (isLoading) {
+            return <LucideLoader/>;
+        }
 
         if (!slices.length) {
             return (
@@ -114,7 +119,7 @@ export default function RecentsEssay() {
                 </Button>
             );
         });
-    }, [listEssays, handleClick]);
+    }, [listEssays, handleClick, isLoading]);
 
 
     return (

@@ -5,6 +5,7 @@ import { useCallback, useEffect } from 'react';
 import ButtonsRedirect from '@/app/interno/inicio/domains/ButtonsRedirect';
 import { CardDataList } from '@/app/interno/inicio/domains/CardDataList';
 import { MissionsCard } from '@/app/interno/inicio/domains/MissionsCard';
+import { MostHighScoresRanking } from '@/app/interno/inicio/domains/MostHighScoresRanking';
 import RecentsEssay from '@/app/interno/inicio/domains/RecentsEssay';
 import TipMessage from '@/app/interno/inicio/domains/TipMessage';
 import WelcomeUser from '@/app/interno/inicio/domains/WelcomeUser';
@@ -37,10 +38,12 @@ export default function Page() {
                             <div className={styles.statsRow}>
                                 <CardDataList />
                             </div>
-                            <RecentsEssay/>
+                            <RecentsEssay />
+                            <RecentsEssay />
                         </div>
                         <div className={styles.tips}>
                             <MissionsCard />
+                            <MostHighScoresRanking />
                             <TipMessage />
                         </div>
 

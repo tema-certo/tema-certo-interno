@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { MissionsCard } from '@/app/interno/inicio/domains/MissionsCard';
 import Badge from '@/components/Badge';
 import Card from '@/components/Card';
 import Container from '@/components/Container';

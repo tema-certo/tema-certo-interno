@@ -44,7 +44,7 @@
 @media (--isTablet) {
     .statsRow {
         display: grid;
-        grid-template-columns: repeat(1fr, 1fr); /* DUAS colunas */
+        grid-template-columns: repeat(1, 1fr); /* DUAS colunas */
         gap: 20px;
         width: 100%;
     }
@@ -69,14 +69,20 @@
     gap: 12px;
 }
 
+@media (--isLowDesktop) {
+    .statsAndTipGrid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        width: auto;
+        max-width: 100%;
+    }
+}
+
 @media (--isTablet) {
     .statsAndTipGrid {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
     }
 
-    .tips {
-        flex-direction: row;
-    }
 }
 
 @media (--isMobile) {

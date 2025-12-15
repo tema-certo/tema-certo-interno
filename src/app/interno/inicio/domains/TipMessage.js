@@ -99,7 +99,6 @@ export default function TipMessage() {
                 title={'💡 Dica'}
                 html={<Text text={getRandomMessage().value} as='p' size='2' color='gray' />}
                 minW={'40px'}
-                maxW={'460px'}
                 aligntitle={'left'}
                 ownVariant={'tip'}
                 titleSize={'5'}

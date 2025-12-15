@@ -100,6 +100,14 @@
     box-shadow: 0 0 0 0 transparent !important;
 }
 
+.cardRanking {
+    background: var(--orange-a2);
+    border: 1px solid var(--yellow-a5);
+
+    --card-border-width: 0 !important;
+    box-shadow: 0 0 0 0 transparent !important;
+}
+
 .cardTipBox {
     box-shadow: none !important;
 }

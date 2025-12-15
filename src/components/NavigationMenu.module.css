@@ -93,6 +93,10 @@
     cursor: pointer;
 }
 
+.logoContainerMobile {
+    margin-bottom: 24px;
+}
+
 .userContainer {
     display: flex;
     align-content: center;
@@ -138,4 +142,72 @@
 .rankingBadge {
     position: absolute;
     right: 140%;
+}
+
+.menuMobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 85%;
+    max-width: 340px;
+    height: 100vh;
+
+    background: var(--color-white);
+    z-index: 1001;
+
+    padding: 24px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+
+    transform: translateX(-100%);
+    animation: slideIn 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes slideIn {
+    to {
+        transform: translateX(0);
+    }
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+}
+
+@media (--isTablet) {
+    .menuList {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 32px;
+    }
+
+    .menuList > li {
+        list-style: none;
+    }
+
+    .menuList button {
+        justify-content: flex-start !important;
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 15px;
+        border-radius: 12px;
+    }
+
+    .userScore {
+        position: relative;
+        right: 0;
+    }
+
+    .rankingBadge {
+        position: relative;
+        right: 0;
+    }
 }

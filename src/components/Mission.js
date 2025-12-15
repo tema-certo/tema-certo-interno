@@ -58,6 +58,7 @@ export default function Mission({
 
     let isCompleted = false;
     let valueDone = countCurrent;
+    let textValuePossibility = 0;
 
     if (strategy === 'sum' && (countCurrent >= countTarget)) {
         isCompleted = true;
@@ -66,6 +67,7 @@ export default function Mission({
     if (strategy === 'comparable' && (countCurrent >= countTarget)) {
         valueDone = countTarget;
         isCompleted = true;
+        textValuePossibility = times;
     }
 
     return (
@@ -102,7 +104,7 @@ export default function Mission({
                 />
             </div>
             <Text
-                text={`${countCurrent}/${times || countTarget} ${targetFinal?.text || ''}`}
+                text={`${textValuePossibility || valueDone}/${times || countTarget} ${targetFinal?.text || ''}`}
                 as={'p'}
                 bold
                 size={'2'}

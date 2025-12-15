@@ -125,7 +125,6 @@ export default function Page() {
                     title={title || 'Entrar'}
                     html={<LocationHandler setTitle={setTitle} />}
                     minW={'20px'}
-                    maxW={'460px'}
                     aligntitle={'center'}
                     basecontent={modalFinalSeparator()}
                 />

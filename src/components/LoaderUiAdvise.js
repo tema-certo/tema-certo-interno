@@ -24,6 +24,7 @@ export function LoadUiAdvise() {
                     color="gray"
                     className={styles.textMessage}
                 />
+                <Loader2Icon className="size-8 animate-spin blue" />
             </div>
         </main>
     );

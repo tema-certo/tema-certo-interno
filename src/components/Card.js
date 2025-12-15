@@ -33,9 +33,11 @@ export default function Card({
     const classNameSetter = useClassNames(setExtraClass(styles.card, [
         className,
         ownVariant === 'tip' && styles.cardTip,
+        ownVariant === 'ranking' && styles.cardRanking,
     ]));
     const ownVariance = useClassNames(setExtraClass(styles.cardContainer, [
         ownVariant === 'tip' && styles.cardTipBox,
+        ownVariant === 'ranking' && styles.cardTipBox,
     ]));
 
     return (

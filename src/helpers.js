@@ -209,3 +209,29 @@ export const formatThemeTitle = (themeTitle) => {
         .join('-')
         .toLowerCase();
 };
+
+export function SplitLargeText(text, limitSize) {
+    return text.length > limitSize ? `${text.slice(0, limitSize)}...` : text;
+}
+
+export function BadgeColorStyle (score) {
+    const itemScore = score;
+
+    if (itemScore <= 250) {
+        return 'red';
+    }
+
+    if (itemScore <= 550) {
+        return 'yellow';
+    }
+
+    if (itemScore <= 650) {
+        return 'purple';
+    }
+
+    if (itemScore <= 800) {
+        return 'blue';
+    }
+
+    return 'green';
+};

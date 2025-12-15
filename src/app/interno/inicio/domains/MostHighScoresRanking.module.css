@@ -1,0 +1,39 @@
+.nameAndIcon {
+    display: flex;
+    width: 100%;
+    gap: 4px;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+}
+
+.rankingItem {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    padding: 8px 0;
+}
+
+.seeAll {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.btnSeeAll {
+    cursor: pointer;
+}
+
+.separator {
+    opacity: 0.6;
+    width: 100%;
+    margin-top: 12px !important;
+}
+
+.rankingItemSelectors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

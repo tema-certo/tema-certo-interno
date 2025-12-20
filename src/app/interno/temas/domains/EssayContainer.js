@@ -11,24 +11,83 @@ import Text from '@/components/Text';
 import { getEssayProps } from '@/helpers';
 import useSelector from '@/hooks/useEssaySelector';
 import { BoxIcon, ClockIcon, FileTextIcon, Pencil1Icon, Pencil2Icon } from '@radix-ui/react-icons';
+import { orderBy } from 'lodash/collection';
+import { BuildingIcon } from 'lucide-react';
 
 import styles from './EssayContainer.module.css';
 
 export default function EssayContainer({
     essays,
+    filters,
 }) {
     const { onSelect, clearSelect, value: selectedEssay  } = useSelector();
 
-    const { difficultyData, definedTime } = getEssayProps(
+    const { difficultyData } = getEssayProps(
         selectedEssay?.category,
         selectedEssay?.difficulty,
-        selectedEssay?.definedTime,
     );
 
+    const filteredList = useMemo(() => {
+        let list = [...essays];
+
+        if (filters?.category) {
+            list = list.filter(
+                item => item?.classification?.category?.name === filters.category,
+            );
+        }
+
+        if (filters?.difficulty) {
+            list = list.filter(
+                item => item?.classification?.difficulty_level?.level === filters.difficulty,
+            );
+        }
+
+        const difficultyOrder = {
+            Easy: 1,
+            Medium: 2,
+            Hard: 3,
+        };
+
+        if (filters?.orderBy) {
+            switch (filters.orderBy) {
+            case 'popular':
+                list = orderBy(
+                    list,
+                    item => item?.total,
+                    'desc',
+                );
+                break;
+
+            case 'difficult':
+                list = orderBy(
+                    list,
+                    item => difficultyOrder[item?.classification?.difficulty_level?.level] ?? 0,
+                    'desc',
+                );
+                break;
+
+            case 'recent':
+                list.sort(
+                    (a, b) =>
+                        new Date(b?.theme?.created_at).getTime() -
+                            new Date(a?.theme?.created_at).getTime(),
+                );
+                break;
+
+            default:
+                break;
+            }
+        }
+
+        return list;
+    }, [essays, filters]);
+
     const ListItems = useMemo(() => {
-        return ['Contador de palavras em tempo real',
+        return [
+            'Contador de palavras em tempo real',
             'Dicas de estrutura e argumentação',
-            'Correção automática com IA ao finalizar'];
+            'Correção automática com IA ao finalizar',
+        ];
     }, []);
 
 
@@ -61,11 +120,11 @@ export default function EssayContainer({
                         >
                             <Text
                                 as="div"
-                                icon={<ClockIcon width={13} height={13} />}
+                                icon={<BuildingIcon width={13} height={13} />}
                                 color={'gray'}
                                 type="1"
-                                gapSize={1}
-                                text={`${definedTime} min.`|| 'Indefinido'}
+                                gapSize={'1'}
+                                text={selectedEssay?.pedagogicalOrigin}
                             />
                         </Badge>
                         <Badge
@@ -89,22 +148,23 @@ export default function EssayContainer({
                 />
             </div>
         );
-    }, [ListItems, clearSelect, definedTime, difficultyData?.textConversion, onClick, selectedEssay]);
+    }, [ListItems, clearSelect, difficultyData?.textConversion, onClick, selectedEssay]);
 
     return (
         <div className={styles.containerEssays}>
             <div className={styles.containerEssaysCards}>
-                {essays.map((item) => (
+                {filteredList.map((item) => (
                     <EssaySelectorCard
                         idEssay={item?.theme?.id}
                         title={item?.theme?.theme_title}
                         description={item?.theme?.theme_description}
-                        definedTime={item?.theme?.defined_time}
-                        essayFinishedCounter={item?.theme?.essay_finished_counter}
+                        pedagogicalOrigin={item?.classification?.pedagogical_origin?.institution_name}
+                        essayFinishedCounter={item?.total}
                         difficulty={item?.classification?.difficulty_level?.level}
                         category={item?.classification?.category?.name}
                         imageEndpoint={item?.theme?.image_endpoint}
                         onSelect={onSelect}
+                        filters={filters}
                     />
                 ))}
             </div>

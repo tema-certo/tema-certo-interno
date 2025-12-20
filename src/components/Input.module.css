@@ -46,3 +46,7 @@
     font-weight: 500;
     margin-top: 4px;
 }
+
+.shadow {
+    box-shadow: var(--general-shadow) !important;
+}

@@ -1,0 +1,144 @@
+.containerFilters {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+}
+
+.containerFiltersContent {
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--color-gray-300);
+    padding-bottom: 32px;
+}
+
+.containerBadges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.defaultFilters {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    width: -webkit-fill-available;
+    height: auto;
+}
+
+.toggleContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.buttonBadge {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    transition:
+            background-color 200ms ease,
+            color 200ms ease,
+            border-color 200ms ease,
+            transform 150ms ease,
+            box-shadow 150ms ease;
+}
+
+
+.buttonBadge:active {
+    transform: scale(0.96);
+}
+
+.selected {
+    transform: scale(0.98);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.35);
+}
+
+.defaultButtonBadge {
+    box-shadow: var(--drop-shadow-xs);
+    border: 1px solid var(--color-gray-300);
+
+
+    &:hover {
+            background: var(--color-gray-100);
+
+        .buttonBadge {
+            transform: translateY(-1px);
+        }
+    }
+}
+
+.rapidFilters {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.searchInput {
+    flex: 1 1 auto;
+    min-width: 270px;
+    height: 48px;
+}
+
+.searchRow {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & > div {
+        flex: 1 1 !important;
+    }
+}
+
+.filterOptions {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.filterBtn {
+    font-size: 14px;
+    color: var(--color-gray-900);
+}
+
+.extraFilters {
+    opacity: 0;
+    margin-top: 24px;
+
+    animation: fadeInDown 400ms ease forwards;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cardFilters {
+    min-width: 0;
+}
+
+.filtersSelectors {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 12px;
+}

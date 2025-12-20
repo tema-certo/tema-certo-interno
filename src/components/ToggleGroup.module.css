@@ -1,0 +1,52 @@
+.toggleRoot {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.toggleItem {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+
+    background: var(--color-gray-100);
+    color: var(--color-gray-800);
+    font-weight: 500;
+    border: 1px solid var(--color-gray-300);
+    transition: all 150ms ease;
+}
+
+.toggleItem:hover {
+    background: var(--color-gray-200);
+}
+
+.toggleItem[data-state="on"] {
+    background: var(--color-blue-600);
+    color: white;
+    border-color: var(--color-blue-500);
+}
+
+.toggleItem[data-state="off"] {
+    background: var(--color-white);
+    color: var(--color-gray-800);
+
+    &:hover {
+        background: var(--color-gray-200);
+    }
+}
+
+.toggleItem[position="center"] {
+    border-radius: 0;
+}
+
+.toggleItem[position="left"] {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.toggleItem[position="right"] {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}

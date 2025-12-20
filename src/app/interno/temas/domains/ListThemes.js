@@ -1,5 +1,6 @@
-import { useMemo, useEffect, useRef, useCallback } from 'react';
+import { useMemo, useEffect, useRef, useCallback, useState } from 'react';
 
+import Filters from '@/app/interno/temas/domains/Filters';
 import EssaySelectorCard from '@/components/EssaySelectorCard';
 import { envs } from '@/envs';
 import useApi from '@/hooks/useApi';
@@ -11,7 +12,7 @@ import EssayContainer from './EssayContainer';
 import styles from './ListThemes.module.css';
 
 
-const REQUEST_LIMIT_INITIAL = 16;
+const REQUEST_LIMIT_INITIAL = 8;
 const REQUEST_LIMIT_ADD = 8;
 const REQUEST_PAGE_INITIAL = 1;
 
@@ -19,6 +20,9 @@ export default function ListThemes() {
     const api = useApi({ url: envs.API_URL });
     const observerTarget = useRef(null);
     const { isLowerMobile, isMobile, isTablet } = useSize();
+
+    // Filtros
+    const [filters, changeFilters] = useState({});
 
     const {
         data,
@@ -38,6 +42,7 @@ export default function ListThemes() {
             );
 
             return {
+                allData: res.data,
                 data: res.data.data || res.data,
                 page: pageParam,
                 hasMore: res.data.hasMore ?? (res.data.data?.length >= limit),
@@ -54,8 +59,10 @@ export default function ListThemes() {
     );
 
     const essays = useMemo(() => {
-        return data?.pages.flatMap(page => page.data) ?? [];
-    }, [data]);
+        return data?.pages.flatMap(page => {
+            return page.data;
+        }) ?? [];
+    }, [data?.pages]);
 
     const handleObserver = useCallback((entries) => {
         const [target] = entries;
@@ -101,7 +108,16 @@ export default function ListThemes() {
 
     return (
         <div className={styles.container}>
-            <EssayContainer essays={essays} />
+            <Filters
+                data={essays}
+                filters={filters}
+                changeFilters={changeFilters}
+            />
+
+            <EssayContainer
+                essays={essays}
+                filters={filters}
+            />
 
             {!essays.length && (
                 <div className={styles.containerSkeleton}>

@@ -26,6 +26,7 @@ export default function Card({
     ownVariant,
     icon,
     iconLocation,
+    noBorder,
     ...props
 }) {
     const variantFilter = variant || 'surface';
@@ -34,6 +35,7 @@ export default function Card({
         className,
         ownVariant === 'tip' && styles.cardTip,
         ownVariant === 'ranking' && styles.cardRanking,
+        !noBorder && styles.border,
     ]));
     const ownVariance = useClassNames(setExtraClass(styles.cardContainer, [
         ownVariant === 'tip' && styles.cardTipBox,
@@ -109,6 +111,7 @@ Card.WithIcon = function CardWithIcon({
                         <Text
                             text={subText}
                             size={'1'}
+                            as={'span'}
                             color={'gray'}
                         />
                     )}
@@ -117,6 +120,7 @@ Card.WithIcon = function CardWithIcon({
                             text={value.toString()}
                             size={'7'}
                             color={'gray'}
+                            as={'h1'}
                             className={styles.valueStyle}
                         />
                     )}

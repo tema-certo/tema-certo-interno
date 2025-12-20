@@ -2,8 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import { InputPassword } from '@/components/InputPassword';
 import { envs } from '@/envs';
-import { dismissLoadingToast, InputPassword, setTokenCookieSec } from '@/helpers';
+import { dismissLoadingToast, setTokenCookieSec } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
 import useStore, { setUserLoginData } from '@/hooks/useStore';

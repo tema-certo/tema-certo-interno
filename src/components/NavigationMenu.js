@@ -6,6 +6,7 @@ import Badge from '@/components/Badge';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import Text from '@/components/Text';
+import Tooltip from '@/components/Tooltip';
 import { AvgRanking, setExtraClass } from '@/helpers';
 import useClassnames from '@/hooks/useClassnames';
 import useScroll from '@/hooks/useScroll';
@@ -152,13 +153,17 @@ export default function NavigationMenu() {
                                     <Text text={metrics?.sequence || 0} size={'1'} />
                                 </div>
                                 <div className={styles.rankingBadge}>
-                                    <Badge
-                                        text={FindUserRanking()?.label}
-                                        icon={<StarIcon />}
-                                        radius={'full'}
-                                        color={FindUserRanking()?.color}
-                                        variant={'surface'}
-                                    />
+                                    <Tooltip
+                                        children={'Ranking'}
+                                        icon={<Badge
+                                            text={FindUserRanking()?.label}
+                                            icon={<StarIcon />}
+                                            radius={'full'}
+                                            color={FindUserRanking()?.color}
+                                            variant={'surface'}
+                                        />}>
+                                        {'O seu ranking depende da sua média de pontos.'}
+                                    </Tooltip>
                                 </div>
                             </div>
 
@@ -200,13 +205,17 @@ export default function NavigationMenu() {
                         />
                     </div>
                     <div className={styles.rankingBadge}>
-                        <Badge
-                            text={FindUserRanking()?.label}
-                            icon={<StarIcon/>}
-                            radius={'full'}
-                            color={FindUserRanking()?.color}
-                            variant={'surface'}
-                        />
+                        <Tooltip
+                            children={'Ranking'}
+                            icon={<Badge
+                                text={FindUserRanking()?.label}
+                                icon={<StarIcon />}
+                                radius={'full'}
+                                color={FindUserRanking()?.color}
+                                variant={'surface'}
+                            />}>
+                            {'O seu ranking depende da sua média de pontos.'}
+                        </Tooltip>
                     </div>
                     <Avatar
                         radius={'full'}

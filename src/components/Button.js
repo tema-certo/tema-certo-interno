@@ -89,7 +89,7 @@ Button.Card = function GlobalizedIcon({
 };
 
 Button.propTypes = {
-    text: PropTypes.string.isRequired,
+    text: PropTypes.string,
     variant: PropTypes.oneOf['classic', 'solid', 'soft', 'surface', 'outline', 'ghost'],
     size: PropTypes.oneOf['1', '2', '3', '4'],
     color: PropTypes.oneOf['blue'],

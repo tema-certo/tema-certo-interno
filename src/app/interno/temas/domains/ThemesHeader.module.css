@@ -1,10 +1,57 @@
+@import "../../../medias.css";
+
 .titleColorChange {
     color: var(--color-blue-600);
 }
 
 .containerHeader {
-    width: 100%;
+    max-width: 700px;
     display: flex;
     flex-direction: column;
+    gap: 16px;
+}
+
+.containerHeaderTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.containerCards {
+    display: flex;
     gap: 12px;
+
+    & > span {
+        color: #fff ;
+    }
+}
+
+@media (--isLowDesktop) {
+    .containerHeaderTop {
+        flex-direction: column;
+    }
+
+    .containerHeader {
+        max-width: 100%;
+    }
+}
+
+@media (--isTablet) {
+    .containerCards {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+.containerImage {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
 }

@@ -10,6 +10,7 @@ import useApi from '@/hooks/useApi';
 import useSize from '@/hooks/useSize';
 import { ChevronRightIcon, ClockIcon, FileTextIcon } from '@radix-ui/react-icons';
 import { Box, Card, Inset, Separator, Flex } from '@radix-ui/themes';
+import { BuildingIcon } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 
@@ -19,12 +20,13 @@ export default function EssaySelectorCard({
     idEssay,
     title,
     description,
-    definedTime,
+    pedagogicalOrigin,
     essayFinishedCounter,
     category,
     difficulty,
     imageEndpoint,
     onSelect,
+    filters,
 }) {
     const api = useApi({ url: envs.APP_CDN, denyToken: true });
     const { isMobile, isTablet, isLowerMobile } = useSize();
@@ -35,7 +37,7 @@ export default function EssaySelectorCard({
         description,
         category,
         difficulty,
-        definedTime,
+        pedagogicalOrigin,
     };
 
     const { data: img } = useQuery({
@@ -57,7 +59,7 @@ export default function EssaySelectorCard({
         retry: false,
     });
 
-    const { difficultyData, categoryData } = getEssayProps(category, difficulty, definedTime);
+    const { difficultyData, categoryData } = getEssayProps(category, difficulty);
 
     const selectEssay = useCallback((data) => {
         return () => onSelect(data);
@@ -93,9 +95,16 @@ export default function EssaySelectorCard({
         return null;
     }, [imageEndpoint, img]);
 
+    const isList = filters?.visualization === 'list';
+
     return (
-        <Box minWidth={minW} maxWidth="310px">
-            <Card className={styles.card} variant={'ghost'} onClick={selectEssay(parsedEssayData)}>
+        <Box minWidth={isList ? '100%' : minW} className={styles.cardEffect}>
+            <Card
+                className={styles.card}
+                list={isList ? 'true' : null}
+                variant={'ghost'}
+                onClick={selectEssay(parsedEssayData)}
+            >
                 {renderImage()}
                 <div className={styles.content}>
                     <div className={styles.badgeContainer}>
@@ -136,11 +145,11 @@ export default function EssaySelectorCard({
                         <Flex gap="2">
                             <Text
                                 as="div"
-                                icon={<ClockIcon width={13} height={13} />}
+                                icon={<BuildingIcon width={13} height={13} />}
                                 color={'gray'}
                                 type="1"
                                 gapSize={1}
-                                text={`${definedTime || 0} min.`|| 'Tempo indefinido'}
+                                text={`${pedagogicalOrigin || 'Geral'}`}
                             />
                             <Text
                                 as="div"
@@ -172,7 +181,7 @@ export default function EssaySelectorCard({
 EssaySelectorCard.PropTypes = {
     essayTitle: PropTypes.string,
     description: PropTypes.string,
-    definedTime: PropTypes.number,
+    pedagogicalOrigin: PropTypes.number,
     essayFinishedCounter: PropTypes.number,
     category: PropTypes.string,
     difficulty: PropTypes.string,

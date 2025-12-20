@@ -5,6 +5,7 @@ import Badge from '@/components/Badge';
 import Card from '@/components/Card';
 import Container from '@/components/Container';
 import Text from '@/components/Text';
+import Tooltip from '@/components/Tooltip';
 import { envs } from '@/envs';
 import { AvgRanking } from '@/helpers';
 import useApi from '@/hooks/useApi';
@@ -72,13 +73,18 @@ export default function WelcomeUser(callback, deps) {
                     size={'9'}
 		       />
                 <div className={styles.containerBadge}>
-                    <Badge
-                        text={FindUserRanking()?.label}
-                        icon={<StarIcon/>}
-                        radius={'full'}
-                        color={FindUserRanking()?.color}
-                        variant={'surface'}
-                    />
+                    <Tooltip
+                        children={'Ranking'}
+                        sideOffset={-500}
+                        icon={<Badge
+                            text={FindUserRanking()?.label}
+                            icon={<StarIcon />}
+                            radius={'full'}
+                            color={FindUserRanking()?.color}
+                            variant={'surface'}
+                        />}>
+                        {'O seu ranking depende da sua média de pontos.'}
+                    </Tooltip>
                     <Text
                         text={`Membro desde ${UserMemberSince()}` }
                         size={'2'}

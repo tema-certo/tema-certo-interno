@@ -142,6 +142,7 @@
 .rankingBadge {
     position: absolute;
     right: 140%;
+    display: flex;
 }
 
 .menuMobile {
@@ -181,7 +182,7 @@
     z-index: 1000;
 }
 
-@media (--isTablet) {
+@media (max-width: 900px) {
     .menuList {
         display: flex;
         flex-direction: column;

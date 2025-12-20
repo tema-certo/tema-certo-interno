@@ -4,4 +4,5 @@ export default {
     'color-gray-common': '#555',
     'color-title-blue': '#0b64f4',
     'color-gold-winner': '#D7A63E',
+    'color-black-default': '#171717',
 };

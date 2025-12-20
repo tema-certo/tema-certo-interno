@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useState } from 'react';
 
 import { setExtraClass, setIconLocation } from '@/helpers';
@@ -24,11 +26,13 @@ export default function Input({
     extraIcon,
     onClickExtra,
     error,
+    shadow,
     ...props
 }) {
     const classNames = useClassNames(setExtraClass('inputDefault',
         [
             error && styles.error,
+            shadow && styles.shadow,
         ],
     ));
 

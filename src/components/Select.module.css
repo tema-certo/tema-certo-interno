@@ -42,6 +42,7 @@
     transition: 0.3s all;
     border-radius: 12px;
     display: block;
+    max-height: 360px;
 }
 
 .select {

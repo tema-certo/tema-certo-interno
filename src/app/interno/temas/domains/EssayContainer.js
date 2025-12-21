@@ -42,26 +42,12 @@ export default function EssayContainer({
             );
         }
 
-        const difficultyOrder = {
-            Easy: 1,
-            Medium: 2,
-            Hard: 3,
-        };
-
         if (filters?.orderBy) {
             switch (filters.orderBy) {
             case 'popular':
                 list = orderBy(
                     list,
                     item => item?.total,
-                    'desc',
-                );
-                break;
-
-            case 'difficult':
-                list = orderBy(
-                    list,
-                    item => difficultyOrder[item?.classification?.difficulty_level?.level] ?? 0,
                     'desc',
                 );
                 break;
@@ -73,7 +59,6 @@ export default function EssayContainer({
                             new Date(a?.theme?.created_at).getTime(),
                 );
                 break;
-
             default:
                 break;
             }
@@ -153,6 +138,15 @@ export default function EssayContainer({
     return (
         <div className={styles.containerEssays}>
             <div className={styles.containerEssaysCards}>
+                {filteredList.length <= 0 && (
+                    <div className={styles.containerNoEssay}>
+                        <Text
+                            text={'Nenhum tema encontrado para o filtro específico. Tente alterar os filtros.'}
+                            size={'3'}
+                            color={'gray'}
+                        />
+                    </div>
+                )}
                 {filteredList.map((item) => (
                     <EssaySelectorCard
                         idEssay={item?.theme?.id}

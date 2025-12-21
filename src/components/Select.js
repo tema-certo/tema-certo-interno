@@ -48,7 +48,7 @@ export default function Select({
                     <SelectGroup>
                         <SelectLabel>{label}</SelectLabel>
                         {options.map((item) => (
-                            <SelectItem key={item.value} value={item.value} className={styles.item}>
+                            <SelectItem z key={item.value} value={item.value} className={styles.item}>
                                 {setIconLocation(item?.position, item?.icon, item.label, item?.gapSize)}
                             </SelectItem>
                         ))}

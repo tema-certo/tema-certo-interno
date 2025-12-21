@@ -1,4 +1,5 @@
 import { EyeClosedIcon, EyeOpenIcon, LockClosedIcon } from '@radix-ui/react-icons';
+import Needle from '@waxs/needle';
 import { toast } from 'sonner';
 
 const badgeDifficultyColorDefiner = [
@@ -186,3 +187,7 @@ export function BadgeColorStyle (score) {
 
     return 'green';
 };
+
+export function startFilterArray(data) {
+    return new Needle(data);
+}

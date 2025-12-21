@@ -10,14 +10,17 @@ import Input from '@/components/Input';
 import Select from '@/components/Select';
 import Text from '@/components/Text';
 import ToggleGroup from '@/components/ToggleGroup';
-import { badgeCategoryColorDefiner } from '@/helpers';
+import { envs } from '@/envs';
+import { badgeCategoryColorDefiner, startFilterArray } from '@/helpers';
+import useApi from '@/hooks/useApi';
 import useSize from '@/hooks/useSize';
-import { ClockIcon, MagnifyingGlassIcon, StarFilledIcon } from '@radix-ui/react-icons';
+import { ClockIcon, MagnifyingGlassIcon, PlusCircledIcon, StarFilledIcon } from '@radix-ui/react-icons';
 import { Skeleton } from '@radix-ui/themes';
+import { Separator } from '@radix-ui/themes/dist/esm';
 import lodash from 'lodash';
 import {
     BlocksIcon, Building,
-    Calendar1Icon, FilterXIcon,
+    Calendar1Icon, Circle, FilterXIcon,
     GridIcon,
     HardDriveIcon,
     HardHatIcon,
@@ -25,6 +28,7 @@ import {
     StarsIcon,
     TrendingUp,
 } from 'lucide-react';
+import { useQuery } from 'react-query';
 
 import styles from './Filters.module.css';
 
@@ -35,28 +39,10 @@ export default function Filters({
     changeFilters,
 }) {
     const { isLowerMobile } = useSize();
+    const api = useApi({ url: envs.API_URL });
+
     const [rapidFilters, setCloseRapidFilters] = useState(true);
     const [showFilters, setShowFilters] = useState(false);
-
-    const rapidFiltersPossibilites = useMemo(() => {
-        const date = new Date();
-
-        return [
-            {
-                label: 'Fácil',
-                value: 'easy',
-            },
-            {
-                label: 'ENEM',
-                value: 'enem',
-            },
-            {
-                label: date.getFullYear(),
-                value: date.getFullYear(),
-                changeDate: true,
-            },
-        ];
-    }, []);
 
     const orderByOptions = useMemo(() => {
         return [
@@ -70,49 +56,100 @@ export default function Filters({
                 value: 'popular',
                 icon: <TrendingUp />,
             },
+        ];
+    }, []);
+
+    const optionsDifficulty = useMemo(() => {
+        return [
             {
-                label: 'Mais difíceis',
-                value: 'difficult',
-                icon: <HardHatIcon />,
+                label: 'Fácil',
+                value: 'Easy',
+            },
+            {
+                label: 'Médio',
+                value: 'Medium',
+            },
+            {
+                label: 'Difícil',
+                value: 'Hard',
             },
         ];
     }, []);
 
-    const changeCategory = useCallback((category) => {
-        return () => {
-            changeFilters({
-                ...filters,
-                category,
-            });
-        };
-    }, [changeFilters, filters]);
+    const optionsYears = useMemo(() => {
+        const currentYear = new Date().getFullYear();
+        const startYear = 2000;
 
-    const changeOtherFilters = useCallback((filter, close) => {
-        return () => {
-            if (close) {
-                setCloseRapidFilters(false);
-            }
+        return Array.from(
+            { length: currentYear - startYear + 1 },
+            (_, index) => {
+                const year = currentYear - index;
 
-            changeFilters({
-                ...filters,
-                [filter]: !filters[filter],
-            });
-        };
-    }, [changeFilters, filters]);
+                return {
+                    label: year.toString(),
+                    value: year.toString(),
+                };
+            },
+        );
+    }, []);
 
-    const changeVisualization = useCallback((visualization) => {
-        changeFilters({
+    const {
+        data: classificationPossibilities,
+        isLoading,
+    } = useQuery({
+        queryKey: ['classificationPossibilities'],
+        queryFn: async () => {
+            const { data } = await api.get('/classification-possibilities');
+            return data;
+        },
+        enabled: true,
+        staleTime: Infinity,
+    });
+
+    const optionsInstitutions = useMemo(() => {
+        if (!classificationPossibilities) return [];
+
+        return classificationPossibilities.map(item => ({
+            label: item.label,
+            value: item.institution_name,
+        }));
+    }, [classificationPossibilities]);
+
+    const changeFilterCommon = useCallback((filter, value) => {
+        if (filters[filter] === value) return null;
+
+        return changeFilters({
             ...filters,
-            visualization,
-        });
-    }, [filters, changeFilters]);
-
-    const changeOrderBy = useCallback((newOrder) => {
-        changeFilters({
-            ...filters,
-            orderBy: newOrder,
+            [filter]: value,
         });
     }, [changeFilters, filters]);
+
+    const clearAllFilters = useCallback(() => {
+        return changeFilters({});
+    }, [changeFilters]);
+
+    const rapidFiltersPossibilites = useMemo(() => {
+        const date = new Date();
+
+        return [
+            {
+                label: 'Fácil',
+                value: 'easy',
+                handleClick: () => changeFilterCommon('difficulty', 'Easy'),
+            },
+            {
+                label: 'ENEM',
+                value: 'enem',
+                handleClick: () => changeFilterCommon('institution', 'ENEM'),
+            },
+            {
+                label: date.getFullYear(),
+                value: date.getFullYear(),
+                changeDate: true,
+                handleClick: () => changeFilterCommon('year', date.getFullYear().toString()),
+            },
+        ];
+    }, [changeFilterCommon]);
 
     const handleShowFilters = useCallback((value) => {
         return () => setShowFilters(!value);
@@ -131,7 +168,8 @@ export default function Filters({
                     color={isAllSelected ? 'blue' : 'gray'}
                     radius="full"
                     size="3"
-                    onClick={changeCategory(undefined)}
+                    /* eslint-disable-next-line react/jsx-no-bind */
+                    onClick={() => changeFilterCommon('category', null)}
                     classnames={isAllSelected ? styles.selected : styles.defaultButtonBadge}
                 >
                     <div className={styles.buttonBadge}>
@@ -147,9 +185,11 @@ export default function Filters({
                     const categoryName = item?.classification?.category?.name;
                     if (!categoryName) return null;
 
-                    const nameConverted = badgeCategoryColorDefiner.find(
-                        itemExtra => itemExtra.identifier === categoryName,
-                    );
+                    const nameConvertedArr = startFilterArray(badgeCategoryColorDefiner)
+                        .where('identifier', '=', categoryName)
+                        .take();
+
+                    const nameConverted = nameConvertedArr[0];
 
                     const isSelected = filters?.category === categoryName;
 
@@ -160,7 +200,8 @@ export default function Filters({
                             color={isSelected ? 'blue' : 'gray'}
                             radius="full"
                             size="3"
-                            onClick={changeCategory(categoryName)}
+                            /* eslint-disable-next-line react/jsx-no-bind */
+                            onClick={() => changeFilterCommon('category', categoryName)}
                             classnames={isSelected ? styles.selected : styles.defaultButtonBadge}
                         >
                             <div className={styles.buttonBadge}>
@@ -176,7 +217,7 @@ export default function Filters({
                 })}
             </>
         );
-    }, [data, filters?.category, changeCategory]);
+    }, [data, filters?.category, changeFilterCommon]);
 
     const RapidFilters = useCallback(() => {
         return rapidFiltersPossibilites.map(item => {
@@ -187,8 +228,8 @@ export default function Filters({
                     color={'gray'}
                     radius="full"
                     size="2"
-                    onClick={changeOtherFilters(item?.value, true)}
                     classnames={styles.defaultButtonBadge}
+                    onClick={item?.handleClick}
                 >
                     <div className={styles.buttonBadge}>
                         <Text
@@ -201,7 +242,7 @@ export default function Filters({
                 </Button>
             );
         });
-    }, [changeOtherFilters, rapidFiltersPossibilites]);
+    }, [rapidFiltersPossibilites]);
 
     const ToggleVisualization = useCallback(() => {
         return (
@@ -213,7 +254,8 @@ export default function Filters({
                 /* eslint-disable-next-line react/jsx-no-bind */
                 onValueChange={(value) => {
                     if (!value) return null;
-                    changeVisualization(value);
+
+                    changeFilterCommon('visualization', value);
                 }}
             >
                 <ToggleGroup.Item
@@ -230,7 +272,7 @@ export default function Filters({
                 </ToggleGroup.Item>
             </ToggleGroup>
         );
-    }, [changeVisualization, filters?.visualization]);
+    }, [changeFilterCommon, filters?.visualization]);
 
     const FilterOptions = useCallback(() => {
         return (
@@ -238,47 +280,162 @@ export default function Filters({
                 <div className={styles.filtersSelectors}>
                     <Select
                         label={'Selecione um ano'}
-                        options={orderByOptions}
+                        options={optionsYears}
                         position={'left'}
                         /* eslint-disable-next-line react/jsx-no-bind */
                         onValueChange={(value) => {
                             if (!value) return null;
 
-                            changeOrderBy(value);
+                            changeFilterCommon('year', value);
                         }}
+                        value={filters?.year}
                         labelIcon={<Calendar1Icon width={16} height={16} color={colors['color-black-default']}/>}
                         uiLabel={'Ano'}
                     />
                     <Select
                         label={'Selecione uma instituição'}
-                        options={orderByOptions}
+                        options={optionsInstitutions}
                         position={'left'}
+                        value={filters?.institution}
+                        loading={isLoading}
                         /* eslint-disable-next-line react/jsx-no-bind */
                         onValueChange={(value) => {
                             if (!value) return null;
 
-                            changeOrderBy(value);
+                            changeFilterCommon('institution', value);
                         }}
                         labelIcon={<Building width={16} height={16} color={colors['color-black-default']}/>}
-                        uiLabel={'Ano'}
+                        uiLabel={'Instituição'}
                     />
                     <Select
                         label={'Selecione uma dificuldade'}
-                        options={orderByOptions}
+                        options={optionsDifficulty}
+                        value={filters?.difficulty}
                         position={'left'}
                         /* eslint-disable-next-line react/jsx-no-bind */
                         onValueChange={(value) => {
                             if (!value) return null;
 
-                            changeOrderBy(value);
+                            changeFilterCommon('difficulty', value);
                         }}
                         labelIcon={<HardHatIcon width={16} height={16} color={colors['color-black-default']}/>}
-                        uiLabel={'Ano'}
+                        uiLabel={'Dificuldade'}
                     />
+                    <Separator my="3" size="4" />
+                    <div className={styles.legendDifficulty}>
+                        <Text
+                            text={'Legenda de dificuldade:'}
+                            color={'gray'}
+                            size={'2'}
+                        />
+                        <Text
+                            text={'Fácil'}
+                            icon={<Circle
+                                fill={colors['color-green-default']}
+                                color={colors['color-green-default']}
+                                width={12}
+                                size={'2'}
+                                height={12}/>}
+                        />
+                        <Text
+                            text={'Médio'}
+                            icon={<Circle
+                                fill={colors['color-yellow-default']}
+                                color={colors['color-yellow-default']}
+                                width={12}
+                                size={'2'}
+                                height={12}/>}
+                        />
+                        <Text
+                            text={'Difícil'}
+                            icon={<Circle
+                                fill={colors['color-red-default']}
+                                color={colors['color-red-default']}
+                                width={12}
+                                size={'2'}
+                                height={12}/>}
+                        />
+                    </div>
                 </div>
             </div>
         );
-    }, [changeOrderBy, orderByOptions]);
+    }, [optionsYears, filters?.year, filters?.institution, filters?.difficulty,
+        optionsInstitutions, isLoading, optionsDifficulty, changeFilterCommon]);
+
+    const filtersOptionsMap = useMemo(() => ({
+        difficulty: optionsDifficulty,
+        year: optionsYears,
+        institution: optionsInstitutions,
+        orderBy: orderByOptions,
+        visualization: [
+            { label: 'Grid', value: 'grid' },
+            { label: 'Lista', value: 'list' },
+        ],
+        category: data?.map(item => ({
+            label: badgeCategoryColorDefiner.find(i => i.identifier === item?.classification?.category?.name)?.textConversion,
+            value: item?.classification?.category?.name,
+        })) ?? [],
+    }), [
+        optionsDifficulty,
+        optionsYears,
+        optionsInstitutions,
+        orderByOptions,
+        data,
+    ]);
+    const activeFiltersWithLabel = useMemo(() => {
+        if (!filters) return [];
+
+        return Object.entries(filters)
+            .filter(([, value]) => value !== null && value !== undefined)
+            .map(([key, value]) => {
+                const options = filtersOptionsMap[key];
+                if (!options) return null;
+
+                const found = options.find(opt => opt.value === value);
+
+                return found
+                    ? {
+                        key,
+                        label: found.label,
+                        value: found.value,
+                    }
+                    : null;
+            })
+            .filter(Boolean);
+    }, [filters, filtersOptionsMap]);
+
+    const ActiveFilters = useCallback(() => {
+        return (
+            <div className={styles.activeFiltersWithBtn}>
+                <div className={styles.selectedFilters}>
+                    <Text
+                        text={'Filtros: '}
+                        size={'2'}
+                        color={'gray'}
+                    />
+                    {activeFiltersWithLabel.map((item) => (
+                        <Badge
+                            key={item.key}
+                            text={item.label}
+                            variant={'surface'}
+                            radius={'full'}
+                            size={'2'}
+                            color={'gray'}
+                        />
+                    ))}
+                </div>
+                <Button
+                    text={'Limpar filtros'}
+                    variant={'ghost'}
+                    color={'red'}
+                    radius={'full'}
+                    size={'2'}
+                    classnames={styles.clearFiltersBtn}
+                    onClick={clearAllFilters}
+                />
+            </div>
+        );
+    }, [activeFiltersWithLabel, clearAllFilters]);
 
     return (
         <div>
@@ -299,16 +456,16 @@ export default function Filters({
                         <div className={styles.filterOptions}>
                             <Button
                                 text={'Filtros'}
-                                variant={'surface'}
-                                color={'gray'}
+                                variant={!showFilters ? 'surface' : 'solid'}
+                                color={!showFilters ? 'gray': 'blue'}
                                 radius={'large'}
                                 size={'4'}
                                 icon={<SlidersHorizontalIcon
                                     width={16}
                                     height={16}
-                                    color={colors['color-black-default']}
+                                    color={!showFilters ? colors['color-gray-common'] : colors['color-white']}
                                 />}
-                                classnames={styles.filterBtn}
+                                classnames={!showFilters ? styles.filterBtn : styles.filterActiveBtn}
                                 onClick={handleShowFilters(showFilters)}
                             />
                             <Select
@@ -316,11 +473,12 @@ export default function Filters({
                                 options={orderByOptions}
                                 position={'left'}
                                 labelIcon={<ClockIcon color={colors['color-black-default']}/>}
+                                value={filters?.orderBy}
                                 /* eslint-disable-next-line react/jsx-no-bind */
                                 onValueChange={(value) => {
                                     if (!value) return null;
 
-                                    changeOrderBy(value);
+                                    changeFilterCommon('orderBy', value);
                                 }}
                             />
                             {!isLowerMobile && <ToggleVisualization/>}
@@ -333,6 +491,11 @@ export default function Filters({
                                 className={styles.cardFilters}
                                 noBorder
                             />
+                        </div>
+                    )}
+                    {activeFiltersWithLabel.length >= 1 && (
+                        <div className={styles.activeFilters}>
+                            <ActiveFilters/>
                         </div>
                     )}
                 </div>

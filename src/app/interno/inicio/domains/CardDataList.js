@@ -30,7 +30,7 @@ export function CardDataList() {
     const { metrics } = useStore((state) => state);
 
     const MetricsGroup = useMemo(() => {
-        const textDays = metrics?.sequence > 1 ? 'dias' : 'dia';
+        const textDays = metrics?.sequence > 1 ? 'dias' : metrics?.sequence === 0 ? '' : 'dia';
 
         return [
             {

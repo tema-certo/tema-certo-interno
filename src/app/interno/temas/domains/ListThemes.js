@@ -16,7 +16,7 @@ const REQUEST_LIMIT_INITIAL = 8;
 const REQUEST_LIMIT_ADD = 8;
 const REQUEST_PAGE_INITIAL = 1;
 
-export default function ListThemes() {
+export default function  ListThemes() {
     const api = useApi({ url: envs.API_URL });
     const observerTarget = useRef(null);
     const { isLowerMobile, isMobile, isTablet } = useSize();

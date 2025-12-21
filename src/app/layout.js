@@ -1,4 +1,4 @@
-import NavigationMenu from '@/components/NavigationMenu';
+import { Toaster } from '@/components/ui/sonner';
 import { ClientProviders } from '@/providers';
 import { Theme } from '@radix-ui/themes';
 import { Crimson_Text, Inter } from 'next/font/google';
@@ -28,7 +28,6 @@ export default function RootLayout({ children }) {
                 <script src="https://accounts.google.com/gsi/client" async defer></script>
             </head>
             <body
-
                 className={`${crimsonText.variable} ${inter.variable} antialiased`}
             >
                 <Theme>
@@ -36,6 +35,7 @@ export default function RootLayout({ children }) {
                         {children}
                     </ClientProviders>
                 </Theme>
+                <Toaster position="top-center" richColors expand />
             </body>
         </html>
     );

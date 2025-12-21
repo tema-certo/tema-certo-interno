@@ -1,0 +1,14 @@
+@import '../../medias.css';
+
+.containerButtons {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+}
+
+@media (--isMobile) {
+    .containerButtons {
+        flex-direction: column;
+        gap: 12px;
+    }
+}

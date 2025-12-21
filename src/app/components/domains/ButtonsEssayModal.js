@@ -3,12 +3,14 @@ import { useCallback } from 'react';
 import Button from '@/components/Button';
 import Icons from '@/icons/icons';
 
+import styles from './ButtonsEssayModal.module.css';
+
 export default function ButtonsEssayModal({
     onCancel,
     onClick,
 }) {
     return (
-        <div className="flex gap-4 justify-end align-bottom items-end">
+        <div className={styles.containerButtons}>
             <Button
                 text={'Cancelar'}
                 variant={'surface'}

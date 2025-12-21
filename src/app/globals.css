@@ -189,8 +189,6 @@ body {
   background-color: var(--background-gray-default);
 }
 
-
-
 /* setup de avatar padronizado */
 .rt-AvatarRoot.rt-r-size-3 {
   .rt-AvatarFallback {
@@ -203,7 +201,6 @@ body {
 }
 
 /* Change avatar */
-
 .rt-AvatarFallback {
   ::before {
     content: '';

@@ -22,6 +22,14 @@ const Toaster = ({
       className="toaster group"
       position={'top-center'}
       duration={duration}
+      toastOptions={{
+          style: {
+              zIndex: 2147483647,
+          },
+          classNames: {
+              toast: 'sonner-toast-override',
+          },
+      }}
       icons={{
         success: <CircleCheckIcon className="size-4" color={'green'} />,
         info: <InfoIcon className="size-4" />,
@@ -34,7 +42,7 @@ const Toaster = ({
           "--normal-bg": "var(--popover)",
           "--normal-text": "var(--popover-foreground)",
           "--normal-border": "var(--border)",
-          "--border-radius": "var(--radius)"
+          "--border-radius": "var(--radius)",
         }
       }
       {...props} />

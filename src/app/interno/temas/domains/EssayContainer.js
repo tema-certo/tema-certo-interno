@@ -2,17 +2,24 @@ import { useCallback, useMemo } from 'react';
 
 import ButtonsEssayModal from '@/app/components/domains/ButtonsEssayModal';
 import FinalBadgeHtmls from '@/app/components/domains/FinalBadgeHtmls';
+import colors from '@/colors';
 import Badge from '@/components/Badge';
 import Button from '@/components/Button';
 import EssaySelectorCard from '@/components/EssaySelectorCard';
 import List from '@/components/List';
 import { WrapModal } from '@/components/Modal';
 import Text from '@/components/Text';
-import { getEssayProps } from '@/helpers';
+import { envs } from '@/envs';
+import { dismissLoadingToast, getEssayProps } from '@/helpers';
+import useApi from '@/hooks/useApi';
 import useSelector from '@/hooks/useEssaySelector';
 import { BoxIcon, ClockIcon, FileTextIcon, Pencil1Icon, Pencil2Icon } from '@radix-ui/react-icons';
 import { orderBy } from 'lodash/collection';
-import { BuildingIcon } from 'lucide-react';
+import { BuildingIcon, Loader2Icon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { TailSpin } from 'react-loader-spinner';
+import { useQuery } from 'react-query';
+import { toast } from 'sonner';
 
 import styles from './EssayContainer.module.css';
 
@@ -21,6 +28,8 @@ export default function EssayContainer({
     filters,
 }) {
     const { onSelect, clearSelect, value: selectedEssay  } = useSelector();
+    const router = useRouter();
+    const api = useApi({ url: envs.API_URL });
 
     const { difficultyData } = getEssayProps(
         selectedEssay?.category,
@@ -75,16 +84,51 @@ export default function EssayContainer({
         ];
     }, []);
 
+    const {
 
-    const onClick = useCallback(() => {
-        // TODO: Fazer lógica de criação de tentativa
-        // eslint-disable-next-line no-console
-        return console.log('ok');
-    }, []);
+        isFetching,
+        refetch: refetchCreateTry,
+    } = useQuery({
+        queryKey: 'createTry',
+        queryFn: async () => {
+            const toastId = toast.loading('Iniciando redação...');
+
+            try {
+                const { data } = await api.post('/create-essay-try', {
+                    essay_theme_id: selectedEssay?.id,
+                });
+
+                dismissLoadingToast({
+                    toastId,
+                    type: 'success',
+                    message: 'Redação iniciada com sucesso!',
+                });
+
+                router.push(`/interno/redacao/${data?.id}`);
+            } catch (e) {
+                dismissLoadingToast({
+                    toastId,
+                    type: 'error',
+                    message: 'Erro ao iniciar redação.',
+                });
+            }
+        },
+        enabled: false,
+    });
 
     const HtmlInsideModal = useCallback(() => {
+        if (isFetching) {
+            return (
+                <div className={styles.htmlInsideModalLoader}>
+                    <TailSpin
+                        color={colors['color-title-blue']}
+                    />
+                </div>
+            );
+        }
+
         return (
-            <div className="flex flex-col gap-4">
+            <div className={styles.htmlInsideModal}>
                 <span className="text-sm text-gray-500">
                     Você está prestes a começar uma redação sobre o tema selecionado.
                 </span>
@@ -129,11 +173,11 @@ export default function EssayContainer({
                 </div>
                 <ButtonsEssayModal
                     onCancel={clearSelect}
-                    onClick={onClick}
+                    onClick={refetchCreateTry}
                 />
             </div>
         );
-    }, [ListItems, clearSelect, difficultyData?.textConversion, onClick, selectedEssay]);
+    }, [ListItems, clearSelect, difficultyData?.textConversion, isFetching, refetchCreateTry, selectedEssay]);
 
     return (
         <div className={styles.containerEssays}>
@@ -170,7 +214,7 @@ export default function EssayContainer({
             >
                 {selectedEssay && (
                     <>
-                        <HtmlInsideModal />
+                        <HtmlInsideModal/>
                     </>
                 )}
             </WrapModal>

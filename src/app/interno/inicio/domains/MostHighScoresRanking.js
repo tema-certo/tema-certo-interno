@@ -13,7 +13,7 @@ import useSelector from '@/hooks/useEssaySelector';
 import { ArrowRightIcon, PersonIcon } from '@radix-ui/react-icons';
 import { Table } from '@radix-ui/themes';
 import { Separator } from '@radix-ui/themes/dist/esm';
-import { CrownIcon } from 'lucide-react';
+import { CrownIcon, TrophyIcon } from 'lucide-react';
 import { useQuery } from 'react-query';
 
 import styles from './MostHighScoresRanking.module.css';
@@ -34,10 +34,6 @@ export function MostHighScoresRanking() {
         refetchOnMount: true,
         suspense: true,
     });
-
-    const handleClick = useCallback(() => {
-        return () => onSelect(true);
-    }, [onSelect]);
 
     const CardHtml = useCallback(() => {
         let rankingList = ranking?.data ?? [];
@@ -90,32 +86,19 @@ export function MostHighScoresRanking() {
                                 />
                             </div>
                         </div>
-                        <Separator
-                            my="0"
-                            size="2"
-                            color={'orange'}
-                            className={styles.separator}
-                        />
+                        {index !== rankingList.length - 1 && (
+                            <Separator
+                                my="0"
+                                size="2"
+                                color={'orange'}
+                                className={styles.separator}
+                            />
+                        )}
                     </div>
                 ))}
-                {haveBetterThan4 && (
-                    <div className={styles.seeAll}>
-                        <Button
-                            text={'Ver todas'}
-                            icon={<ArrowRightIcon/>}
-                            animatedicon
-                            position={'right'}
-                            variant={'classic'}
-                            classnames={styles.btnSeeAll}
-                            color={'gold'}
-                            size={'3'}
-                            onClick={handleClick()}
-			            />
-                    </div>
-	            )}
             </div>
         );
-    }, [handleClick, isLoading, ranking?.data]);
+    }, [isLoading, ranking?.data]);
 
     return (
         <div>
@@ -123,7 +106,7 @@ export function MostHighScoresRanking() {
                 title={'(Últimas) Melhores notas'}
                 html={<CardHtml/>}
                 ownVariant={'ranking'}
-                icon={<CrownIcon width={24} height={24} color={colors['color-gold-winner']}/>}
+                icon={<TrophyIcon width={24} height={24} color={colors['color-gold-winner']}/>}
                 titleSize={'5'}
             />
 

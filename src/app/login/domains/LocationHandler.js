@@ -33,7 +33,6 @@ export default function LocationHandler({ setTitle }) {
 
     return (
         <Tabs.Root value={selectedTab} onValueChange={handleTabChange}>
-
             <Text
                 text={currentTabInfo?.description}
                 as="p"

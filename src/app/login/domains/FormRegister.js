@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import ConfirmationCode from '@/app/login/domains/ConfirmationCode';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { InputPassword } from '@/components/InputPassword';
+import { WrapModal } from '@/components/Modal';
 import { envs } from '@/envs';
 import { dismissLoadingToast, setTokenCookieSec } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
+import useSelector from '@/hooks/useEssaySelector';
 import useStore, { setUserLoginData } from '@/hooks/useStore';
 import {
     ArrowRightIcon,
@@ -25,6 +28,7 @@ import styles from './FormLogin.module.css';
 const toastLayoutMessages = {
     createAccountLoading: 'Criando sua conta...',
     createAccountSuccess: 'Conta criada com sucesso! Vamos te redirecionar para seu acesso.',
+    preRegisterAccountSuccess: 'Pré-registro concluído. Verifique seu e-mail para continuar.',
     createAccountError: {
         title: 'Erro ao criar conta',
         description: 'Tente inserir um novo e-mail ou senha para acessar.',
@@ -36,6 +40,7 @@ export default function FormRegister() {
         control,
         handleSubmit,
         formState: { isSubmitting },
+        getValues,
     } = useForm({
         defaultValues: {
             name: '',
@@ -43,15 +48,15 @@ export default function FormRegister() {
             password: '',
         },
     });
-
     const api = useApi({ url: envs.API_URL });
     const router = useRouter();
+    const { onSelect, clearSelect, value } = useSelector();
 
     const { loading, call: loginUser } = useAsync(async (formData) => {
         const toastId = toast.loading(toastLayoutMessages.createAccountLoading);
 
         try {
-            const { data } = await api.post('/create-user', {
+            await api.post('/create-user', {
                 user: {
                     name: formData?.name,
                     email: formData?.email,
@@ -59,12 +64,12 @@ export default function FormRegister() {
                 },
             });
 
-            await setTokenCookieSec(data?.token);
+            onSelect(true);
 
             dismissLoadingToast({
                 toastId,
                 type: 'success',
-                message: toastLayoutMessages.createAccountSuccess,
+                message: toastLayoutMessages.preRegisterAccountSuccess,
             });
 
             await router.replace('/interno/inicio');
@@ -76,6 +81,12 @@ export default function FormRegister() {
             );
         }
     });
+
+    const handleKeyDown = useCallback((e) => {
+        if (e.key === ' ' || e.code === 'Space') {
+            e.preventDefault();
+        }
+    }, []);
 
     return (
         <div>
@@ -118,6 +129,8 @@ export default function FormRegister() {
                         name={'password'}
                         id={'password'}
                         disabled={loading}
+                        onKeyDown={handleKeyDown}
+                        isRegister
                     />
                 </div>
                 <div className={styles.buttonContainer}>
@@ -135,6 +148,20 @@ export default function FormRegister() {
                         loading={isSubmitting}
                     />
                 </div>
+                {
+                    value && (
+                        <WrapModal
+                            open={!!value}
+                            title={'Verifique seu e-mail'}
+                            clearSelect={clearSelect}
+                            cannotClose
+                        >
+                            <ConfirmationCode
+                                email={getValues()?.email}
+                            />
+                        </WrapModal>
+                    )
+                }
             </form>
         </div>
     );

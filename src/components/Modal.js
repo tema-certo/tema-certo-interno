@@ -16,6 +16,7 @@ export function WrapModal({
     open,
     onClose,
     icon,
+    cannotClose,
 }) {
 
     const validateOpenChange = useCallback((isOpen) => {
@@ -37,9 +38,15 @@ export function WrapModal({
                             : children
                         }
 
-                        <Dialog.Close asChild>
-                            <button className="IconButton" aria-label="Close">✕</button>
-                        </Dialog.Close>
+                        {!cannotClose && (
+                            <Button
+                                text={'Fechar'}
+                                variant={'surface'}
+                                color={'gray'}
+                                size={'3'}
+                                onClick={onClose}
+                            />
+                        )}
                     </Dialog.Content>
                 </Theme>
             </Dialog.Portal>

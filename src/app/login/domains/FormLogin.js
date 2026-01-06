@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import ConfirmationCode from '@/app/login/domains/ConfirmationCode';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { InputPassword } from '@/components/InputPassword';
@@ -9,6 +10,7 @@ import { envs } from '@/envs';
 import { dismissLoadingToast, setTokenCookieSec } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useAsync from '@/hooks/useAsync';
+import useSelector from '@/hooks/useEssaySelector';
 import useStore, { setUserLoginData } from '@/hooks/useStore';
 import {
     ArrowRightIcon, CheckIcon,
@@ -115,6 +117,7 @@ export default function FormLogin() {
     const {
         control,
         handleSubmit,
+        getValues,
         formState: { isSubmitting },
     } = useForm({
         defaultValues: {
@@ -125,6 +128,7 @@ export default function FormLogin() {
 
     const api = useApi({ url: envs.API_URL });
     const router = useRouter();
+    const { onSelect, clearSelect, value } = useSelector();
 
     const changeSetupRecoverPasswordModal = useCallback(() => {
         setSendedEmail(false);
@@ -151,6 +155,20 @@ export default function FormLogin() {
                 email: formData?.email,
                 password: formData?.password,
             });
+
+            // wamive8696@emaxasp.com
+
+            if (data?.missCompletedRegistration) {
+                onSelect(true);
+
+                dismissLoadingToast({
+                    toastId,
+                    type: 'warning',
+                    message: 'Você precisa confirmar seu e-mail para acessar.',
+                });
+
+                return;
+            }
 
             await setTokenCookieSec(data?.token);
 
@@ -227,6 +245,18 @@ export default function FormLogin() {
                         loading={isSubmitting}
 		            />
                 </div>
+                {value && (
+                    <WrapModal
+                        open={!!value}
+                        title={'Verifique seu e-mail'}
+                        clearSelect={clearSelect}
+                        cannotClose
+                    >
+                        <ConfirmationCode
+                            email={getValues()?.email}
+                        />
+                    </WrapModal>
+                )}
             </form>
         </div>
     );

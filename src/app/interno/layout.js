@@ -25,7 +25,6 @@ export default function ProtectedLayout({ children }) {
                 setUser(response.data);
             });
         }
-
     }, [api, setUser, user]);
 
     useQuery({

@@ -1,0 +1,71 @@
+@import '../../medias.css';
+
+.confirmationCodeContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.inputOTPContainer {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.inputOTPGroup {
+    display: flex;
+    gap: 20px;
+}
+
+.resendCodeContainer {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+
+    & > button {
+        font-weight: 500;
+
+        &:hover {
+            background: none;
+        }
+    }
+}
+
+.inputOTPSlot {
+    width: 64.2px;
+    height: 64px;
+    border-radius: 8px;
+    border: 1px solid var(--color-gray-300);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gray-900);
+    font-size: 24px;
+    font-weight: 500;
+}
+
+@media (--isMobile) {
+    .inputOTPSlot {
+        width: 36px;
+        height: 56px;
+    }
+
+    .inputOTPGroup {
+        gap: 4px;
+    }
+
+    .inputOTPContainer {
+        justify-content: center;
+    }
+}
+
+.buttonConfirm {
+    width: 100%;
+    margin-top: 16px;
+
+    & > button {
+        width: 100%;
+    }
+}

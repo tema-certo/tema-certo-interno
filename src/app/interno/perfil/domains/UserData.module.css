@@ -1,0 +1,58 @@
+.avatar {
+    border: 4px solid var(--color-blue-200) !important;
+}
+
+.containerAvatar {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.containerInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.separator {
+    margin-bottom: 24px;
+}
+
+.containerValues {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerUserData {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.animation {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: fadeUp 400ms ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.userForm {
+    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 24px;
+    margin-bottom: 32px;
+}
+
+.userFormTop {
+    margin-bottom: 16px !important;
+}

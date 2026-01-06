@@ -85,7 +85,6 @@ export default function EssayContainer({
     }, []);
 
     const {
-
         isFetching,
         refetch: refetchCreateTry,
     } = useQuery({

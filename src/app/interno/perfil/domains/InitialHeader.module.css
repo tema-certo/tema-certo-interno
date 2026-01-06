@@ -1,0 +1,15 @@
+.containerHeaderDefault {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.containerHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.buttonBack {
+    margin-top: 6px;
+}

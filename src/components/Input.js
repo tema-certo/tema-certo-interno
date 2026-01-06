@@ -12,6 +12,7 @@ import { Controller } from 'react-hook-form';
 import styles from './Input.module.css';
 
 const EmailValidator = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const PasswordValidator = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
 export default function Input({
     icon,
@@ -78,7 +79,6 @@ Input.Field = function Field({
     ...props
 }) {
     const FieldRender = useCallback(({ field, fieldState }) => {
-
         return <div>
             <Input
                 {...props}
@@ -89,22 +89,37 @@ Input.Field = function Field({
         </div>;
     }, [props]);
 
+    const commonRules = {
+        ...(required && {
+            required: 'Este campo é obrigatório.',
+        }),
+
+        ...(name === 'email' && {
+            pattern: {
+                value: EmailValidator,
+                message: 'Insira um e-mail válido.',
+            },
+        }),
+
+        ...(name === 'password' && props.isRegister && {
+            minLength: {
+                value: 6,
+                message: 'A senha deve ter pelo menos 6 caracteres.',
+            },
+            pattern: {
+                value: PasswordValidator,
+                message: 'A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número.',
+            },
+        }),
+    };
+
     return (
         <Controller
             name={name}
             control={control}
             /* eslint-disable-next-line react-perf/jsx-no-new-object-as-prop */
             rules={{
-                ...(required ? { required: 'Este campo é obrigatório.' } : {}),
-                ...(name === 'email'
-                    ? {
-                        pattern: {
-                            value: EmailValidator,
-                            message: 'Insira um e-mail válido.',
-                        },
-                    }
-                    : {}
-                ),
+                ...commonRules,
             }}
 
             /* eslint-disable-next-line react/jsx-no-bind */

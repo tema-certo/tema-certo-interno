@@ -111,9 +111,8 @@ export function dismissLoadingToast({
     if (type === 'success') {
         toast.success(message);
     } else {
-        toast.error(message);
+        toast[type](message);
     }
-
 }
 
 export const AvgRanking = [

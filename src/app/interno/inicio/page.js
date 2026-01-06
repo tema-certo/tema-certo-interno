@@ -39,7 +39,6 @@ export default function Page() {
                                 <CardDataList />
                             </div>
                             <RecentsEssay />
-                            <RecentsEssay />
                         </div>
                         <div className={styles.tips}>
                             <MissionsCard />

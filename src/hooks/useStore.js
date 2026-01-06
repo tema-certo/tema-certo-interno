@@ -12,7 +12,7 @@ const useStore = create((set) => (
 
 
 export async function removeAuthData() {
-    useStore.getState().setUser({});
+    useStore.getState().setUser(null);
 
     document.cookie = 'token=; path=/; max-age=0;';
 }

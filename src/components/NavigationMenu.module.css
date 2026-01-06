@@ -114,7 +114,7 @@
     border-radius: 8px;
 
     & > * {
-        font-size: 8px;
+        font-size: 10px;
     }
 
     position: absolute;
@@ -123,6 +123,7 @@
 
 .avatar {
     position: relative;
+    cursor: pointer;
 
     &::before {
         content: '';
@@ -137,6 +138,16 @@
         border-radius: 100%;
         background-color: var(--color-green-600);
     }
+}
+
+.avatarContainer {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+;
 }
 
 .rankingBadge {
@@ -211,4 +222,24 @@
         position: relative;
         right: 0;
     }
+}
+
+.avatarContainer {
+    cursor: pointer;
+}
+
+.labelDropdown {
+    cursor: pointer !important;
+}
+
+.dropDownData {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.dropDownClient {
+    min-width: 164px;
 }

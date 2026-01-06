@@ -1,0 +1,64 @@
+@import '../app/medias.css';
+
+.tabsList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--color-white);
+    height: fit-content;
+    padding: 16px;
+    align-content: flex-start;
+    align-items: flex-start;
+    box-shadow: var(--shadow-xs);
+    border: 1px solid var(--color-gray-100);
+    border-radius: 8px;
+
+
+    min-width: 280px !important;
+}
+
+.tabsTrigger {
+    display: flex;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--color-gray-800);
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 150ms ease;
+    width: 100%;
+    justify-content: flex-start;
+
+    &:hover {
+        background: var(--color-gray-100);
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    & > * {
+        font-size: 18px;
+    }
+}
+
+.tabsTrigger[data-state="active"] {
+    color: var(--color-blue-600);
+    box-shadow: none;
+    background: var(--color-blue-50);
+    font-weight: 500;
+}
+
+.lateral {
+    flex-direction: row;
+    gap: 24px;
+}
+
+@media (--isTablet) {
+    .tabsList {
+        min-width: 100% !important;
+    }
+
+    .lateral {
+        flex-direction: column;
+    }
+}

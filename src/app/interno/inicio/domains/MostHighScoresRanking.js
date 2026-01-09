@@ -20,7 +20,7 @@ import styles from './MostHighScoresRanking.module.css';
 
 
 export function MostHighScoresRanking() {
-    const { value, clearSelect, onSelect } = useSelector();
+    const { value, clearSelect } = useSelector();
     const api = useApi({ url: envs.API_URL });
 
     const {

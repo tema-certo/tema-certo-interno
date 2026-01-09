@@ -19,7 +19,6 @@ export default function UserData() {
 
     const {
         control,
-        handleSubmit,
         formState: { isSubmitting },
     } = useForm({
         defaultValues: {

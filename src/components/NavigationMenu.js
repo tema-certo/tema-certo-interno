@@ -15,7 +15,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar';
-import { AvgRanking, setExtraClass } from '@/helpers';
+import { AvgRanking, setExtraClass, verifyIfIsPro } from '@/helpers';
 import useClassnames from '@/hooks/useClassnames';
 import useScroll from '@/hooks/useScroll';
 import useSize from '@/hooks/useSize';
@@ -74,6 +74,12 @@ export default function NavigationMenu() {
                 path: '/interno/estatisticas',
                 icon: <LucideChartNoAxesColumnIncreasing width={16} height={16}/>,
                 handler: () => router.push('/interno/estatisticas'),
+            },
+            {
+                label: 'Planos',
+                path: '/interno/planos',
+                icon: <CrownIcon width={16} height={16}/>,
+                handler: () => router.push('/interno/planos'),
             },
         ];
     }, [router]);
@@ -294,10 +300,15 @@ export default function NavigationMenu() {
 
                             <div className={styles.userContainer}>
                                 {avatarOptions}
-                                <div className={styles.userScore}>
-                                    <Icons.FireIcon width={12} height={12} color={'#894b00'} />
-                                    <Text text={metrics?.sequence || 0} size={'2'} />
-                                </div>
+                                {verifyIfIsPro(user) && (
+                                    <div className={styles.userScore}>
+                                        <Icons.FireIcon width={12} height={12} color={'#894b00'}/>
+                                        <Text
+                                            text={metrics?.sequence || 0}
+                                            size={'2'}
+                                        />
+                                    </div>
+                                )}
                                 <div className={styles.rankingBadge}>
                                     <Tooltip
                                         children={'Ranking'}
@@ -344,11 +355,15 @@ export default function NavigationMenu() {
                 </div>
                 <div className={styles.userContainer}>
                     <div className={styles.userScore}>
-                        <Icons.FireIcon width={12} height={12} color={'#894b00'}/>
-                        <Text
-                            text={metrics?.sequence || 0}
-                            size={'2'}
-                        />
+                        {verifyIfIsPro(user) && (
+                            <div className={styles.userScore}>
+                                <Icons.FireIcon width={12} height={12} color={'#894b00'}/>
+                                <Text
+                                    text={metrics?.sequence || 0}
+                                    size={'2'}
+                                />
+                            </div>
+                        )}
                     </div>
                     <div className={styles.rankingBadge}>
                         <Tooltip

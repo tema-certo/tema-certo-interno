@@ -1,0 +1,160 @@
+@import '../../../medias.css';
+
+.containerCards {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    gap: 16px;
+    width: 100%;
+    margin-top: 64px;
+
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.containerCards > * {
+    position: relative;
+    transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+}
+
+.gray {
+    border-radius: 12px;
+    border: 1px solid var(--color-blue-200);
+    background: var(--color-blue-100);
+}
+
+.gold {
+    background: linear-gradient(
+            180deg,
+            var(--color-yellow-50),
+            var(--color-yellow-100)
+    );
+    border: 1px solid var(--color-yellow-200);
+    border-radius: 12px;
+}
+
+.setupIcon {
+    background: var(--color-blue-100);
+    border-radius: 12px;
+    border: 1px solid var(--color-blue-200);
+}
+
+.setupIcon > svg {
+    width: 48px;
+    height: 48px;
+}
+
+.containerCards > *:not(.preferred):hover {
+    transform: translateY(-6px);
+}
+
+.preferred {
+    z-index: 2;
+    border: 1px solid var(--color-yellow-300);
+
+    transform: translateY(-12px);
+}
+
+.cardWrapper {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+
+    background: linear-gradient(
+            135deg,
+            var(--color-yellow-400),
+            var(--color-yellow-300)
+    );
+    color: var(--color-yellow-900);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    padding: 4px 12px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+.badgeBenefit {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+
+    background: linear-gradient(
+            135deg,
+            var(--color-blue-400),
+            var(--color-yellow-300)
+    );
+    color: var(--color-black-default);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    padding: 4px 12px;
+    width: 240px;
+    display: flex;
+    justify-content: center;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+
+.preferredWrapper {
+    position: relative;
+    z-index: 1;
+}
+
+.containerPrice {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerEssaysPerMonth {
+    margin-top: 24px;
+    display: flex;
+    gap: 8px;
+    background: var(--color-gray-100);
+    border-radius: 8px;
+    align-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.yellowCard {
+    background: var(--color-yellow-50);
+}
+
+.containerListBenefits {
+    margin-top: 24px;
+}
+
+@media (--isLowDesktop) {
+    .containerCards {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .containerCards > * {
+        width: 100%;
+        max-width: 480px;
+    }
+}
+
+.btn {
+    cursor: pointer;
+    margin-top: 24px;
+    width: 100%;
+}

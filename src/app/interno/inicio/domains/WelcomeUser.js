@@ -98,7 +98,8 @@ export default function WelcomeUser(callback, deps) {
                     html={<CardStructureHtml/>}
                     className={styles.card}
                     radius={'medium'}
-		       />
+                    minW={'150px'}
+                />
             </div>
         </div>
     );

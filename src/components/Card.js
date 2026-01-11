@@ -27,12 +27,14 @@ export default function Card({
     icon,
     iconLocation,
     noBorder,
+    noShadow,
     ...props
 }) {
     const variantFilter = variant || 'surface';
 
     const classNameSetter = useClassNames(setExtraClass(styles.card, [
         className,
+        !noShadow && styles.shadowCard,
         ownVariant === 'tip' && styles.cardTip,
         ownVariant === 'ranking' && styles.cardRanking,
         !noBorder && styles.border,
@@ -138,6 +140,7 @@ Card.WithIcon = function CardWithIcon({
             aligntitle={aligntitle}
             basecontent={basecontent}
             variant={variant}
+            className={className}
             {...props}
         />
     );

@@ -190,3 +190,7 @@ export function BadgeColorStyle (score) {
 export function startFilterArray(data) {
     return new Needle(data);
 }
+
+export function verifyIfIsPro(user) {
+    return user?.permissions?.role_name === 'ai:pro';
+}

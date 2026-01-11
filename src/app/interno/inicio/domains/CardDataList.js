@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
 import Card from '@/components/Card';
+import Tooltip from '@/components/Tooltip';
 import { envs } from '@/envs';
+import { verifyIfIsPro } from '@/helpers';
 import useApi from '@/hooks/useApi';
 import useStore from '@/hooks/useStore';
 import Icons from '@/icons/icons';
@@ -28,6 +30,7 @@ const iconColors = {
 
 export function CardDataList() {
     const { metrics } = useStore((state) => state);
+    const user = useStore((state) => state.user);
 
     const MetricsGroup = useMemo(() => {
         const textDays = metrics?.sequence > 1 ? 'dias' : metrics?.sequence === 0 ? '' : 'dia';
@@ -56,21 +59,45 @@ export function CardDataList() {
                 iconClassName: 'gold',
                 subText: <div>Sequência</div>,
                 value: `${metrics?.sequence || 0} ${textDays}`,
+                exclusivePro: true,
             },
         ];
     }, [metrics]);
 
     return (
         <div className={styles.cardsContainer}>
-            {MetricsGroup.map((item, index) => (
-                <Card.WithIcon
-                    key={index}
-                    subText={item.subText}
-                    value={item.value}
-                    icon={item.icon}
-                    iconClassName={item.iconClassName}
-                />
-            ))}
+            {MetricsGroup.map((item, index) => {
+                if (!verifyIfIsPro(user) && item?.exclusivePro) {
+                    return (
+                        <div key={index}>
+                            <Card.WithIcon
+                                key={index}
+                                subText={item.subText}
+                                value={'-'}
+                                iconClassName={item.iconClassName}
+                                icon={item.icon}
+                                minW={'200px'}
+                                className={styles.cardProBlur}
+                            />
+                            <Tooltip
+                                children={'Sistema de ofensiva apenas para membros Pro'}
+                                className={styles.tooltipPro}
+                            />
+                        </div>
+                    );
+                }
+
+                return (
+                    <Card.WithIcon
+                        key={index}
+                        subText={item.subText}
+                        value={item.value}
+                        iconClassName={item.iconClassName}
+                        icon={item.icon}
+                        minW={'200px'}
+                    />
+                );
+            })}
         </div>
     );
 }

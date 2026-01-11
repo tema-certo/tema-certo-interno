@@ -6,6 +6,17 @@
     gap: 16px;
 }
 
+.cardProBlur {
+    filter: blur(2px) !important;
+}
+
+.tooltipPro {
+    position: relative;
+    top: -24px;
+    left: 8px;
+    z-index: 100;
+}
+
 @media (--isTablet) {
     .cardsContainer {
         grid-template-columns: repeat(2, 1fr);

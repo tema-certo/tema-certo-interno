@@ -39,3 +39,7 @@
 .bolder {
     font-weight: 500 !important;
 }
+
+.mostBolder {
+    font-weight: 600 !important;
+}

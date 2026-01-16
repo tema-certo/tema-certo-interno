@@ -210,6 +210,7 @@ export default function EssayContainer({
                 open={!!selectedEssay}
                 title="Iniciar Redação"
                 onClose={clearSelect}
+                cannotClose
             >
                 {selectedEssay && (
                     <>

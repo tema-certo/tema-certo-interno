@@ -85,6 +85,7 @@ Card.WithIcon = function CardWithIcon({
     subText,
     value,
     icon,
+    titleSize = '7',
     ...props
 }) {
 
@@ -120,7 +121,7 @@ Card.WithIcon = function CardWithIcon({
                     { value && (
                         <Text
                             text={value.toString()}
-                            size={'7'}
+                            size={titleSize}
                             color={'gray'}
                             as={'h1'}
                             className={styles.valueStyle}
@@ -129,7 +130,7 @@ Card.WithIcon = function CardWithIcon({
                 </div>
             </div>
         );
-    }, [backgroundCardIcon, subText, value]);
+    }, [backgroundCardIcon, subText, titleSize, value]);
 
     return (
         <Card
@@ -141,6 +142,7 @@ Card.WithIcon = function CardWithIcon({
             basecontent={basecontent}
             variant={variant}
             className={className}
+            titleSize={titleSize}
             {...props}
         />
     );

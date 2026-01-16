@@ -183,7 +183,6 @@ export function BadgeColorStyle (score) {
     if (itemScore <= 800) {
         return 'blue';
     }
-
     return 'green';
 };
 

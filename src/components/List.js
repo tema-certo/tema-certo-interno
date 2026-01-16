@@ -26,10 +26,10 @@ export default function List({
                 className={styles.title}
             />}
             <ul className={listDisc}>
-                {items.map((item) => {
+                {items.map((item, index) => {
                     if (useCheckmark) {
                         return (
-                            <li key={item} className={styles.listItem}>
+                            <li key={index} className={styles.listItem}>
                                 <div className={styles.listItemCheck}>
                                     <CheckIcon
                                         width={16}
@@ -49,14 +49,14 @@ export default function List({
                     }
 
                     return (
-                        <li key={item} className={styles.listItem}>
-                            <Text
-                                text={item}
-                                as="p"
-                                size="2"
-                                color="gray"
-                            />
-                        </li>
+                        <Text
+                            color="gray"
+                            size="2"
+                            as="li"
+                            text={item}
+                            key={item}
+                            className={styles.listItem}
+                        />
                     );
                 })}
             </ul>

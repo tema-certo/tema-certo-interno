@@ -1,0 +1,15 @@
+.containerCheckout {
+    width: 100%;
+    max-width: 100%;
+    opacity: 0.1;
+    animation: fadeUp 400ms ease forwards;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

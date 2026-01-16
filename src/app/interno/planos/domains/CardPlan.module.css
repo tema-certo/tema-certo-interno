@@ -151,10 +151,22 @@
         width: 100%;
         max-width: 480px;
     }
+
+    .preferred {
+        transform: translateY(0);
+    }
+
+    .badge {
+        top: -12px;
+    }
 }
 
 .btn {
     cursor: pointer;
     margin-top: 24px;
     width: 100%;
+}
+
+.defaultCard {
+    height: 580px;
 }

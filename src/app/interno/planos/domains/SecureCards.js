@@ -42,6 +42,7 @@ export default function SecureCards() {
                         value={card.value}
                         icon={card.icon}
                         iconClassName={card.iconClassName}
+                        titleSize={'5'}
                         noBorder
                     />
                 );

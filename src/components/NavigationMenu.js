@@ -33,7 +33,7 @@ import { Avatar } from '@radix-ui/themes';
 import {
     BarChartHorizontalIcon,
     BookOpenIcon, CrownIcon, HelpCircleIcon,
-    Home,
+    Home, LockIcon,
     LogOutIcon,
     LucideChartNoAxesColumnIncreasing,
     XIcon,
@@ -389,3 +389,40 @@ export default function NavigationMenu() {
         </div>
     );
 }
+
+NavigationMenu.Converter = function ConverterNavigationMenu() {
+    const router = useRouter();
+
+    const handleClickLogo = useCallback(() => {
+        return () => router.push('/interno/inicio');
+    }, [router]);
+
+    return (
+        <div className={styles.containerPageComponent}>
+            <div className={styles.navigationContainer}>
+                <div>
+                    <button
+                        onClick={handleClickLogo()}
+                    >
+                        <img
+                            src="/tema-certo-black.svg"
+                            alt="Logo do Tema Certo"
+                            width={56}
+                            height={56}
+                        />
+                    </button>
+                </div>
+                <div>
+                    <Text
+                        text={'Ambiente seguro'}
+                        size={'2'}
+                        icon={<LockIcon width={16} height={16} />}
+                        color={'gray'}
+                        type={'4'}
+                        bolder
+                    />
+                </div>
+            </div>
+        </div>
+    );
+};

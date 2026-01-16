@@ -2,4 +2,6 @@ export const envs = {
     API_URL: process.env.NEXT_PUBLIC_API_URL,
     GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
     APP_CDN: process.env.NEXT_PUBLIC_CDN_TEMA_CERTO,
+    PAYMENTS_API_URL: process.env.NEXT_PUBLIC_PAYMENTS_API_URL,
+    STRIPE_PUB_KEY: process.env.NEXT_PUBLIC_STRIPE_PUB_KEY,
 };

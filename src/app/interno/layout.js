@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { LoadUiAdvise } from '@/components/LoaderUiAdvise';
 import NavigationMenu from '@/components/NavigationMenu';
@@ -10,14 +10,19 @@ import useApi from '@/hooks/useApi';
 import useStore from '@/hooks/useStore';
 import {  ClientProviders } from '@/providers';
 import { Theme } from '@radix-ui/themes';
+import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from 'react-query';
 
+const hiddenMenuRoutes = ['/interno/checkout'];
+const setupConversionNavigationMenu = ['/interno/checkout'];
 
 export default function ProtectedLayout({ children }) {
     const api = useApi({ url: envs.API_URL });
     const user = useStore((state) => state.user);
     const setUser = useStore((state) => state.setUser);
     const setMetrics = useStore((state) => state.setMetrics);
+
+    const pathname = usePathname();
 
     useEffect(() => {
         if (!user) {
@@ -26,6 +31,18 @@ export default function ProtectedLayout({ children }) {
             });
         }
     }, [api, setUser, user]);
+
+    const shouldShowNavigationMenu = useMemo(() => {
+        return !hiddenMenuRoutes.some(route =>
+            pathname.startsWith(route),
+        );
+    }, [pathname]);
+
+    const needConversionMenu = useMemo(() => {
+        return setupConversionNavigationMenu.some(route =>
+            pathname.startsWith(route),
+        );
+    }, [pathname]);
 
     useQuery({
         queryKey: 'metrics',
@@ -46,7 +63,8 @@ export default function ProtectedLayout({ children }) {
     return (
         <Theme>
             <ClientProviders>
-                <NavigationMenu />
+                {shouldShowNavigationMenu && <NavigationMenu />}
+                {needConversionMenu && <NavigationMenu.Converter />}
                 {children}
             </ClientProviders>
         </Theme>

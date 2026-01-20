@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 import styles from './WelcomeUser.module.css';
 
 
-export default function WelcomeUser(callback, deps) {
+export default function WelcomeUser() {
     const user = useStore((state) => state.user);
 
     const CardStructureHtml = useCallback(() => {

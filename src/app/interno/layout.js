@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 
 import { LoadUiAdvise } from '@/components/LoaderUiAdvise';
 import NavigationMenu from '@/components/NavigationMenu';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { envs } from '@/envs';
 import useApi from '@/hooks/useApi';
 import useStore from '@/hooks/useStore';
@@ -14,7 +15,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from 'react-query';
 
 const hiddenMenuRoutes = ['/interno/checkout'];
-const setupConversionNavigationMenu = ['/interno/checkout'];
 
 export default function ProtectedLayout({ children }) {
     const api = useApi({ url: envs.API_URL });
@@ -38,12 +38,6 @@ export default function ProtectedLayout({ children }) {
         );
     }, [pathname]);
 
-    const needConversionMenu = useMemo(() => {
-        return setupConversionNavigationMenu.some(route =>
-            pathname.startsWith(route),
-        );
-    }, [pathname]);
-
     useQuery({
         queryKey: 'metrics',
         queryFn: async () => {
@@ -62,11 +56,12 @@ export default function ProtectedLayout({ children }) {
 
     return (
         <Theme>
-            <ClientProviders>
-                {shouldShowNavigationMenu && <NavigationMenu />}
-                {needConversionMenu && <NavigationMenu.Converter />}
-                {children}
-            </ClientProviders>
+            <SidebarProvider>
+                <ClientProviders>
+                    {shouldShowNavigationMenu && <NavigationMenu />}
+                    {children}
+                </ClientProviders>
+            </SidebarProvider>
         </Theme>
     );
 }

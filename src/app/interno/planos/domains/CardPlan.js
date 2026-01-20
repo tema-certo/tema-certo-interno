@@ -2,7 +2,6 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
-import CheckoutEmbedded from '@/app/interno/planos/domains/CheckoutEmbedded';
 import colors from '@/colors';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
@@ -14,7 +13,8 @@ import useApi from '@/hooks/useApi';
 import useClassnames from '@/hooks/useClassnames';
 import useStore from '@/hooks/useStore';
 import { RocketIcon } from '@radix-ui/react-icons';
-import { BookCheck, BrickWallFireIcon, InfinityIcon } from 'lucide-react';
+import { Skeleton } from '@radix-ui/themes';
+import { BookCheck, BrickWallFireIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQuery } from 'react-query';
 import { toast } from 'sonner';
@@ -153,7 +153,7 @@ const HtmlCardsGeneric = ({
                 />
             </div>
             {button && (
-                <div className={styles.containerButton}>
+                <div>
                     {button}
                 </div>
             )}
@@ -166,13 +166,13 @@ export default function CardPlan() {
     const router = useRouter();
     const setUserSessionSubscribe = useStore(state => state.setUserSessionSubscribe);
 
-    const { data: possiblePlans } = useQuery({
+    const { data: possiblePlans, isFetching } = useQuery({
         queryKey: 'possiblePlans',
         queryFn: async () => {
             return await api.get('/possible-client-plans');
         },
         refetchOnMount: true,
-        staleTime: Infinity,
+        cacheTime: Infinity,
     });
 
     const { mutateAsync: callSubscribePlan, isLoading: isSubscribing } = useMutation({
@@ -214,7 +214,19 @@ export default function CardPlan() {
     }, [callSubscribePlan, router, setUserSessionSubscribe]);
 
     const setupCards = useMemo(() => {
-        if (!possiblePlans?.data) return [];
+        if (!possiblePlans?.data) return Array.from({ length: PLAN_ORDER.length }, (_, index) => {
+            return {
+                html: (
+                    <Skeleton
+                        width={'100%'}
+                        height={200}
+                    />
+                ),
+                styleDefinition: 'skeleton',
+            };
+        });
+
+        if (!possiblePlans?.data && !isFetching) return [];
 
         return [...possiblePlans?.data]
             .sort((a, b) => {
@@ -260,10 +272,10 @@ export default function CardPlan() {
                 };
             })
             .filter(Boolean);
-    }, [handleSubscribe, isSubscribing, possiblePlans?.data]);
+    }, [handleSubscribe, isFetching, isSubscribing, possiblePlans?.data]);
 
     const renderCards = useCallback(() => {
-        return setupCards.map((item) => {
+        return setupCards.map((item, index) => {
             const className = [
                 styles.defaultCard,
                 styles[item.styleDefinition],
@@ -274,10 +286,10 @@ export default function CardPlan() {
 
             return (
                 <div
+                    key={index}
                     className={`${styles.cardWrapper} ${
                         item.preferred ? styles.preferredWrapper : ''
                     }`}
-                    key={item.title}
                 >
                     {item.preferred && (
                         <span className={styles.badge}>MAIS ESCOLHIDO 🏆</span>

@@ -170,3 +170,8 @@
 .defaultCard {
     height: 580px;
 }
+
+.skeleton {
+    border-radius: 12px;
+    background: var(--color-gray-400);
+}

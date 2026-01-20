@@ -193,3 +193,43 @@ export function startFilterArray(data) {
 export function verifyIfIsPro(user) {
     return user?.permissions?.role_name === 'ai:pro';
 }
+
+export function conversorPlanInfo(planName) {
+    return [
+        {
+            identifier: 'ai:free',
+            label: 'Gratuito',
+            benefits: [
+                'Acesso à correção de redações',
+                'Até 5 redações por mês',
+                'Sugestões de melhorias básicas',
+                'Benefícios básicos...',
+            ],
+        },
+        {
+            identifier: 'ai:basic',
+            label: 'Básico',
+            benefits: [
+                'Acesso amplificado à correção de redações',
+                'Até 15 redações por mês',
+                'Feedback detalhado e personalizado',
+                'Sugestões de melhorias otimizadas',
+                'Análise avançada de competências',
+                'Suporte prioritário',
+            ],
+        },
+        {
+            identifier: 'ai:pro',
+            label: 'Pro!',
+            benefits: [
+                'Até 50 redações por mês',
+                'Pratique sem medo até dominar cada competência',
+                'Analise redações com as melhores notas',
+                'Sistema de streak para manter o foco',
+                'Feedback detalhado e personalizado',
+                'Acesso a conteúdos exclusivos',
+                'Suporte prioritário',
+            ],
+        },
+    ].find(item => item.identifier === planName);
+}

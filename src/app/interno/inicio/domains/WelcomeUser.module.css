@@ -34,7 +34,21 @@
         margin: 0 auto;
         align-content: center;
     }
+}
 
+@media (--isTablet) {
+    .containerWelcomeUser {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .containerCardChanger {
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+        left: 12px;
+    }
 }
 
 .containerCard {
@@ -44,6 +58,7 @@
     align-content: center;
     align-items: center;
 }
+
 
 .card {
     background: linear-gradient(180deg, #0066FF 20%, #2D8CFF 90%);

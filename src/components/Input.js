@@ -12,7 +12,7 @@ import { Controller } from 'react-hook-form';
 import styles from './Input.module.css';
 
 const EmailValidator = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-const PasswordValidator = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+const PasswordValidator = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d\W_]{6,}$/;
 
 export default function Input({
     icon,

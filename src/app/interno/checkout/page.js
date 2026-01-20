@@ -3,6 +3,7 @@
 import Benefits from '@/app/interno/checkout/domains/Benefits';
 import CheckoutEmbedded from '@/app/interno/planos/domains/CheckoutEmbedded';
 import Container from '@/components/Container';
+import NavigationMenu from '@/components/NavigationMenu';
 import Text from '@/components/Text';
 import useStore from '@/hooks/useStore';
 import { LockClosedIcon } from '@radix-ui/react-icons';
@@ -21,7 +22,8 @@ export default function Page() {
 
     return (
         <main className={styles.checkoutPage}>
-            <Container>
+            <NavigationMenu.Converter/>
+            <Container delimited>
                 <div className={styles.containerCheckout}>
                     <div className={styles.checkoutColumn}>
                         <div className={styles.progressBar}>

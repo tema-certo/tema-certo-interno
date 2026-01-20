@@ -4,10 +4,9 @@ import Container from '@/components/Container';
 
 import styles from './page.module.css';
 
-
 export default function Page() {
     return (
-        <main>
+        <main className={styles.mainContainer}>
             <Container
                 className={styles.containerPage}
             >

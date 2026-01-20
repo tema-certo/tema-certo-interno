@@ -1,0 +1,205 @@
+@import '../../../medias.css';
+
+.containerMyPlan {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.containerPlanName {
+    margin-bottom: 20px;
+}
+
+.containerCardHtml {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 48px;
+    position: relative;
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    max-width: 45%;
+    position: relative;
+    transition: transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.image:hover {
+    transform: scale(1.02) translateY(-4px);
+}
+
+.image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 360px;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.05));
+}
+
+.containerList {
+    display: flex;
+    max-width: 560px;
+    flex: 1.2;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.benefitsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.upgradePrompt {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    background: linear-gradient(135deg,
+    rgba(239, 246, 255, 0.4) 0%,
+    rgba(219, 234, 254, 0.3) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.upgradePrompt::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+    rgba(59, 130, 246, 0.5) 0%,
+    rgba(37, 99, 235, 0.8) 50%,
+    rgba(59, 130, 246, 0.5) 100%);
+    animation: slideGradient 3s ease-in-out infinite;
+}
+
+@keyframes slideGradient {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.upgradeText {
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(226, 232, 240, 0.5);
+    transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: default;
+}
+
+.statItem:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(59, 130, 246, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.statNumber {
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.statLabel {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ctaButton {
+    cursor: pointer;
+}
+
+@media (--isLowDesktop) {
+    .containerCardHtml {
+        flex-direction: column-reverse;
+        gap: 36px;
+    }
+
+    .image {
+        max-width: 100%;
+    }
+
+    .containerList {
+        max-width: 100%;
+    }
+
+    .statsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (--isMobile  ) {
+    .containerCardHtml {
+        padding: 0;
+        gap: 28px;
+    }
+
+    .containerList {
+        gap: 24px;
+    }
+
+    .image img {
+        max-height: 260px;
+    }
+
+    .upgradePrompt {
+        padding: 20px;
+    }
+
+    .statsGrid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .statItem {
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}

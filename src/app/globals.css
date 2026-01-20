@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@radix-ui/themes/styles.css";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -178,17 +179,6 @@ body {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* setup de background radix theme */
-.radix-themes:where([data-is-root-theme="true"]) {
-  background-image:
-  linear-gradient(to right, rgba(229,231,235,0.8) 1px, transparent 1px),
-  linear-gradient(to bottom, rgba(229,231,235,0.8) 1px, transparent 1px),
-  radial-gradient(circle 500px at 20% 100%, var(--blue-a4), transparent),
-  radial-gradient(circle 500px at 100% 80%, var(--blue-a4), transparent);
-  background-size: "48px 48px, 48px 48px, 100% 100%, 100% 100%";
-  background-color: var(--background-gray-default);
-}
-
 /* setup de avatar padronizado */
 .rt-AvatarRoot.rt-r-size-3 {
   .rt-AvatarFallback {
@@ -221,4 +211,142 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.radix-themes:where([data-is-root-theme="true"]) {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+
+  /* Base ultra clean */
+  background: #fafbfc;
+
+  /* Grid de papel elegante */
+  background-image:
+          repeating-linear-gradient(
+                  0deg,
+                  transparent 0px,
+                  transparent 31px,
+                  rgba(0, 112, 243, 0.04) 31px,
+                  rgba(0, 112, 243, 0.04) 32px
+          );
+}
+
+/* Orb principal - "Núcleo de IA" */
+.radix-themes:where([data-is-root-theme="true"])::before {
+  content: '';
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Gradient concêntrico que pulsa */
+  background:
+          radial-gradient(
+                  circle at center,
+                  rgba(0, 112, 243, 0.15) 0%,
+                  rgba(0, 112, 243, 0.10) 20%,
+                  rgba(59, 130, 246, 0.06) 40%,
+                  rgba(96, 165, 250, 0.03) 60%,
+                  transparent 80%
+          );
+
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+
+  /* Pulsação sutil */
+  animation: aiPulse 8s ease-in-out infinite;
+}
+
+/* Efeito de "tinta se espalhando" */
+.radix-themes:where([data-is-root-theme="true"])::after {
+  content: '';
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
+  background-image:
+    /* Ondas de cor fluindo */
+          radial-gradient(
+                  ellipse 800px 400px at 20% 80%,
+                  rgba(0, 112, 243, 0.08) 0%,
+                  transparent 50%
+          ),
+          radial-gradient(
+                  ellipse 600px 500px at 80% 20%,
+                  rgba(59, 130, 246, 0.06) 0%,
+                  transparent 50%
+          ),
+          radial-gradient(
+                  ellipse 500px 600px at 50% 95%,
+                  rgba(147, 197, 253, 0.04) 0%,
+                  transparent 60%
+          );
+
+  pointer-events: none;
+  z-index: 0;
+  animation: inkFlow 25s ease-in-out infinite;
+}
+
+/* Partículas de "inspiração" flutuando */
+.radix-themes:where([data-is-root-theme="true"]) {
+  background-image:
+          repeating-linear-gradient(
+                  0deg,
+                  transparent 0px,
+                  transparent 31px,
+                  rgba(0, 112, 243, 0.04) 31px,
+                  rgba(0, 112, 243, 0.04) 32px
+          ),
+
+            /* Pontos luminosos que representam ideias */
+          radial-gradient(circle 2px at 15% 25%, rgba(0, 112, 243, 0.4), transparent),
+          radial-gradient(circle 1.5px at 85% 40%, rgba(59, 130, 246, 0.3), transparent),
+          radial-gradient(circle 2px at 40% 75%, rgba(96, 165, 250, 0.35), transparent),
+          radial-gradient(circle 1.5px at 70% 15%, rgba(0, 112, 243, 0.38), transparent),
+          radial-gradient(circle 2px at 25% 55%, rgba(147, 197, 253, 0.25), transparent),
+          radial-gradient(circle 1.5px at 90% 85%, rgba(59, 130, 246, 0.32), transparent);
+
+  animation: sparkleShift 30s linear infinite;
+}
+
+@keyframes aiPulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes inkFlow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes sparkleShift {
+  0%, 100% {
+    background-position: 0 0, 15% 25%, 85% 40%, 40% 75%, 70% 15%, 25% 55%, 90% 85%;
+  }
+  50% {
+    background-position: 0 0, 18% 28%, 82% 43%, 43% 72%, 73% 12%, 28% 52%, 87% 88%;
+  }
+}
+
+/* Brilho sutil nas bordas */
+.radix-themes:where([data-is-root-theme="true"]) {
+  box-shadow:
+          inset 0 0 150px rgba(0, 112, 243, 0.03);
 }

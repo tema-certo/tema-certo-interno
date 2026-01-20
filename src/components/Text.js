@@ -18,6 +18,7 @@ export default function Text({
     middleSeparator,
     bold,
     children,
+    mostBolder,
     ...props
 }) {
     const titleMode = isTitle ? styles.titleDefault : '';
@@ -26,6 +27,7 @@ export default function Text({
         classNames,
         color === 'black' && styles.black,
         bold && styles.bolder,
+        mostBolder && styles.mostBolder,
     ]), titleMode]);
 
     return (

@@ -1,9 +1,8 @@
 @import '../app/medias.css';
 
 .navigationContainer {
-    max-width: 1300px;
+    max-width: 255px;
     margin: 0 auto;
-    padding: 14px 20px 0 20px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -12,7 +11,7 @@
 
 @media (--isMobile) {
     .navigationContainer {
-        padding: 20px 20px 10px 20px;
+        padding: 40px 20px 0 20px;
     }
 }
 
@@ -22,10 +21,15 @@
 
 .menuList {
     display: flex;
-    gap: 48px;
+    padding: 0 20px;
+    margin-top: 20px;
+
+    gap: 24px;
+
     & > * {
         color: var(--black-3);
         list-style: none;
+        font-size: 14px;
     }
 
     & > li > button {
@@ -33,6 +37,12 @@
         transition: all 0.3s ease-out;
         font-size: 14px;
         font-weight: 500;
+
+        width: 100%;
+        padding: 12px 14px;
+        align-items: flex-start;
+        text-align: left;
+        justify-content: flex-start;
 
         &:hover {
             background: none;
@@ -52,21 +62,6 @@
         position: relative;
     }
 
-    :global(button.active)::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 1px;
-        width: 50%;
-        margin-left: 25%;
-        height: 2px;
-        border-radius: 8px;
-        background-color: var(--color-blue-600);
-
-        transform: scaleX(0);
-        transform-origin: center;
-        animation: underline-grow 0.35s ease-out forwards;
-    }
 }
 
 @keyframes underline-grow {
@@ -80,14 +75,29 @@
 
 .containerPageComponent {
     position: sticky;
-    top: 0;
-    z-index: 1000;
-    width: 100%;
+
     background: var(--background-gray-default);
     border-bottom: 1px solid var(--accent-a3);
     padding-bottom: 12px;
+    border: 1px solid var(--color-gray-300);
 }
 
+.containerConverter {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid var(--accent-a3);
+    padding: 0 24px
+}
+
+.converterContainer {
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 12px 0;
+    align-items: center;
+    align-content: center;
+}
 
 .logoContainer {
     cursor: pointer;
@@ -196,6 +206,7 @@
 @media (max-width: 900px) {
     .menuList {
         display: flex;
+        max-width: 260px;
         flex-direction: column;
         gap: 12px;
         padding-top: 32px;
@@ -242,4 +253,37 @@
 
 .dropDownClient {
     min-width: 164px;
+}
+
+.sidebarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.sidebarFooter {
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 24px;
+    margin-top: 24px;
+}
+
+.sidebarTrigger {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    & > * {
+        cursor: pointer;
+        color: var(--color-gray-800) !important;
+    }
+}
+
+.sidebarContent {
+    border-top-radius: 322px !important;
+    border-bottom-radius: 40px !important;
 }

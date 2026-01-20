@@ -1,0 +1,341 @@
+.checkoutPage {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #fafbfc 0%, #ffffff 100%);
+}
+
+.checkoutHeader {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.headerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.logoIcon {
+    font-size: 1.75rem;
+}
+
+.securityBadge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #059669;
+    font-weight: 600;
+}
+
+.containerCheckout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.checkoutColumn {
+    max-width: 680px;
+}
+
+/* Progress bar */
+.progressBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+    padding: 24px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+}
+
+.progressStep {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.stepNumber {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.progressStep.active .stepNumber {
+    background: linear-gradient(135deg, #0070f3, #0ea5e9);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 112, 243, 0.3);
+}
+
+.stepLabel {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.progressStep.active .stepLabel {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.progressLine {
+    width: 80px;
+    height: 2px;
+    background: #e5e7eb;
+    margin: 0 16px;
+}
+
+/* Título do checkout */
+.checkoutTitle {
+    margin-bottom: 32px;
+}
+
+.checkoutTitle h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+}
+
+.checkoutTitle p {
+    font-size: 1.05rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Container do Stripe */
+.stripeContainer {
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    background: var(--color-white);
+    padding: 32px;
+    box-shadow:
+            0 4px 16px rgba(0, 0, 0, 0.04),
+            0 2px 4px rgba(0, 0, 0, 0.02);
+    margin-bottom: 24px;
+}
+
+.trustBadgesBottom {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.trustItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #475569;
+}
+
+.trustIcon {
+    font-size: 1.1rem;
+}
+
+.benefitsColumn {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.testimonial {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    position: relative;
+}
+
+.testimonialQuote {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    font-size: 4rem;
+    color: #0070f3;
+    opacity: 0.1;
+    font-family: Georgia, serif;
+    line-height: 1;
+}
+
+.testimonialText {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #334155;
+    margin: 0 0 16px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.testimonialAuthor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.authorAvatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0070f3, #0ea5e9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.testimonialAuthor div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.testimonialAuthor strong {
+    font-size: 0.9rem;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.testimonialAuthor span {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.checkoutFooter {
+    margin-top: auto;
+    background: #f8fafc;
+    border-top: 1px solid #e5e7eb;
+    padding: 32px 0;
+}
+
+.footerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.footerLinks {
+    display: flex;
+    gap: 24px;
+}
+
+.footerLinks a {
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footerLinks a:hover {
+    color: #0070f3;
+}
+
+@media (max-width: 1200px) {
+    .containerCheckout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 680px;
+    }
+
+    .benefitsColumn {
+        position: relative;
+        top: 0;
+        order: -1;
+    }
+
+    .checkoutColumn {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .containerCheckout {
+        padding: 0;
+    }
+
+    .checkoutHeader {
+        padding: 16px 0;
+    }
+
+    .headerContent {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .logo {
+        font-size: 1.1rem;
+    }
+
+    .progressBar {
+        padding: 16px;
+    }
+
+    .stepLabel {
+        display: none;
+    }
+
+    .progressLine {
+        width: 40px;
+        margin: 0 8px;
+    }
+
+    .checkoutTitle h1 {
+        font-size: 1.5rem;
+    }
+
+    .checkoutTitle p {
+        font-size: 0.95rem;
+    }
+
+    .stripeContainer {
+        padding: 20px;
+    }
+
+    .trustBadgesBottom {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+}

@@ -5,38 +5,34 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import colors from '@/colors';
 import Badge from '@/components/Badge';
 import Button from '@/components/Button';
-import Container from '@/components/Container';
 import Text from '@/components/Text';
-import Tooltip from '@/components/Tooltip';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar';
-import { AvgRanking, setExtraClass } from '@/helpers';
-import useClassnames from '@/hooks/useClassnames';
-import useScroll from '@/hooks/useScroll';
+import { Separator } from '@/components/ui/separator';
+import {
+    Sidebar,
+    SidebarContent, SidebarFooter,
+    SidebarGroupContent,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarTrigger,
+} from '@/components/ui/sidebar';
+import { AvgRanking } from '@/helpers';
 import useSize from '@/hooks/useSize';
 import useStore, { removeAuthData } from '@/hooks/useStore';
-import Icons from '@/icons/icons';
 import {
-    BookmarkIcon,
-    BarChartIcon,
-    StarIcon,
-    HamburgerMenuIcon,
-    LightningBoltIcon,
-    PersonIcon,
+    PersonIcon, StarIcon,
 } from '@radix-ui/react-icons';
 import { Avatar } from '@radix-ui/themes';
 import {
-    BarChartHorizontalIcon,
     BookOpenIcon, CrownIcon, HelpCircleIcon,
-    Home,
+    Home, LockIcon,
     LogOutIcon,
-    LucideChartNoAxesColumnIncreasing,
-    XIcon,
+    LucideChartNoAxesColumnIncreasing, SidebarIcon,
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -44,16 +40,11 @@ import styles from './NavigationMenu.module.css';
 
 export default function NavigationMenu() {
     const [menuMobile, setMenuMobile] = useState(false);
-    const [seeOpt, setSeeOpt] = useState(false);
 
     const pathName = usePathname();
     const router = useRouter();
     const user = useStore((state) => state.user);
-    const metrics = useStore((state) => state.metrics);
     const { isTablet, isMobile, isLowerMobile } = useSize();
-    const { scrolled } = useScroll();
-
-    const definedClasses = useClassnames(setExtraClass(styles.containerPageComponent, [scrolled && styles.moved]));
 
     const menuOptions = useMemo(() => {
         return [
@@ -74,6 +65,12 @@ export default function NavigationMenu() {
                 path: '/interno/estatisticas',
                 icon: <LucideChartNoAxesColumnIncreasing width={16} height={16}/>,
                 handler: () => router.push('/interno/estatisticas'),
+            },
+            {
+                label: 'Planos',
+                path: '/interno/planos',
+                icon: <CrownIcon width={16} height={16}/>,
+                handler: () => router.push('/interno/planos'),
             },
         ];
     }, [router]);
@@ -123,13 +120,6 @@ export default function NavigationMenu() {
     const handleMobileModal = useCallback(value => {
         return () => setMenuMobile(!value);
     }, []);
-
-
-    const handleAvatar = useCallback(() => {
-        return () => {
-            setSeeOpt(!seeOpt);
-        };
-    }, [seeOpt]);
 
     const handleLogout = useCallback(() => {
         return async () => {
@@ -218,26 +208,24 @@ export default function NavigationMenu() {
 
         return (
             <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <button
-                        className="outline-none focus:outline-none ring-0 focus:ring-0"
-                    >
-                        <Avatar
-                            radius={'full'}
-                            variant={'solid'}
-                            fallback={user?.name?.charAt(0)}
-                            color={'blue'}
-                            size={'3'}
-                            className={styles.avatar}
-                        />
-                    </button>
+                <DropdownMenuTrigger >
+                    <Avatar
+                        radius={'full'}
+                        variant={'solid'}
+                        fallback={user?.name?.charAt(0)}
+                        color={'blue'}
+                        size={'3'}
+                        className={styles.avatar}
+                    />
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent align={'start'} className={styles.dropDownClient}>
-                    {dropDownOptions.map(item => {
+                    {dropDownOptions.map((item, index) => {
                         if (item.separator) {
                             return (
-                                <div className={styles.labelDropdown}>
+                                <div className={styles.labelDropdown}
+                                    key={index}
+                                >
                                     {item.topSeparator && <DropdownMenuSeparator />}
                                     {item.html}
                                     {!item.topSeparator && <DropdownMenuSeparator />}
@@ -245,7 +233,7 @@ export default function NavigationMenu() {
                             );
                         }
                         return (
-                            <div className={styles.labelDropdown}>
+                            <div className={styles.labelDropdown} key={index}>
                                 {item.html}
                             </div>
                         );
@@ -255,122 +243,98 @@ export default function NavigationMenu() {
         );
     }, [getSomeHelp, goToPlans, goToProfile, handleLogout, user?.id, user?.name]);
 
-    if (isTablet || isMobile || isLowerMobile) {
-        return (
-            <div className={definedClasses}>
-                {!menuMobile && (
-                    <div className={styles.navigationContainer}>
-                        <Button
-                            variant={'ghost'}
-                            radius={'large'}
-                            color={'gray'}
-                            size={'2'}
-                            onClick={handleMobileModal(menuMobile)}
-                        >
-                            <HamburgerMenuIcon
-                                width={24}
-                                height={24}
-                            />
-                        </Button>
-                    </div>
-                )}
-                {menuMobile && (
-                    <>
-                        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-                        <div className={styles.overlay} onClick={handleMobileModal(menuMobile)} />
-
-                        <div className={styles.menuMobile}>
-                            <div className={styles.logoContainerMobile}>
-                                <Button
-                                    variant={'ghost'}
-                                    radius={'large'}
-                                    color={'gray'}
-                                    size={'2'}
-                                    onClick={handleMobileModal(menuMobile)}
-                                >
-                                    <XIcon />
-                                </Button>
-                            </div>
-
-                            <div className={styles.userContainer}>
-                                {avatarOptions}
-                                <div className={styles.userScore}>
-                                    <Icons.FireIcon width={12} height={12} color={'#894b00'} />
-                                    <Text text={metrics?.sequence || 0} size={'2'} />
-                                </div>
-                                <div className={styles.rankingBadge}>
-                                    <Tooltip
-                                        children={'Ranking'}
-                                        icon={<Badge
-                                            text={FindUserRanking()?.label}
-                                            icon={<StarIcon />}
-                                            radius={'full'}
-                                            color={FindUserRanking()?.color}
-                                            variant={'surface'}
-                                        />}>
-                                        {'O seu ranking depende da sua média de pontos.'}
-                                    </Tooltip>
-                                </div>
-                            </div>
-
-                            <ul className={styles.menuList}>
-                                {mapMenuOptions()}
-                            </ul>
-                        </div>
-                    </>
-                )}
-            </div>
-        );
-    }
-
     return (
         <div className={styles.containerPageComponent}>
-            <div className={styles.navigationContainer}>
-                <div>
-                    {/* eslint-disable-next-line react/jsx-no-bind */}
-                    <button onClick={() => router.push('/interno/inicio')} className={styles.logoContainer}>
+            {(menuMobile || isTablet || isMobile || isLowerMobile) && (
+                <SidebarTrigger onClick={handleMobileModal(menuMobile)}/>
+            )}
+            <Sidebar className={styles.navigationContainer} variant={'floating'}>
+                <SidebarContent>
+                    <div className={styles.sidebarTrigger}>
+                        <SidebarTrigger
+                            icon={<SidebarIcon width={16} height={16}/>}
+                            onClick={handleMobileModal(menuMobile)}
+                        />
+                    </div>
+                    <SidebarHeader
+                        className={styles.sidebarHeader}
+                    >
                         <img
                             src="/tema-certo-black.svg"
                             alt="Logo do Tema Certo"
-                            width={56}
-                            height={56}
+                            width={72}
+                            height={72}
                         />
-                    </button>
-                </div>
-                <div>
-                    <ul className={styles.menuList}>
-                        {mapMenuOptions()}
-                    </ul>
-                </div>
-                <div className={styles.userContainer}>
-                    <div className={styles.userScore}>
-                        <Icons.FireIcon width={12} height={12} color={'#894b00'}/>
-                        <Text
-                            text={metrics?.sequence || 0}
-                            size={'2'}
-                        />
-                    </div>
-                    <div className={styles.rankingBadge}>
-                        <Tooltip
-                            children={'Ranking'}
-                            icon={<Badge
+                        {FindUserRanking() && (
+                            <Badge
                                 text={FindUserRanking()?.label}
                                 icon={<StarIcon />}
+                                size={'2'}
                                 radius={'full'}
                                 color={FindUserRanking()?.color}
                                 variant={'surface'}
-                            />}>
-                            {'O seu ranking depende da sua média de pontos.'}
-                        </Tooltip>
-                    </div>
-                    <button
-                        onClick={handleAvatar()}
-                        className={styles.avatarContainer}
-                    >
-                        {avatarOptions}
-                    </button>
+                            />
+                        )}
+                    </SidebarHeader>
+                    <Separator
+                        my="3"
+                        size="4"
+                    />
+                    <SidebarGroupContent>
+                        <SidebarMenu className={styles.menuList}>
+                            {mapMenuOptions()}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarContent>
+                <Separator
+                    my="3"
+                    size="4"
+                />
+                <SidebarFooter
+                    className={styles.sidebarFooter}
+                >
+                    {avatarOptions}
+                </SidebarFooter>
+            </Sidebar>
+        </div>
+    );
+}
+
+NavigationMenu.Converter = function ConverterNavigationMenu() {
+    const router = useRouter();
+
+    const handleClickLogo = useCallback(() => {
+        return () => router.push('/interno/inicio');
+    }, [router]);
+
+    return (
+        <div className={styles.containerConverter}>
+            <div className={styles.converterContainer}>
+                <div>
+                    <Button
+                        text={<img
+                            src="/tema-certo-black.svg"
+                            alt="Logo do Tema Certo"
+                            width={64}
+                            height={64}
+                        />}
+                        variant={'ghost'}
+                        color={'gray'}
+                        size={'3'}
+                        radius={'large'}
+                        onClick={handleClickLogo()}
+                    />
+                </div>
+                <div>
+                    <Text
+                        text={'Ambiente seguro'}
+                        as="h1"
+                        size="2"
+                        color="gray"
+                        icon={<LockIcon width={16} height={16}   />}
+                    />
                 </div>
             </div>
         </div>
     );
-}
+};

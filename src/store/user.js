@@ -6,5 +6,7 @@ export default function userResources(set) {
         setUser: (user) => set({ user }),
         metrics: null,
         setMetrics: (metrics) => set({ metrics }),
+        userSessionSubscribe: null,
+        setUserSessionSubscribe: (userSessionSubscribe) => set({ userSessionSubscribe }),
     };
 }

@@ -7,11 +7,12 @@ export default function Tooltip({
     children,
     icon = <CircleHelpIcon width={16} height={16}/>,
     sideOffset = 0,
+    className,
     ...props
 }) {
     return (
         <TooltipComponent {...props}>
-            <TooltipTrigger asChild>{icon}</TooltipTrigger>
+            <TooltipTrigger asChild className={className}>{icon}</TooltipTrigger>
             <TooltipContent children={children} className={styles.tooltipChildren} sideOffset={sideOffset}>
             </TooltipContent >
         </TooltipComponent>

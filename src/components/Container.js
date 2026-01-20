@@ -6,8 +6,11 @@ import styles from './Container.module.css';
 export default function Container({
     className,
     children,
+    delimited,
 }) {
-    const extraClasses = useClassNames(setExtraClass(styles.containerPageComponent, [className]));
+    const extraClasses = useClassNames(setExtraClass(styles.containerPageComponent, [className,
+        delimited && styles.delimited,
+    ]));
 
     return (
         <div className={extraClasses}>

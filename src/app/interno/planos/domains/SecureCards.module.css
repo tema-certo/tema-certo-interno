@@ -1,0 +1,24 @@
+@import '../../../medias.css';
+
+.containerCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+}
+
+@media (--isLowDesktop) {
+    .containerCards {
+        grid-template-columns: repeat(2, 1fr);
+
+        & > *:last-child {
+            grid-column: 1 / -1;
+        }
+    }
+}
+
+@media (--isMobile) {
+    .containerCards {
+        grid-template-columns: 1fr;
+    }
+}

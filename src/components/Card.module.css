@@ -1,4 +1,10 @@
-.cardContainer {
+.border {
+    border: 1px solid var(--color-gray-100);
+
+    --card-border-width: 0;
+}
+
+.shadowCard {
     box-shadow: var(--shadow-2);
     height: auto;
     width: 100%;
@@ -6,8 +12,8 @@
     border-radius: 0.5rem;
 }
 
-.border {
-    border: 1px solid var(--color-gray-100);
+.cardContainer {
+    width: 100%;
 }
 
 .card {

@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 import styles from './WelcomeUser.module.css';
 
 
-export default function WelcomeUser(callback, deps) {
+export default function WelcomeUser() {
     const user = useStore((state) => state.user);
 
     const CardStructureHtml = useCallback(() => {
@@ -98,7 +98,8 @@ export default function WelcomeUser(callback, deps) {
                     html={<CardStructureHtml/>}
                     className={styles.card}
                     radius={'medium'}
-		       />
+                    minW={'150px'}
+                />
             </div>
         </div>
     );

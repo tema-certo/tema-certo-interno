@@ -19,3 +19,17 @@
         color: var(--blue-10);
     }
 }
+
+.listCheckmark .listItem {
+    list-style: none;
+}
+
+.listItemCheck {
+    display: flex;
+    gap: 8px;
+}
+
+.checkIcon {
+    width: 16px !important;
+    height: 16px !important;
+}

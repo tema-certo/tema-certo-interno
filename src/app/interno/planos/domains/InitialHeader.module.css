@@ -1,0 +1,25 @@
+.containerHeader {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    flex-direction: column;
+}
+
+.containerTitle {
+    margin-bottom: 8px;
+
+    & > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        align-content: center;
+    }
+}
+
+.containerSubtitle {
+    max-width: 700px;
+    text-align: center;
+}

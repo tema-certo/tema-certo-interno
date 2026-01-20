@@ -143,6 +143,7 @@ export default function FormLogin() {
                 onClose={changeSetupRecoverPasswordModal}
                 children={<FormRecoverPwd setSended={setSendedEmail}/>}
                 icon={sended && <CheckCircleIcon color={'green'}/>}
+                cannotClose
             />
         );
     }, [changeSetupRecoverPasswordModal, recoveringPwd, sended]);

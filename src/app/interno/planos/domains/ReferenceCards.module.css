@@ -1,0 +1,71 @@
+@import '../../../medias.css';
+
+.containerReferenceCards {
+    margin-top: 64px;
+}
+
+.containerTitle {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.textCard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.starContainer {
+    display: flex;
+}
+
+.containerQuote {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+.containerInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.containerCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.containerGarantia {
+    margin-top: 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@media (--isLowDesktop) {
+    .containerCards {
+        grid-template-columns: repeat(2, 1fr);
+
+        & > *:last-child {
+            grid-column: 1 / -1;
+        }
+    }
+}
+
+@media (--isMobile) {
+    .containerCards {
+        grid-template-columns: 1fr;
+    }
+}

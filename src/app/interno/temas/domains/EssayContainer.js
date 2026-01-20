@@ -190,8 +190,9 @@ export default function EssayContainer({
                         />
                     </div>
                 )}
-                {filteredList.map((item) => (
+                {filteredList.map((item, index) => (
                     <EssaySelectorCard
+                        key={index}
                         idEssay={item?.theme?.id}
                         title={item?.theme?.theme_title}
                         description={item?.theme?.theme_description}
@@ -210,6 +211,7 @@ export default function EssayContainer({
                 open={!!selectedEssay}
                 title="Iniciar Redação"
                 onClose={clearSelect}
+                cannotClose
             >
                 {selectedEssay && (
                     <>

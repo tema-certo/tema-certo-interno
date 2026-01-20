@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import MyPlan from '@/app/interno/perfil/domains/MyPlan';
 import UserData from '@/app/interno/perfil/domains/UserData';
 import SegmentedControl from '@/components/SegmentedControl';
 import Text from '@/components/Text';
@@ -28,7 +29,7 @@ export default function StateSelector() {
             },
 	        {
 		        value: 'user-plan',
-		        content: <div>Meu plano</div>,
+		        content: <MyPlan/>,
 	        },
         ];
     }, []);
